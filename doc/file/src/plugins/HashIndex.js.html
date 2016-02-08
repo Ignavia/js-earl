@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/plugins/HashIndex.js | JavaScript Earl API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/Ignavia/js-earl.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/BreadthFirstTree.js~BreadthFirstTree.html">BreadthFirstTree</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Edge.js~Edge.html">Edge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Node.js~Node.html">Node</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Path.js~Path.html">Path</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">plugins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html">EdgeHashIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/HashIndex.js~HashIndex.html">HashIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/NodeHashIndex.js~NodeHashIndex.html">NodeHashIndex</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/plugins/HashIndex.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Plugin} from &quot;@ignavia/util&quot;;
+
+/**
+ * An index that maps from a hash value to all objects with that hash value.
+ */
+export default class HashIndex extends Plugin {
+
+    /**
+     * @param {Function} hashFunction
+     * A function that gets an object as input and returns a deterministic,
+     * immutable value. If an object should not be included in the index the
+     * function can return undefined.
+     */
+    constructor(hashFunction) {
+        super();
+
+        /**
+         * A function that gets an object as input and returns a deterministic,
+         * immutable value.
+         *
+         * @type {Function}
+         * @protected
+         */
+        this.hash = hashFunction;
+
+        /**
+         * Maps from a hash value to a set with the IDs of all corresponding
+         * objects.
+         *
+         * @type {Map&lt;*, Set&lt;String&gt;&gt;}
+         * @protected
+         */
+        this.hashToIds = new Map();
+
+        this.idToHash = new Map();
+    }
+
+    /**
+     * Returns an array containing the IDs of the objects with the given hash
+     * value.
+     *
+     * @param {*} param
+     * The hash value or the object to hash.
+     *
+     * @param {Boolean} [hashParam=false]
+     * Whether the first argument has to be hashed first before using it as a
+     * key.
+     *
+     * @return {String[]}
+     * The IDs of the selected objects.
+     *
+     * @private
+     */
+    get(param, hashParam = false) {
+        return [...this.iter(param, hashParam)];
+    }
+
+    /**
+     * Iterates over the IDs of the objects with the given hash value.
+     *
+     * @param {*} param
+     * The hash value.
+     *
+     * @param {Boolean} [hashParam=false]
+     * Whether the first argument has to be hashed first before using it as a
+     * key.
+     *
+     * @private
+     */
+    * iter(param, hashParam) {
+        hashParam = hashParam || false; // TODO change to default parameter (babel bug)
+
+        if (hashParam) {
+            param = this.hash(param);
+        }
+        if (this.data.has(param)) {
+            yield* this.data.get(param).values();
+        }
+    }
+
+    /**
+     * Returns the number of objects with the given hash value.
+     *
+     * @param {*} param
+     * The hash value.
+     *
+     * @param {Boolean} [hashParam=false]
+     * Whether the first argument has to be hashed first before using it as a
+     * key.
+     *
+     * @private
+     */
+    count(param, hashParam = false) {
+        if (hashParam) {
+            param = this.hash(param);
+        }
+        return this.data.has(param) ? this.data.get(param).size : 0;
+    }
+
+    /**
+     * Tests if objects with the given hash value exist.
+     *
+     * @param {*} param
+     * The hash value.
+     *
+     * @param {Boolean} [hashParam=false]
+     * Whether the first argument has to be hashed first before using it as a
+     * key.
+     *
+     * @private
+     */
+    test(param, hashParam = false) {
+        if (hashParam) {
+            param = this.hash(param);
+        }
+        return this.data.has(param);
+    }
+
+    /**
+     * Adds the objects to the index.
+     *
+     * @param {Event} e
+     * The received event.
+     *
+     * @private
+     */
+    add(e) {
+        const objs = e.data;
+
+        for (let obj of objs) {
+            const key = this.hash(obj);
+
+            if (key !== undefined) {
+                if (!this.data.has(key)) {
+                    this.data.set(key, new Set()) ;
+                }
+                this.data.get(key).add(obj.id);
+            }
+        }
+    }
+
+    /**
+     * Removes the objects from the index.
+     *
+     * @param {Event} e
+     * The received event.
+     *
+     * @private
+     */
+    remove(e) {
+        const objs = e.data;
+
+        for (let obj of objs) {
+            const key = this.hash(obj);
+            if (this.data.has(key)) {
+                const set = this.data.get(key);
+
+                set.delete(obj.id);
+                if (set.size === 0) {
+                    this.data.delete(key);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.4)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

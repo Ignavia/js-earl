@@ -1,0 +1,3 @@
+[bugtraq "jira"]
+ url = http://jira.codelottery.eu/browse/JSEARL-%BUGID%
+ logRegex = JSEARL-(\\d+)

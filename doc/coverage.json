@@ -1,0 +1,49 @@
+{
+  "coverage": "98.79%",
+  "expectCount": 83,
+  "actualCount": 82,
+  "files": {
+    "src/BreadthFirstTree.js": {
+      "expectCount": 5,
+      "actualCount": 5,
+      "undocumentLines": []
+    },
+    "src/Edge.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "src/plugins/EdgeHashIndex.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/Graph.js": {
+      "expectCount": 30,
+      "actualCount": 30,
+      "undocumentLines": []
+    },
+    "src/plugins/HashIndex.js": {
+      "expectCount": 5,
+      "actualCount": 4,
+      "undocumentLines": [
+        35
+      ]
+    },
+    "src/Node.js": {
+      "expectCount": 14,
+      "actualCount": 14,
+      "undocumentLines": []
+    },
+    "src/plugins/NodeHashIndex.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/Path.js": {
+      "expectCount": 10,
+      "actualCount": 10,
+      "undocumentLines": []
+    }
+  }
+}

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Graph.js | JavaScript Earl API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/Ignavia/js-earl.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/BreadthFirstTree.js~BreadthFirstTree.html">BreadthFirstTree</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Edge.js~Edge.html">Edge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Node.js~Node.html">Node</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Path.js~Path.html">Path</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">plugins</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html">EdgeHashIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/HashIndex.js~HashIndex.html">HashIndex</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/plugins/NodeHashIndex.js~NodeHashIndex.html">NodeHashIndex</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Graph.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {EventManager, extensibleMixin, IDGenerator, observableMixin, observableSymbols} from &quot;@ignavia/util&quot;;
+const fireEvent = observableSymbols.fireEvent;
+
+import Node             from &quot;./Node.js&quot;;
+import Edge             from &quot;./Edge.js&quot;;
+import BreadthFirstTree from &quot;./BreadthFirstTree.js&quot;;
+
+/**
+ * A graph data structure.
+ *
+ * @implements {Observable}
+ * @implements {Extensible}
+ */
+export default class Graph {
+
+    /**
+     * A helper function to turn a node or its ID into an ID.
+     *
+     * @param {String|Node} node
+     * The node or its ID.
+     *
+     * @return {String}
+     * The requested ID.
+     */
+    static toNodeId(node) {
+        if (typeof node === &quot;string&quot;) {
+            return node;
+        } else if (node instanceof Node) {
+            return node.id;
+        }
+    }
+
+    /**
+     * A helper function to turn an edge or its ID into an ID.
+     *
+     * @param {String|Edge} edge
+     * The edge or its ID.
+     *
+     * @return {String}
+     * The requested ID.
+     */
+    static toEdgeId(edge) {
+        if (typeof edge === &quot;string&quot;) {
+            return edge;
+        } else if (edge instanceof Edge) {
+            return edge.id;
+        }
+    }
+
+    /**
+     * A helper function for other functions that can take a single node ID, an
+     * iterator for node IDs, a single node or an iterator for nodes and returns
+     * an iterable object.
+     *
+     * @param {String|Iterator&lt;String&gt;|Node|Iterator&lt;String&gt;} nodes
+     * The parameter to normalize.
+     *
+     * @return {Iterator&lt;String&gt;|Iterator&lt;Node&gt;}
+     * The normalized parameter.
+     */
+    static makeNodesIterable(nodes) {
+        if (typeof nodes === &quot;string&quot; || nodes instanceof Node) {
+            return [nodes];
+        }
+        return nodes;
+    }
+
+    /**
+     * A helper function for other functions that can take a single edge ID, an
+     * iterator for edge IDs, a single edge or an iterator for edges and returns
+     * an iterable object.
+     *
+     * @param {String|Iterator&lt;String&gt;|Edge|Iterator&lt;String&gt;} edges
+     * The parameter to normalize.
+     *
+     * @return {Iterator&lt;String&gt;|Iterator&lt;Edge&gt;}
+     * The normalized parameter.
+     */
+    static makeEdgesIterable(edges) {
+        if (typeof edges === &quot;string&quot; || edges instanceof Edge) {
+            return [edges];
+        }
+        return edges;
+    }
+
+    /**
+     *
+     */
+    constructor() {
+
+        /**
+         * The ID of this graph.
+         *
+         * @type {String}
+         */
+        this.id = Graph.idGenerator.next();
+
+        /**
+         * Contains all the nodes of the graph.
+         *
+         * @type {Map&lt;String, Node&gt;}
+         * @private
+         */
+        this.nodes = new Map();
+
+        /**
+         * Contains all the edges of the graph.
+         *
+         * @type {Map&lt;String, Edge&gt;}
+         * @private
+         */
+        this.edges = new Map();
+
+        /**
+         * Handles listeners.
+         *
+         * @type {EventManager}
+         */
+        this.eventManager = new EventManager();
+    }
+
+    /**
+     * Adds the given nodes to the graph model.
+     *
+     * @param {Node|Iterator&lt;Node&gt;} nodeObjs
+     * The nodes to add.
+     *
+     * @return {Graph}
+     * This graph to make the method chainable.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;addNodes&quot;, the source is this graph and the
+     * data is an array containing the inserted nodes.
+     *
+     */
+    addNodes(nodeObjs) {
+        nodeObjs = Graph.makeNodesIterable(nodeObjs);
+
+        const inserted = [];
+
+        // Add nodes
+        for (let nodeObj of nodeObjs) {
+            nodeObj.graph = this;
+            this.nodes.set(nodeObj.id, nodeObj);
+            inserted.push(nodeObj);
+        }
+
+        // Notify listeners
+        this[fireEvent](EventManager.makeEvent({
+            subject: this,
+            type:    &quot;addNodes&quot;,
+            data:    inserted
+        }));
+
+        return this;
+    }
+
+    /**
+     * Adds the given edges to the graph model. Note that the graph must contain
+     * both the source and the target node of each edge.
+     *
+     * @param {Edge|Iterator&lt;Edge&gt;} edgeObjs
+     * The edges to add.
+     *
+     * @return {Graph}
+     * This graph to make the method chainable.
+     *
+     * @throws {Error}
+     * If a source node does not exist.
+     *
+     * @throws {Error}
+     * If a target node does not exist.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;addEdges&quot;, the source is this graph and the
+     * data is an array with the inserted edges.
+     */
+    addEdges(edgeObjs) {
+        edgeObjs = Graph.makeEdgesIterable(edgeObjs);
+
+        const inserted = [];
+
+        // Add edges
+        for (let edgeObj of edgeObjs) {
+            const sourceObj = this.getNodeById(edgeObj.sourceId),
+                  targetObj = this.getNodeById(edgeObj.targetId);
+
+            if (!sourceObj) {
+                throw new Error(`The source node ${edgeObj.sourceId} is invalid.`);
+            }
+            if (!targetObj) {
+                throw new Error(`The target node ${edgeObj.targetId} is invalid.`);
+            }
+
+            // Update edge data
+            edgeObj.graph = this;
+            this.edges.set(edgeObj.id, edgeObj);
+            inserted.push(edgeObj);
+
+            // Update incident nodes
+            sourceObj.addOutgoingEdge(edgeObj);
+            targetObj.addIncomingEdge(edgeObj);
+        }
+
+        // Notify listeners
+        this[fireEvent](EventManager.makeEvent({
+            subject: this,
+            type:   &quot;addEdges&quot;,
+            data:   inserted
+        }));
+
+        return this;
+    }
+
+    /**
+     * Removes the given nodes and all incident edges.
+     *
+     * @param {String|Iterator&lt;String&gt;|Node|Iterator&lt;Node&gt;} nodes
+     * The nodes to remove. Passing in IDs is enough.
+     *
+     * @return {Object}
+     * An object of all deleted nodes and edges.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;removeNodes&quot;, the source is this graph and
+     * the data is another object. This data object has a property nodes which
+     * is an array containing the deleted nodes and another property edges doing
+     * the same for the edges.
+     */
+    removeNodes(nodes) {
+        nodes = Graph.makeNodesIterable(nodes);
+
+        const deleted = {
+            nodes: [],
+            edges: []
+        };
+
+        for (let node of nodes) {
+            const nodeObj = this.toNodeObj(node);
+            if (!nodeObj) {
+                continue;
+            }
+
+            // Remove incident edges
+            const deletedEdges = this.removeEdges(nodeObj.iterIncidentEdges());
+            Array.prototype.push.apply(deleted.edges, deletedEdges);
+
+            // Update node data
+            this.nodes.delete(nodeObj.id);
+            deleted.nodes.push(nodeObj);
+        }
+
+        // Notify listeners
+        this[fireEvent](EventManager.makeEvent({
+            subject: this,
+            type:    &quot;removeNodes&quot;,
+            data:    deleted.nodes
+        }));
+
+        return deleted;
+    }
+
+    /**
+     * Removes the given edges.
+     *
+     * @param {String|Iterator&lt;String&gt;|Edge|Iterator&lt;Edge&gt;} edges
+     * The edges to remove. Passing in IDs is enough.
+     *
+     * @return {Edge[]}
+     * An array of all deleted edges.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;removeEdges&quot;, the source is this graph and
+     * the data is an array containing all deleted nodes.
+     */
+    removeEdges(edges) {
+        edges = Graph.makeEdgesIterable(edges);
+
+        const deleted = [];
+
+        // Remove edges
+        for (let edge of edges) {
+            const edgeObj = this.toEdgeObj(edge);
+            if (!edgeObj) {
+                continue;
+            }
+
+            // Update edge data
+            this.edges.delete(edgeObj.id);
+            deleted.push(edgeObj);
+
+            // Update incident nodes
+            this.nodes.get(edgeObj.sourceId).removeOutgoingEdge(edgeObj);
+            this.nodes.get(edgeObj.targetId).removeIncomingEdge(edgeObj);
+        }
+
+        // Notify listeners
+        this[fireEvent](EventManager.makeEvent({
+            subject: this,
+            type:    &quot;removeEdges&quot;,
+            data:    deleted
+        }));
+
+        return deleted;
+    }
+
+    /**
+     * Notifies all indexes that their node data is deprecated. Note that this
+     * operation is rather expensive. It is preferred to pass changes via
+     * beforeUpdateNodes and afterUpdateNodes events.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;reindexNodes&quot;, the source is this graph and
+     * the data is empty.
+     */
+    reindexNodes() {
+        this[fireEvent](&quot;reindexNodes&quot;); // TODO remove
+    }
+
+    /**
+     * Notifies all indexes that their edge data is deprecated. Note that this
+     * operation is rather expensive. It is preferred to pass changes via
+     * beforeUpdateEdges and afterUpdateEdges events.
+     *
+     * @emits {Event}
+     * The type property is set to &quot;reindexEdges&quot;, the source is this graph and
+     * the data is empty.
+     */
+    reindexEdges() {
+        this[fireEvent](&quot;reindexEdges&quot;); // TODO remove
+    }
+
+    /**
+     * Returns the node with the given ID.
+     *
+     * @param {String} nodeId
+     * The ID of the node.
+     *
+     * @return {Node}
+     * The node with the given ID.
+     */
+    getNodeById(nodeId) {
+        return this.nodes.get(nodeId);
+    }
+
+    /**
+     * Returns the edge with the given ID.
+     *
+     * @param {String} edgeId
+     * The ID of the edge.
+     *
+     * @return {Edge}
+     * The edge with the given ID.
+     */
+    getEdgeById(edgeId) {
+        return this.edges.get(edgeId);
+    }
+
+    /**
+     * Returns the number of nodes in the graph.
+     *
+     * @return {Number}
+     * The number of nodes.
+     */
+    getNumberOfNodes() {
+        return this.nodes.size;
+    }
+
+    /**
+     * Returns the number of edges in the graph.
+     *
+     * @return {Number}
+     * The number of edges.
+     */
+    getNumberOfEdges() {
+        return this.edges.size;
+    }
+
+    /**
+     * An iterator for the node IDs in this graph.
+     */
+    * iterNodeIds() {
+        yield* this.nodes.keys();
+    }
+
+    /**
+     * An iterator for the edge IDs in this graph.
+     */
+    * iterEdgeIds() {
+        yield* this.edges.keys();
+    }
+
+    /**
+     * Iterates over the nodes in the graph. If the nodes parameter is specified
+     * only those nodes are considered. Furthermore if a filter function is
+     * supplied only nodes that pass the test are included. It is also possible
+     * to apply a function to a node and yield the result instead.
+     *
+     * @param {Object} [options={}]
+     * Used for various options.
+     *
+     * @param {Function} [options.filter=(n, g)=&gt;true]
+     * The filter function to apply. It gets a node as the first parameter
+     * and this graph as the second.
+     *
+     * @param {Function} [options.map=(n, g)=&gt;n]
+     * The function to use for mapping. It gets a node as the first parameter
+     * and this graph as the second.
+     *
+     * @param {String|Iterator&lt;String&gt;|Node|Iterator&lt;Node&gt;} [options.nodes]
+     * Restricts the nodes to iterate over. Passing in IDs is enough.
+     */
+    * iterNodes({filter = (n, g)=&gt;true, map = (n, g)=&gt;n, nodes = this.nodes.values()} = {}) {
+        nodes = Graph.makeNodesIterable(nodes);
+
+        for (let node of nodes) {
+            const nodeObj = this.toNodeObj(node);
+            if (nodeObj &amp;&amp; filter(nodeObj, this)) {
+                yield map(nodeObj, this);
+            }
+        }
+    }
+
+
+    /**
+     * Iterates over the edges in the graph. If the edges parameter is specified
+     * only those edges are considered. Furthermore if a filter function is
+     * supplied only edges that pass the test are included. It is also possible
+     * to apply a function to an edge and yield the result instead.
+     *
+     * @param {Object} [options={}]
+     * Used for various options.
+     *
+     * @param {Function} [options.filter=(e, g)=&gt;true]
+     * The filter function to apply. It gets an edge as the first parameter
+     * and this graph as the second.
+     *
+     * @param {Function} [options.map=(e, g)=&gt;e]
+     * The function to use for mapping. It gets a node as the first parameter
+     * and this graph as the second.
+     *
+     * @param {String|Iterator&lt;String&gt;|Edge|Iterator&lt;Edge&gt;} [options.edges]
+     * Restricts the edges to iterate over. Specifying IDs is sufficient.
+     */
+    * iterEdges({filter = (e, g)=&gt;true, map = (e, g)=&gt;e, edges = this.edges.values()} = {}) {
+        edges = Graph.makeEdgesIterable(edges);
+
+        for (let edge of edges) {
+            const edgeObj = this.toEdgeObj(edge);
+            if (edgeObj &amp;&amp; filter(edgeObj, this)) {
+                yield map(edgeObj, this);
+            }
+        }
+    }
+
+    /**
+     * Creates a new graph containing all specified nodes and all edges that
+     * start and end at nodes from this set.
+     *
+     * @param {String|Iterator&lt;String&gt;|Node|Iterator&lt;Node&gt;} nodes
+     * The nodes to include in the result graph. Passing in IDs is enough.
+     *
+     * @return {Graph}
+     * The resulting graph.
+     */
+    generateMaximumSubgraphWith(nodes) {
+        nodes = Graph.makeEdgesIterable(nodes);
+
+        const result    = new Graph();
+        result.parentId = this.id;
+
+        // Maps from node IDs in this graph to IDs in the new graph.
+        const idMap = new Map();
+
+        // Add nodes
+        for (let node of nodes) {
+            const nodeObj = this.toNodeObj(node);
+            if (nodeObj) {
+                const newNodeObj    = new Node();
+                newNodeObj.parentId = nodeObj.id;
+                result.addNodes(newNodeObj);
+                idMap.set(nodeObj.id, newNodeObj.id);
+            } // TODO needs some mapping from old to new nodes now
+        }
+
+        // Add edges
+        for (let edgeObj of this.iterEdges()) {
+            const newSourceId = idMap.get(edgeObj.sourceId),
+                  newTargetId = idMap.get(edgeObj.targetId);
+            if (newSourceId &amp;&amp; newTargetId) {
+                const newEdgeObj = new Edge(
+                    newSourceId,
+                    newTargetId
+                );
+                newEdgeObj.parentId = edgeObj.id;
+                result.addEdges(newEdgeObj);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Creates a graph containing all specified edges and the nodes they start
+     * and end at.
+     *
+     * @param {String|Iterator&lt;String&gt;|Edge|Iterator&lt;Edge&gt;} edges
+     * The edges to include in the result graph. Passing in IDs is sufficient.
+     *
+     * @return {Graph}
+     * The resulting graph.
+     */
+    generateMinimumSubgraphWith(edges) {
+        edges = Graph.makeEdgesIterable(edges);
+
+        const result    = new Graph();
+        result.parentId = this.id;
+
+        // Maps from node IDs in this graph to IDs in the new graph.
+        const idMap = new Map();
+
+        for (let edge of edges) {
+            const edgeObj = this.toEdgeObj(edge);
+            if (!edgeObj) {
+                continue;
+            }
+
+            const sourceId = edgeObj.sourceId,
+                  targetId = edgeObj.targetId;
+
+            // Add source node
+            if (!idMap.has(sourceId)) {
+                const source  = this.getNodeById(sourceId),
+                      newNode = new Node();
+                newNode.parentId = source.id;
+                result.addNodes(newNode);
+                idMap.set(sourceId, newNode.id);
+            }
+
+            // Add target node
+            if (!idMap.has(targetId)) {
+                const target     = this.getNodeById(targetId),
+                      newNode    = new Node();
+                newNode.parentId = target.id;
+                result.addNodes(newNode);
+                idMap.set(targetId, newNode.id);
+            }
+
+            // Add edge
+            const newEdge = new Edge(
+                idMap.get(sourceId),
+                idMap.get(targetId)
+            );
+            newEdge.parentId = edgeObj.id;
+            result.addEdges(newEdge);
+        }
+
+        return result;
+    }
+
+    /**
+     * Yields the nodes in the graph in DFS order starting at the root.
+     *
+     * @param {String|Node} root
+     * The starting node.
+     *
+     * @param {String} [direction=&quot;all&quot;]
+     * * &quot;all&quot;: The direction of edges is disregarded.
+     * * &quot;out&quot;: Only edges starting at a node are followed.
+     * * &quot;inc&quot;: Only edges ending at this node are followed.
+     */
+    * iterDFSVisit(root, direction) {
+        root      = this.toNodeObj(root);
+        direction = direction || &quot;all&quot;; // TODO change to default parameter (babel bug)
+
+        const stack   = [root],
+              visited = new Set();
+
+        while (stack.length &gt; 0) {
+            const currentObj = stack.pop();
+
+            if (!visited.has(currentObj.id)) {
+                yield currentObj;
+                for (let neighborId of currentObj.iterAdjacentNodes(direction)) {
+                    const neighborObj = this.getNodeById(neighborId);
+                    stack.push(neighborObj);
+                }
+                visited.add(currentObj.id);
+            }
+        }
+    }
+
+    /**
+     * Yields the nodes in the graph in BFS order starting at the root.
+     *
+     * @param {String|Node} root
+     * The starting node.
+     *
+     * @param {String} [direction=&quot;all&quot;]
+     * * &quot;all&quot;: The direction of edges is disregarded.
+     * * &quot;out&quot;: Only edges starting at a node are followed.
+     * * &quot;inc&quot;: Only edges ending at this node are followed.
+     */
+    * iterBFSVisit(root, direction) {
+        root = this.toNodeObj(root);
+        direction = direction || &quot;all&quot;; // TODO change to default parameter (babel bug)
+
+        const queue   = [root],
+              visited = new Set();
+
+        visited.add(root.id);
+
+        while (queue.length &gt; 0) {
+            const currentObj = queue.shift();
+            yield currentObj;
+
+            for (let neighborId of currentObj.iterAdjacentNodes(direction)) {
+                if (!visited.has(neighborId)) {
+                    const neighborObj = this.getNodeById(neighborId);
+                    queue.push(neighborObj);
+                    visited.add(neighborId);
+                }
+            }
+        }
+    }
+
+    /**
+     * Computes a breadth first tree starting at the given node.
+     *
+     * @param {String|Node} root
+     * The node to start the algorithm at.
+     *
+     * @param {String} [direction=&quot;all&quot;]
+     * * &quot;all&quot;: The direction of edges is disregarded.
+     * * &quot;out&quot;: Only edges starting at a node are followed.
+     * * &quot;inc&quot;: Only edges ending at this node are followed.
+     *
+     * @return {BreadthFirstTree}
+     * The computed breadth first tree.
+     */
+    computeBreadthFirstTree(root, direction = &quot;all&quot;) {
+        root = this.toNodeObj(root);
+
+        const queue  = [root],
+              result = new Map();
+
+        result.set(root.id, {
+            parentId: undefined,
+            distance: 0
+        });
+
+        while (queue.length &gt; 0) {
+            const currentObj = queue.shift();
+            for (let neighborId of currentObj.iterAdjacentNodes(direction)) {
+                if (!result.has(neighborId)) {
+                    const neighborObj = this.getNodeById(neighborId);
+                    queue.push(neighborObj);
+                    result.set(neighborId, {
+                        parentId: currentObj.id,
+                        distance: result.get(currentObj.id).distance + 1
+                    });
+                }
+            }
+        }
+
+        return new BreadthFirstTree(
+            root,
+            nodeId =&gt; result.has(nodeId) ? result.get(nodeId).parentId : undefined,
+            nodeId =&gt; result.has(nodeId) ? result.get(nodeId).distance : undefined
+        );
+    }
+
+    /**
+     * A helper function to turn a node or its ID into a node object.
+     *
+     * @param {String|Node} node
+     * The node to get or its ID.
+     *
+     * @return {Node}
+     * The requested node.
+     */
+    toNodeObj(node) {
+        if (typeof node === &quot;string&quot;) {
+            return this.getNodeById(node);
+        } else if (node instanceof Node) {
+            return this.getNodeById(node.id);
+        }
+    }
+
+    /**
+     * A helper function to turn an edge or its ID into a edge object.
+     *
+     * @param {String|Edge} edge
+     * The edge to get or its ID.
+     *
+     * @return {Edge}
+     * The requested edge.
+     */
+    toEdgeObj(edge) {
+        if (typeof edge === &quot;string&quot;) {
+            return this.getEdgeById(edge);
+        } else if (edge instanceof Edge) {
+            return this.getEdgeById(edge.id);
+        }
+    }
+
+    /**
+     * Returns a textual representation of this graph.
+     *
+     * @return {String}
+     * A textual representation of this graph.
+     *
+     * @override
+     */
+    toString() {
+        return this.id;
+    }
+}
+
+/**
+ * Provides IDs.
+ *
+ * @type {IDGenerator}
+ * @private
+ */
+Graph.idGenerator = new IDGenerator(&quot;g&quot;);
+
+// Make graphs observable
+Object.assign(Graph.prototype, observableMixin);
+
+// Make graphs extensible
+Object.assign(Graph.prototype, extensibleMixin);
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.4)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

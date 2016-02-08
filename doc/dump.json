@@ -1,0 +1,4129 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/BreadthFirstTree.js",
+    "memberof": null,
+    "longname": "src/BreadthFirstTree.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Graph from \"./Graph.js\";\r\nimport Path  from \"./Path.js\";\r\n\r\n/**\r\n * Represents the result of a BFS algorithm.\r\n */\r\nexport default class BreadthFirstTree {\r\n\r\n    /**\r\n     * @param {String|Node} root\r\n     * The node BFS was started at.\r\n     *\r\n     * @param {Function} getParent\r\n     * Gets a node ID as input and maps to the ID of its BFS predecessor.\r\n     *\r\n     * @param {Function} getDistance\r\n     * Gets a node ID as input and returns its distance from the root node.\r\n     */\r\n    constructor(root, getParent, getDistance) {\r\n\r\n        /**\r\n         * The ID if the root node.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.rootId = Graph.toNodeId(root);\r\n\r\n        /**\r\n         * Returns the predecessor in a shortest path from the root to the given\r\n         * node.\r\n         *\r\n         * @type {Function}\r\n         * @private\r\n         */\r\n        this.parent = getParent;\r\n\r\n        /**\r\n         * Returns the length in a shortest path from the root to the given\r\n         * node.\r\n         *\r\n         * @type {Function}\r\n         * @private\r\n         */\r\n        this.distance = getDistance;\r\n    }\r\n\r\n    /**\r\n     * Returns a shortest path from the root node to the given node.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node to find a shortest path to.\r\n     *\r\n     * @return {Path}\r\n     * A shortest path from the root node to the given node.\r\n     */\r\n    getShortestPathTo(node) {\r\n        node = Graph.toNodeId(node);\r\n\r\n        const path = [];\r\n        for (let currentId = node; currentId; currentId = this.parent(currentId)) {\r\n            path.unshift(currentId);\r\n        }\r\n        return new Path(path);\r\n    }\r\n\r\n    /**\r\n     * Returns how long the shortest path from the root node to the given node\r\n     * is.\r\n     *\r\n     * @param {String|Node} node\r\n     * The ending node of the path. Passing in an ID is sufficient.\r\n     *\r\n     * @return {Number}\r\n     * The distance between the root node and the given node.\r\n     */\r\n    getDistanceTo(node) {\r\n        node = Graph.toNodeId(node);\r\n\r\n        return this.distance(node);\r\n    }\r\n}\r\n"
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "BreadthFirstTree",
+    "memberof": "src/BreadthFirstTree.js",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/BreadthFirstTree.js",
+    "importStyle": "BreadthFirstTree",
+    "description": "Represents the result of a BFS algorithm.",
+    "lineNumber": 7,
+    "interface": false
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "root",
+        "description": "The node BFS was started at."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "getParent",
+        "description": "Gets a node ID as input and maps to the ID of its BFS predecessor."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "getDistance",
+        "description": "Gets a node ID as input and returns its distance from the root node."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "rootId",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#rootId",
+    "access": null,
+    "description": "The ID if the root node.",
+    "lineNumber": 26,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "parent",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#parent",
+    "access": "private",
+    "description": "Returns the predecessor in a shortest path from the root to the given\nnode.",
+    "lineNumber": 35,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "distance",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#distance",
+    "access": "private",
+    "description": "Returns the length in a shortest path from the root to the given\nnode.",
+    "lineNumber": 44,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getShortestPathTo",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#getShortestPathTo",
+    "access": null,
+    "description": "Returns a shortest path from the root node to the given node.",
+    "lineNumber": 56,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node to find a shortest path to."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Path"
+      ],
+      "spread": false,
+      "description": "A shortest path from the root node to the given node."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 7,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getDistanceTo",
+    "memberof": "src/BreadthFirstTree.js~BreadthFirstTree",
+    "longname": "src/BreadthFirstTree.js~BreadthFirstTree#getDistanceTo",
+    "access": null,
+    "description": "Returns how long the shortest path from the root node to the given node\nis.",
+    "lineNumber": 76,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The ending node of the path. Passing in an ID is sufficient."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The distance between the root node and the given node."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 8,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/earl.js",
+    "memberof": null,
+    "longname": "src/earl.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "export {default as Graph} from \"./Graph.js\";\r\nexport {default as Node}  from \"./Node.js\";\r\nexport {default as Edge}  from \"./Edge.js\";\r\nexport {default as Path}  from \"./Path.js\";\r\nexport *                  from \"./plugins/plugins.js\";\r\n"
+  },
+  {
+    "__docId__": 9,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Edge.js",
+    "memberof": null,
+    "longname": "src/Edge.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import {IDGenerator} from \"@ignavia/util\";\r\n\r\nimport Graph from \"./Graph.js\";\r\n\r\n/**\r\n * An edge in a graph.\r\n *\r\n * @implements {Observable}\r\n */\r\nexport default class Edge {\r\n\r\n    /**\r\n     * @param {String|Node} source\r\n     * The ID of the source node or the source node itself.\r\n     *\r\n     * @param {String|Node} target\r\n     * The ID of the target node or the target node itself.\r\n     */\r\n    constructor(source, target) {\r\n\r\n        /**\r\n         * The ID of the source node.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.sourceId = Graph.toNodeId(source);\r\n\r\n        /**\r\n         * The ID of the target node.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.targetId = Graph.toNodeId(target);\r\n\r\n        /**\r\n         * The ID of this edge.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.id = Edge.idGenerator.next();\r\n\r\n        /**\r\n         * The graph that contains this edge. This property will be set after\r\n         * adding the edge to a graph.\r\n         *\r\n         * @type {Graph}\r\n         */\r\n        this.graph = undefined;\r\n    }\r\n\r\n    /**\r\n     * Returns a textual representation of this edge.\r\n     *\r\n     * @return {String}\r\n     * A textual representation of this edge.\r\n     *\r\n     * @override\r\n     */\r\n    toString() {\r\n        return `${this.id}(${this.sourceId}, ${this.targetId})`;\r\n    }\r\n}\r\n\r\n/**\r\n * Provides IDs.\r\n *\r\n * @type {IDGenerator}\r\n * @private\r\n */\r\nEdge.idGenerator = new IDGenerator(\"g\");\r\n"
+  },
+  {
+    "__docId__": 10,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Edge",
+    "memberof": "src/Edge.js",
+    "longname": "src/Edge.js~Edge",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/Edge.js",
+    "importStyle": "Edge",
+    "description": "An edge in a graph.",
+    "lineNumber": 10,
+    "interface": false,
+    "implements": [
+      "Observable"
+    ]
+  },
+  {
+    "__docId__": 11,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "source",
+        "description": "The ID of the source node or the source node itself."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "target",
+        "description": "The ID of the target node or the target node itself."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 12,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "sourceId",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#sourceId",
+    "access": null,
+    "description": "The ID of the source node.",
+    "lineNumber": 26,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "targetId",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#targetId",
+    "access": null,
+    "description": "The ID of the target node.",
+    "lineNumber": 33,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "id",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#id",
+    "access": null,
+    "description": "The ID of this edge.",
+    "lineNumber": 40,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 15,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#graph",
+    "access": null,
+    "description": "The graph that contains this edge. This property will be set after\nadding the edge to a graph.",
+    "lineNumber": 48,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toString",
+    "memberof": "src/Edge.js~Edge",
+    "longname": "src/Edge.js~Edge#toString",
+    "access": null,
+    "description": "Returns a textual representation of this edge.",
+    "lineNumber": 59,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "A textual representation of this edge."
+    },
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Graph.js",
+    "memberof": null,
+    "longname": "src/Graph.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import {EventManager, extensibleMixin, IDGenerator, observableMixin, observableSymbols} from \"@ignavia/util\";\r\nconst fireEvent = observableSymbols.fireEvent;\r\n\r\nimport Node             from \"./Node.js\";\r\nimport Edge             from \"./Edge.js\";\r\nimport BreadthFirstTree from \"./BreadthFirstTree.js\";\r\n\r\n/**\r\n * A graph data structure.\r\n *\r\n * @implements {Observable}\r\n * @implements {Extensible}\r\n */\r\nexport default class Graph {\r\n\r\n    /**\r\n     * A helper function to turn a node or its ID into an ID.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node or its ID.\r\n     *\r\n     * @return {String}\r\n     * The requested ID.\r\n     */\r\n    static toNodeId(node) {\r\n        if (typeof node === \"string\") {\r\n            return node;\r\n        } else if (node instanceof Node) {\r\n            return node.id;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * A helper function to turn an edge or its ID into an ID.\r\n     *\r\n     * @param {String|Edge} edge\r\n     * The edge or its ID.\r\n     *\r\n     * @return {String}\r\n     * The requested ID.\r\n     */\r\n    static toEdgeId(edge) {\r\n        if (typeof edge === \"string\") {\r\n            return edge;\r\n        } else if (edge instanceof Edge) {\r\n            return edge.id;\r\n        }\r\n    }\r\n\r\n    /**\r\n     * A helper function for other functions that can take a single node ID, an\r\n     * iterator for node IDs, a single node or an iterator for nodes and returns\r\n     * an iterable object.\r\n     *\r\n     * @param {String|Iterator<String>|Node|Iterator<String>} nodes\r\n     * The parameter to normalize.\r\n     *\r\n     * @return {Iterator<String>|Iterator<Node>}\r\n     * The normalized parameter.\r\n     */\r\n    static makeNodesIterable(nodes) {\r\n        if (typeof nodes === \"string\" || nodes instanceof Node) {\r\n            return [nodes];\r\n        }\r\n        return nodes;\r\n    }\r\n\r\n    /**\r\n     * A helper function for other functions that can take a single edge ID, an\r\n     * iterator for edge IDs, a single edge or an iterator for edges and returns\r\n     * an iterable object.\r\n     *\r\n     * @param {String|Iterator<String>|Edge|Iterator<String>} edges\r\n     * The parameter to normalize.\r\n     *\r\n     * @return {Iterator<String>|Iterator<Edge>}\r\n     * The normalized parameter.\r\n     */\r\n    static makeEdgesIterable(edges) {\r\n        if (typeof edges === \"string\" || edges instanceof Edge) {\r\n            return [edges];\r\n        }\r\n        return edges;\r\n    }\r\n\r\n    /**\r\n     *\r\n     */\r\n    constructor() {\r\n\r\n        /**\r\n         * The ID of this graph.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.id = Graph.idGenerator.next();\r\n\r\n        /**\r\n         * Contains all the nodes of the graph.\r\n         *\r\n         * @type {Map<String, Node>}\r\n         * @private\r\n         */\r\n        this.nodes = new Map();\r\n\r\n        /**\r\n         * Contains all the edges of the graph.\r\n         *\r\n         * @type {Map<String, Edge>}\r\n         * @private\r\n         */\r\n        this.edges = new Map();\r\n\r\n        /**\r\n         * Handles listeners.\r\n         *\r\n         * @type {EventManager}\r\n         */\r\n        this.eventManager = new EventManager();\r\n    }\r\n\r\n    /**\r\n     * Adds the given nodes to the graph model.\r\n     *\r\n     * @param {Node|Iterator<Node>} nodeObjs\r\n     * The nodes to add.\r\n     *\r\n     * @return {Graph}\r\n     * This graph to make the method chainable.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"addNodes\", the source is this graph and the\r\n     * data is an array containing the inserted nodes.\r\n     *\r\n     */\r\n    addNodes(nodeObjs) {\r\n        nodeObjs = Graph.makeNodesIterable(nodeObjs);\r\n\r\n        const inserted = [];\r\n\r\n        // Add nodes\r\n        for (let nodeObj of nodeObjs) {\r\n            nodeObj.graph = this;\r\n            this.nodes.set(nodeObj.id, nodeObj);\r\n            inserted.push(nodeObj);\r\n        }\r\n\r\n        // Notify listeners\r\n        this[fireEvent](EventManager.makeEvent({\r\n            subject: this,\r\n            type:    \"addNodes\",\r\n            data:    inserted\r\n        }));\r\n\r\n        return this;\r\n    }\r\n\r\n    /**\r\n     * Adds the given edges to the graph model. Note that the graph must contain\r\n     * both the source and the target node of each edge.\r\n     *\r\n     * @param {Edge|Iterator<Edge>} edgeObjs\r\n     * The edges to add.\r\n     *\r\n     * @return {Graph}\r\n     * This graph to make the method chainable.\r\n     *\r\n     * @throws {Error}\r\n     * If a source node does not exist.\r\n     *\r\n     * @throws {Error}\r\n     * If a target node does not exist.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"addEdges\", the source is this graph and the\r\n     * data is an array with the inserted edges.\r\n     */\r\n    addEdges(edgeObjs) {\r\n        edgeObjs = Graph.makeEdgesIterable(edgeObjs);\r\n\r\n        const inserted = [];\r\n\r\n        // Add edges\r\n        for (let edgeObj of edgeObjs) {\r\n            const sourceObj = this.getNodeById(edgeObj.sourceId),\r\n                  targetObj = this.getNodeById(edgeObj.targetId);\r\n\r\n            if (!sourceObj) {\r\n                throw new Error(`The source node ${edgeObj.sourceId} is invalid.`);\r\n            }\r\n            if (!targetObj) {\r\n                throw new Error(`The target node ${edgeObj.targetId} is invalid.`);\r\n            }\r\n\r\n            // Update edge data\r\n            edgeObj.graph = this;\r\n            this.edges.set(edgeObj.id, edgeObj);\r\n            inserted.push(edgeObj);\r\n\r\n            // Update incident nodes\r\n            sourceObj.addOutgoingEdge(edgeObj);\r\n            targetObj.addIncomingEdge(edgeObj);\r\n        }\r\n\r\n        // Notify listeners\r\n        this[fireEvent](EventManager.makeEvent({\r\n            subject: this,\r\n            type:   \"addEdges\",\r\n            data:   inserted\r\n        }));\r\n\r\n        return this;\r\n    }\r\n\r\n    /**\r\n     * Removes the given nodes and all incident edges.\r\n     *\r\n     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes\r\n     * The nodes to remove. Passing in IDs is enough.\r\n     *\r\n     * @return {Object}\r\n     * An object of all deleted nodes and edges.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"removeNodes\", the source is this graph and\r\n     * the data is another object. This data object has a property nodes which\r\n     * is an array containing the deleted nodes and another property edges doing\r\n     * the same for the edges.\r\n     */\r\n    removeNodes(nodes) {\r\n        nodes = Graph.makeNodesIterable(nodes);\r\n\r\n        const deleted = {\r\n            nodes: [],\r\n            edges: []\r\n        };\r\n\r\n        for (let node of nodes) {\r\n            const nodeObj = this.toNodeObj(node);\r\n            if (!nodeObj) {\r\n                continue;\r\n            }\r\n\r\n            // Remove incident edges\r\n            const deletedEdges = this.removeEdges(nodeObj.iterIncidentEdges());\r\n            Array.prototype.push.apply(deleted.edges, deletedEdges);\r\n\r\n            // Update node data\r\n            this.nodes.delete(nodeObj.id);\r\n            deleted.nodes.push(nodeObj);\r\n        }\r\n\r\n        // Notify listeners\r\n        this[fireEvent](EventManager.makeEvent({\r\n            subject: this,\r\n            type:    \"removeNodes\",\r\n            data:    deleted.nodes\r\n        }));\r\n\r\n        return deleted;\r\n    }\r\n\r\n    /**\r\n     * Removes the given edges.\r\n     *\r\n     * @param {String|Iterator<String>|Edge|Iterator<Edge>} edges\r\n     * The edges to remove. Passing in IDs is enough.\r\n     *\r\n     * @return {Edge[]}\r\n     * An array of all deleted edges.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"removeEdges\", the source is this graph and\r\n     * the data is an array containing all deleted nodes.\r\n     */\r\n    removeEdges(edges) {\r\n        edges = Graph.makeEdgesIterable(edges);\r\n\r\n        const deleted = [];\r\n\r\n        // Remove edges\r\n        for (let edge of edges) {\r\n            const edgeObj = this.toEdgeObj(edge);\r\n            if (!edgeObj) {\r\n                continue;\r\n            }\r\n\r\n            // Update edge data\r\n            this.edges.delete(edgeObj.id);\r\n            deleted.push(edgeObj);\r\n\r\n            // Update incident nodes\r\n            this.nodes.get(edgeObj.sourceId).removeOutgoingEdge(edgeObj);\r\n            this.nodes.get(edgeObj.targetId).removeIncomingEdge(edgeObj);\r\n        }\r\n\r\n        // Notify listeners\r\n        this[fireEvent](EventManager.makeEvent({\r\n            subject: this,\r\n            type:    \"removeEdges\",\r\n            data:    deleted\r\n        }));\r\n\r\n        return deleted;\r\n    }\r\n\r\n    /**\r\n     * Notifies all indexes that their node data is deprecated. Note that this\r\n     * operation is rather expensive. It is preferred to pass changes via\r\n     * beforeUpdateNodes and afterUpdateNodes events.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"reindexNodes\", the source is this graph and\r\n     * the data is empty.\r\n     */\r\n    reindexNodes() {\r\n        this[fireEvent](\"reindexNodes\"); // TODO remove\r\n    }\r\n\r\n    /**\r\n     * Notifies all indexes that their edge data is deprecated. Note that this\r\n     * operation is rather expensive. It is preferred to pass changes via\r\n     * beforeUpdateEdges and afterUpdateEdges events.\r\n     *\r\n     * @emits {Event}\r\n     * The type property is set to \"reindexEdges\", the source is this graph and\r\n     * the data is empty.\r\n     */\r\n    reindexEdges() {\r\n        this[fireEvent](\"reindexEdges\"); // TODO remove\r\n    }\r\n\r\n    /**\r\n     * Returns the node with the given ID.\r\n     *\r\n     * @param {String} nodeId\r\n     * The ID of the node.\r\n     *\r\n     * @return {Node}\r\n     * The node with the given ID.\r\n     */\r\n    getNodeById(nodeId) {\r\n        return this.nodes.get(nodeId);\r\n    }\r\n\r\n    /**\r\n     * Returns the edge with the given ID.\r\n     *\r\n     * @param {String} edgeId\r\n     * The ID of the edge.\r\n     *\r\n     * @return {Edge}\r\n     * The edge with the given ID.\r\n     */\r\n    getEdgeById(edgeId) {\r\n        return this.edges.get(edgeId);\r\n    }\r\n\r\n    /**\r\n     * Returns the number of nodes in the graph.\r\n     *\r\n     * @return {Number}\r\n     * The number of nodes.\r\n     */\r\n    getNumberOfNodes() {\r\n        return this.nodes.size;\r\n    }\r\n\r\n    /**\r\n     * Returns the number of edges in the graph.\r\n     *\r\n     * @return {Number}\r\n     * The number of edges.\r\n     */\r\n    getNumberOfEdges() {\r\n        return this.edges.size;\r\n    }\r\n\r\n    /**\r\n     * An iterator for the node IDs in this graph.\r\n     */\r\n    * iterNodeIds() {\r\n        yield* this.nodes.keys();\r\n    }\r\n\r\n    /**\r\n     * An iterator for the edge IDs in this graph.\r\n     */\r\n    * iterEdgeIds() {\r\n        yield* this.edges.keys();\r\n    }\r\n\r\n    /**\r\n     * Iterates over the nodes in the graph. If the nodes parameter is specified\r\n     * only those nodes are considered. Furthermore if a filter function is\r\n     * supplied only nodes that pass the test are included. It is also possible\r\n     * to apply a function to a node and yield the result instead.\r\n     *\r\n     * @param {Object} [options={}]\r\n     * Used for various options.\r\n     *\r\n     * @param {Function} [options.filter=(n, g)=>true]\r\n     * The filter function to apply. It gets a node as the first parameter\r\n     * and this graph as the second.\r\n     *\r\n     * @param {Function} [options.map=(n, g)=>n]\r\n     * The function to use for mapping. It gets a node as the first parameter\r\n     * and this graph as the second.\r\n     *\r\n     * @param {String|Iterator<String>|Node|Iterator<Node>} [options.nodes]\r\n     * Restricts the nodes to iterate over. Passing in IDs is enough.\r\n     */\r\n    * iterNodes({filter = (n, g)=>true, map = (n, g)=>n, nodes = this.nodes.values()} = {}) {\r\n        nodes = Graph.makeNodesIterable(nodes);\r\n\r\n        for (let node of nodes) {\r\n            const nodeObj = this.toNodeObj(node);\r\n            if (nodeObj && filter(nodeObj, this)) {\r\n                yield map(nodeObj, this);\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n    /**\r\n     * Iterates over the edges in the graph. If the edges parameter is specified\r\n     * only those edges are considered. Furthermore if a filter function is\r\n     * supplied only edges that pass the test are included. It is also possible\r\n     * to apply a function to an edge and yield the result instead.\r\n     *\r\n     * @param {Object} [options={}]\r\n     * Used for various options.\r\n     *\r\n     * @param {Function} [options.filter=(e, g)=>true]\r\n     * The filter function to apply. It gets an edge as the first parameter\r\n     * and this graph as the second.\r\n     *\r\n     * @param {Function} [options.map=(e, g)=>e]\r\n     * The function to use for mapping. It gets a node as the first parameter\r\n     * and this graph as the second.\r\n     *\r\n     * @param {String|Iterator<String>|Edge|Iterator<Edge>} [options.edges]\r\n     * Restricts the edges to iterate over. Specifying IDs is sufficient.\r\n     */\r\n    * iterEdges({filter = (e, g)=>true, map = (e, g)=>e, edges = this.edges.values()} = {}) {\r\n        edges = Graph.makeEdgesIterable(edges);\r\n\r\n        for (let edge of edges) {\r\n            const edgeObj = this.toEdgeObj(edge);\r\n            if (edgeObj && filter(edgeObj, this)) {\r\n                yield map(edgeObj, this);\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Creates a new graph containing all specified nodes and all edges that\r\n     * start and end at nodes from this set.\r\n     *\r\n     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes\r\n     * The nodes to include in the result graph. Passing in IDs is enough.\r\n     *\r\n     * @return {Graph}\r\n     * The resulting graph.\r\n     */\r\n    generateMaximumSubgraphWith(nodes) {\r\n        nodes = Graph.makeEdgesIterable(nodes);\r\n\r\n        const result    = new Graph();\r\n        result.parentId = this.id;\r\n\r\n        // Maps from node IDs in this graph to IDs in the new graph.\r\n        const idMap = new Map();\r\n\r\n        // Add nodes\r\n        for (let node of nodes) {\r\n            const nodeObj = this.toNodeObj(node);\r\n            if (nodeObj) {\r\n                const newNodeObj    = new Node();\r\n                newNodeObj.parentId = nodeObj.id;\r\n                result.addNodes(newNodeObj);\r\n                idMap.set(nodeObj.id, newNodeObj.id);\r\n            } // TODO needs some mapping from old to new nodes now\r\n        }\r\n\r\n        // Add edges\r\n        for (let edgeObj of this.iterEdges()) {\r\n            const newSourceId = idMap.get(edgeObj.sourceId),\r\n                  newTargetId = idMap.get(edgeObj.targetId);\r\n            if (newSourceId && newTargetId) {\r\n                const newEdgeObj = new Edge(\r\n                    newSourceId,\r\n                    newTargetId\r\n                );\r\n                newEdgeObj.parentId = edgeObj.id;\r\n                result.addEdges(newEdgeObj);\r\n            }\r\n        }\r\n\r\n        return result;\r\n    }\r\n\r\n    /**\r\n     * Creates a graph containing all specified edges and the nodes they start\r\n     * and end at.\r\n     *\r\n     * @param {String|Iterator<String>|Edge|Iterator<Edge>} edges\r\n     * The edges to include in the result graph. Passing in IDs is sufficient.\r\n     *\r\n     * @return {Graph}\r\n     * The resulting graph.\r\n     */\r\n    generateMinimumSubgraphWith(edges) {\r\n        edges = Graph.makeEdgesIterable(edges);\r\n\r\n        const result    = new Graph();\r\n        result.parentId = this.id;\r\n\r\n        // Maps from node IDs in this graph to IDs in the new graph.\r\n        const idMap = new Map();\r\n\r\n        for (let edge of edges) {\r\n            const edgeObj = this.toEdgeObj(edge);\r\n            if (!edgeObj) {\r\n                continue;\r\n            }\r\n\r\n            const sourceId = edgeObj.sourceId,\r\n                  targetId = edgeObj.targetId;\r\n\r\n            // Add source node\r\n            if (!idMap.has(sourceId)) {\r\n                const source  = this.getNodeById(sourceId),\r\n                      newNode = new Node();\r\n                newNode.parentId = source.id;\r\n                result.addNodes(newNode);\r\n                idMap.set(sourceId, newNode.id);\r\n            }\r\n\r\n            // Add target node\r\n            if (!idMap.has(targetId)) {\r\n                const target     = this.getNodeById(targetId),\r\n                      newNode    = new Node();\r\n                newNode.parentId = target.id;\r\n                result.addNodes(newNode);\r\n                idMap.set(targetId, newNode.id);\r\n            }\r\n\r\n            // Add edge\r\n            const newEdge = new Edge(\r\n                idMap.get(sourceId),\r\n                idMap.get(targetId)\r\n            );\r\n            newEdge.parentId = edgeObj.id;\r\n            result.addEdges(newEdge);\r\n        }\r\n\r\n        return result;\r\n    }\r\n\r\n    /**\r\n     * Yields the nodes in the graph in DFS order starting at the root.\r\n     *\r\n     * @param {String|Node} root\r\n     * The starting node.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": The direction of edges is disregarded.\r\n     * * \"out\": Only edges starting at a node are followed.\r\n     * * \"inc\": Only edges ending at this node are followed.\r\n     */\r\n    * iterDFSVisit(root, direction) {\r\n        root      = this.toNodeObj(root);\r\n        direction = direction || \"all\"; // TODO change to default parameter (babel bug)\r\n\r\n        const stack   = [root],\r\n              visited = new Set();\r\n\r\n        while (stack.length > 0) {\r\n            const currentObj = stack.pop();\r\n\r\n            if (!visited.has(currentObj.id)) {\r\n                yield currentObj;\r\n                for (let neighborId of currentObj.iterAdjacentNodes(direction)) {\r\n                    const neighborObj = this.getNodeById(neighborId);\r\n                    stack.push(neighborObj);\r\n                }\r\n                visited.add(currentObj.id);\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Yields the nodes in the graph in BFS order starting at the root.\r\n     *\r\n     * @param {String|Node} root\r\n     * The starting node.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": The direction of edges is disregarded.\r\n     * * \"out\": Only edges starting at a node are followed.\r\n     * * \"inc\": Only edges ending at this node are followed.\r\n     */\r\n    * iterBFSVisit(root, direction) {\r\n        root = this.toNodeObj(root);\r\n        direction = direction || \"all\"; // TODO change to default parameter (babel bug)\r\n\r\n        const queue   = [root],\r\n              visited = new Set();\r\n\r\n        visited.add(root.id);\r\n\r\n        while (queue.length > 0) {\r\n            const currentObj = queue.shift();\r\n            yield currentObj;\r\n\r\n            for (let neighborId of currentObj.iterAdjacentNodes(direction)) {\r\n                if (!visited.has(neighborId)) {\r\n                    const neighborObj = this.getNodeById(neighborId);\r\n                    queue.push(neighborObj);\r\n                    visited.add(neighborId);\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Computes a breadth first tree starting at the given node.\r\n     *\r\n     * @param {String|Node} root\r\n     * The node to start the algorithm at.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": The direction of edges is disregarded.\r\n     * * \"out\": Only edges starting at a node are followed.\r\n     * * \"inc\": Only edges ending at this node are followed.\r\n     *\r\n     * @return {BreadthFirstTree}\r\n     * The computed breadth first tree.\r\n     */\r\n    computeBreadthFirstTree(root, direction = \"all\") {\r\n        root = this.toNodeObj(root);\r\n\r\n        const queue  = [root],\r\n              result = new Map();\r\n\r\n        result.set(root.id, {\r\n            parentId: undefined,\r\n            distance: 0\r\n        });\r\n\r\n        while (queue.length > 0) {\r\n            const currentObj = queue.shift();\r\n            for (let neighborId of currentObj.iterAdjacentNodes(direction)) {\r\n                if (!result.has(neighborId)) {\r\n                    const neighborObj = this.getNodeById(neighborId);\r\n                    queue.push(neighborObj);\r\n                    result.set(neighborId, {\r\n                        parentId: currentObj.id,\r\n                        distance: result.get(currentObj.id).distance + 1\r\n                    });\r\n                }\r\n            }\r\n        }\r\n\r\n        return new BreadthFirstTree(\r\n            root,\r\n            nodeId => result.has(nodeId) ? result.get(nodeId).parentId : undefined,\r\n            nodeId => result.has(nodeId) ? result.get(nodeId).distance : undefined\r\n        );\r\n    }\r\n\r\n    /**\r\n     * A helper function to turn a node or its ID into a node object.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node to get or its ID.\r\n     *\r\n     * @return {Node}\r\n     * The requested node.\r\n     */\r\n    toNodeObj(node) {\r\n        if (typeof node === \"string\") {\r\n            return this.getNodeById(node);\r\n        } else if (node instanceof Node) {\r\n            return this.getNodeById(node.id);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * A helper function to turn an edge or its ID into a edge object.\r\n     *\r\n     * @param {String|Edge} edge\r\n     * The edge to get or its ID.\r\n     *\r\n     * @return {Edge}\r\n     * The requested edge.\r\n     */\r\n    toEdgeObj(edge) {\r\n        if (typeof edge === \"string\") {\r\n            return this.getEdgeById(edge);\r\n        } else if (edge instanceof Edge) {\r\n            return this.getEdgeById(edge.id);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Returns a textual representation of this graph.\r\n     *\r\n     * @return {String}\r\n     * A textual representation of this graph.\r\n     *\r\n     * @override\r\n     */\r\n    toString() {\r\n        return this.id;\r\n    }\r\n}\r\n\r\n/**\r\n * Provides IDs.\r\n *\r\n * @type {IDGenerator}\r\n * @private\r\n */\r\nGraph.idGenerator = new IDGenerator(\"g\");\r\n\r\n// Make graphs observable\r\nObject.assign(Graph.prototype, observableMixin);\r\n\r\n// Make graphs extensible\r\nObject.assign(Graph.prototype, extensibleMixin);\r\n"
+  },
+  {
+    "__docId__": 18,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "fireEvent",
+    "memberof": "src/Graph.js",
+    "longname": "src/Graph.js~fireEvent",
+    "access": null,
+    "export": false,
+    "importPath": "@ignavia/earl/src/Graph.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Graph",
+    "memberof": "src/Graph.js",
+    "longname": "src/Graph.js~Graph",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/Graph.js",
+    "importStyle": "Graph",
+    "description": "A graph data structure.",
+    "lineNumber": 14,
+    "interface": false,
+    "implements": [
+      "Observable",
+      "Extensible"
+    ]
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "toNodeId",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph.toNodeId",
+    "access": null,
+    "description": "A helper function to turn a node or its ID into an ID.",
+    "lineNumber": 25,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node or its ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "The requested ID."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "toEdgeId",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph.toEdgeId",
+    "access": null,
+    "description": "A helper function to turn an edge or its ID into an ID.",
+    "lineNumber": 42,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edge",
+        "description": "The edge or its ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "The requested ID."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "makeNodesIterable",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph.makeNodesIterable",
+    "access": null,
+    "description": "A helper function for other functions that can take a single node ID, an\niterator for node IDs, a single node or an iterator for nodes and returns\nan iterable object.",
+    "lineNumber": 61,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Node",
+          "Iterator<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodes",
+        "description": "The parameter to normalize."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Iterator<String>",
+        "Iterator<Node>"
+      ],
+      "spread": false,
+      "description": "The normalized parameter."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "static": true,
+    "variation": null,
+    "name": "makeEdgesIterable",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph.makeEdgesIterable",
+    "access": null,
+    "description": "A helper function for other functions that can take a single edge ID, an\niterator for edge IDs, a single edge or an iterator for edges and returns\nan iterable object.",
+    "lineNumber": 79,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Edge",
+          "Iterator<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edges",
+        "description": "The parameter to normalize."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Iterator<String>",
+        "Iterator<Edge>"
+      ],
+      "spread": false,
+      "description": "The normalized parameter."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 24,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 89,
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 25,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "id",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#id",
+    "access": null,
+    "description": "The ID of this graph.",
+    "lineNumber": 96,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "nodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#nodes",
+    "access": "private",
+    "description": "Contains all the nodes of the graph.",
+    "lineNumber": 104,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<String, Node>"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "edges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#edges",
+    "access": "private",
+    "description": "Contains all the edges of the graph.",
+    "lineNumber": 112,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<String, Edge>"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "eventManager",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#eventManager",
+    "access": null,
+    "description": "Handles listeners.",
+    "lineNumber": 119,
+    "type": {
+      "nullable": null,
+      "types": [
+        "EventManager"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addNodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#addNodes",
+    "access": null,
+    "description": "Adds the given nodes to the graph model.",
+    "lineNumber": 136,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Node",
+          "Iterator<Node>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodeObjs",
+        "description": "The nodes to add."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": "This graph to make the method chainable."
+    },
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"addNodes\", the source is this graph and the\ndata is an array containing the inserted nodes."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addEdges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#addEdges",
+    "access": null,
+    "description": "Adds the given edges to the graph model. Note that the graph must contain\nboth the source and the target node of each edge.",
+    "lineNumber": 178,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Edge",
+          "Iterator<Edge>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeObjs",
+        "description": "The edges to add."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": "This graph to make the method chainable."
+    },
+    "throws": [
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If a source node does not exist."
+      },
+      {
+        "types": [
+          "Error"
+        ],
+        "description": "If a target node does not exist."
+      }
+    ],
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"addEdges\", the source is this graph and the\ndata is an array with the inserted edges."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 31,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeNodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#removeNodes",
+    "access": null,
+    "description": "Removes the given nodes and all incident edges.",
+    "lineNumber": 230,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Node",
+          "Iterator<Node>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodes",
+        "description": "The nodes to remove. Passing in IDs is enough."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": "An object of all deleted nodes and edges."
+    },
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"removeNodes\", the source is this graph and\nthe data is another object. This data object has a property nodes which\nis an array containing the deleted nodes and another property edges doing\nthe same for the edges."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 32,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeEdges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#removeEdges",
+    "access": null,
+    "description": "Removes the given edges.",
+    "lineNumber": 276,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Edge",
+          "Iterator<Edge>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edges",
+        "description": "The edges to remove. Passing in IDs is enough."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Edge[]"
+      ],
+      "spread": false,
+      "description": "An array of all deleted edges."
+    },
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"removeEdges\", the source is this graph and\nthe data is an array containing all deleted nodes."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 33,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "reindexNodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#reindexNodes",
+    "access": null,
+    "description": "Notifies all indexes that their node data is deprecated. Note that this\noperation is rather expensive. It is preferred to pass changes via\nbeforeUpdateNodes and afterUpdateNodes events.",
+    "lineNumber": 316,
+    "params": [],
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"reindexNodes\", the source is this graph and\nthe data is empty."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "reindexEdges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#reindexEdges",
+    "access": null,
+    "description": "Notifies all indexes that their edge data is deprecated. Note that this\noperation is rather expensive. It is preferred to pass changes via\nbeforeUpdateEdges and afterUpdateEdges events.",
+    "lineNumber": 329,
+    "params": [],
+    "emits": [
+      {
+        "types": [
+          "Event"
+        ],
+        "description": "The type property is set to \"reindexEdges\", the source is this graph and\nthe data is empty."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNodeById",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#getNodeById",
+    "access": null,
+    "description": "Returns the node with the given ID.",
+    "lineNumber": 342,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodeId",
+        "description": "The ID of the node."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Node"
+      ],
+      "spread": false,
+      "description": "The node with the given ID."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 36,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getEdgeById",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#getEdgeById",
+    "access": null,
+    "description": "Returns the edge with the given ID.",
+    "lineNumber": 355,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeId",
+        "description": "The ID of the edge."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Edge"
+      ],
+      "spread": false,
+      "description": "The edge with the given ID."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 37,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfNodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#getNumberOfNodes",
+    "access": null,
+    "description": "Returns the number of nodes in the graph.",
+    "lineNumber": 365,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The number of nodes."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 38,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfEdges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#getNumberOfEdges",
+    "access": null,
+    "description": "Returns the number of edges in the graph.",
+    "lineNumber": 375,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The number of edges."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 39,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterNodeIds",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterNodeIds",
+    "access": null,
+    "description": "An iterator for the node IDs in this graph.",
+    "lineNumber": 382,
+    "params": [],
+    "generator": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterEdgeIds",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterEdgeIds",
+    "access": null,
+    "description": "An iterator for the edge IDs in this graph.",
+    "lineNumber": 389,
+    "params": [],
+    "generator": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterNodes",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterNodes",
+    "access": null,
+    "description": "Iterates over the nodes in the graph. If the nodes parameter is specified\nonly those nodes are considered. Furthermore if a filter function is\nsupplied only nodes that pass the test are included. It is also possible\nto apply a function to a node and yield the result instead.",
+    "lineNumber": 413,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "Used for various options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "(n,",
+        "defaultRaw": "(n,",
+        "name": "options.filter",
+        "description": "g)=>true]\nThe filter function to apply. It gets a node as the first parameter\nand this graph as the second."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "(n,",
+        "defaultRaw": "(n,",
+        "name": "options.map",
+        "description": "g)=>n]\nThe function to use for mapping. It gets a node as the first parameter\nand this graph as the second."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Node",
+          "Iterator<Node>"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.nodes",
+        "description": "Restricts the nodes to iterate over. Passing in IDs is enough."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterEdges",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterEdges",
+    "access": null,
+    "description": "Iterates over the edges in the graph. If the edges parameter is specified\nonly those edges are considered. Furthermore if a filter function is\nsupplied only edges that pass the test are included. It is also possible\nto apply a function to an edge and yield the result instead.",
+    "lineNumber": 445,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "options",
+        "description": "Used for various options."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "(e,",
+        "defaultRaw": "(e,",
+        "name": "options.filter",
+        "description": "g)=>true]\nThe filter function to apply. It gets an edge as the first parameter\nand this graph as the second."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "(e,",
+        "defaultRaw": "(e,",
+        "name": "options.map",
+        "description": "g)=>e]\nThe function to use for mapping. It gets a node as the first parameter\nand this graph as the second."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Edge",
+          "Iterator<Edge>"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "options.edges",
+        "description": "Restricts the edges to iterate over. Specifying IDs is sufficient."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "generateMaximumSubgraphWith",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#generateMaximumSubgraphWith",
+    "access": null,
+    "description": "Creates a new graph containing all specified nodes and all edges that\nstart and end at nodes from this set.",
+    "lineNumber": 466,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Node",
+          "Iterator<Node>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodes",
+        "description": "The nodes to include in the result graph. Passing in IDs is enough."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": "The resulting graph."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 44,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "generateMinimumSubgraphWith",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#generateMinimumSubgraphWith",
+    "access": null,
+    "description": "Creates a graph containing all specified edges and the nodes they start\nand end at.",
+    "lineNumber": 513,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Edge",
+          "Iterator<Edge>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edges",
+        "description": "The edges to include in the result graph. Passing in IDs is sufficient."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": "The resulting graph."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 45,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterDFSVisit",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterDFSVisit",
+    "access": null,
+    "description": "Yields the nodes in the graph in DFS order starting at the root.",
+    "lineNumber": 572,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "root",
+        "description": "The starting node."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": The direction of edges is disregarded.\n* \"out\": Only edges starting at a node are followed.\n* \"inc\": Only edges ending at this node are followed."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterBFSVisit",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#iterBFSVisit",
+    "access": null,
+    "description": "Yields the nodes in the graph in BFS order starting at the root.",
+    "lineNumber": 604,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "root",
+        "description": "The starting node."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": The direction of edges is disregarded.\n* \"out\": Only edges starting at a node are followed.\n* \"inc\": Only edges ending at this node are followed."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "computeBreadthFirstTree",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#computeBreadthFirstTree",
+    "access": null,
+    "description": "Computes a breadth first tree starting at the given node.",
+    "lineNumber": 641,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "root",
+        "description": "The node to start the algorithm at."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": The direction of edges is disregarded.\n* \"out\": Only edges starting at a node are followed.\n* \"inc\": Only edges ending at this node are followed."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "BreadthFirstTree"
+      ],
+      "spread": false,
+      "description": "The computed breadth first tree."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 48,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toNodeObj",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#toNodeObj",
+    "access": null,
+    "description": "A helper function to turn a node or its ID into a node object.",
+    "lineNumber": 682,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node to get or its ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Node"
+      ],
+      "spread": false,
+      "description": "The requested node."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 49,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toEdgeObj",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#toEdgeObj",
+    "access": null,
+    "description": "A helper function to turn an edge or its ID into a edge object.",
+    "lineNumber": 699,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edge",
+        "description": "The edge to get or its ID."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Edge"
+      ],
+      "spread": false,
+      "description": "The requested edge."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 50,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toString",
+    "memberof": "src/Graph.js~Graph",
+    "longname": "src/Graph.js~Graph#toString",
+    "access": null,
+    "description": "Returns a textual representation of this graph.",
+    "lineNumber": 715,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "A textual representation of this graph."
+    },
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 51,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Node.js",
+    "memberof": null,
+    "longname": "src/Node.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import {IDGenerator} from \"@ignavia/util\";\r\n\r\nimport Graph from \"./Graph.js\";\r\n\r\n/**\r\n * A node in a graph.\r\n *\r\n * @implements {Observable}\r\n */\r\nexport default class Node {\r\n\r\n    /**\r\n     *\r\n     */\r\n    constructor() {\r\n\r\n        /**\r\n         * The ID of this node.\r\n         *\r\n         * @type {String}\r\n         */\r\n        this.id = Node.idGenerator.next();\r\n\r\n        /**\r\n         * The graph that contains this node. This property will be set after\r\n         * adding the node to a graph.\r\n         *\r\n         * @type {Graph}\r\n         */\r\n        this.graph = undefined;\r\n\r\n        /**\r\n         * Stores information about adjacent nodes.\r\n         *\r\n         * @type {Object}\r\n         *\r\n         * @property {Map<String, Set<String>} _adjacencyLists.all\r\n         * Maps from IDs of all adjacent nodes to the IDs of the edges between\r\n         * the nodes.\r\n         *\r\n         * @property {Map<String, Set<String>} _adjacencyLists.out\r\n         * Maps from the IDs of all nodes that are the target node of at least\r\n         * one edge starting at this node to the corresponding edge IDs.\r\n         *\r\n         * @property {Map<String, Set<String>} _adjacencyLists.inc\r\n         * Maps from the IDs of all nodes that are the source node of at least\r\n         * one edge ending at this node to the corresponding edge IDs.\r\n         *\r\n         * @private\r\n         */\r\n        this.adjacencyLists = {\r\n            all: new Map(),\r\n            out: new Map(),\r\n            inc: new Map()\r\n        };\r\n\r\n        /**\r\n         * Stores information about incident edges.\r\n         *\r\n         * @type {Object}\r\n         *\r\n         * @property {Set<String>} _incidenceLists.all\r\n         * The IDs of all incident edges.\r\n         *\r\n         * @property {Set<String>} _incidenceLists.out\r\n         * The IDs of all outgoing edges.\r\n         *\r\n         * @property {Set<String>} _incidenceLists.inc\r\n         * The IDs of all incoming edges.\r\n         *\r\n         * @private\r\n         */\r\n        this.incidenceLists = {\r\n            all: new Set(),\r\n            out: new Set(),\r\n            inc: new Set()\r\n        };\r\n    }\r\n\r\n    /**\r\n     * Iterates over the IDs of adjacent nodes. The result depends on the\r\n     * given direction.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All adjacent nodes are considered.\r\n     * * \"out\": Only nodes that are the target node of at least one edge\r\n     * starting at this node are selected.\r\n     * * \"inc\": Only nodes that are the source node of at least one edge ending\r\n     * at this node are chosen.\r\n     */\r\n    * iterAdjacentNodes(direction) {\r\n        direction = direction || \"all\"; // TODO change to default parameter (babel bug)\r\n\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        yield* adjacencyList.keys();\r\n    }\r\n\r\n    /**\r\n     * Returns the number of adjacent nodes. The result depends on the given\r\n     * direction.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All adjacent nodes are considered.\r\n     * * \"out\": Only nodes that are the target node of at least one edge\r\n     * starting at this node are selected.\r\n     * * \"inc\": Only nodes that are the source node of at least one edge ending\r\n     * at this node are chosen.\r\n     *\r\n     * @return {Number}\r\n     * The number of adjacent nodes.\r\n     */\r\n    getNumberOfAdjacentNodes(direction = \"all\") {\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return adjacencyList.size;\r\n    }\r\n\r\n    /**\r\n     * Returns if the given node is adjacent to this one. The result depends on\r\n     * the supplied direction.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node to test for adjacency. Specifying the ID is sufficient.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All adjacent nodes are considered.\r\n     * * \"out\": Only nodes that are the target node of at least one edge\r\n     * starting at this node are selected.\r\n     * * \"inc\": Only nodes that are the source node of at least one edge ending\r\n     * at this node are chosen.\r\n     *\r\n     * @return {Boolean}\r\n     * If the given node is adjacent to this one.\r\n     */\r\n    isAdjacentNode(node, direction = \"all\") {\r\n        node = Graph.toNodeId(node);\r\n\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return adjacencyList.has(node);\r\n    }\r\n\r\n    /**\r\n     * Iterates over the IDs of the edges between this node and the given node.\r\n     * The result depends on the direction.\r\n     *\r\n     * @param {String|Node} node\r\n     * The other ending point of the edges. Passing in an ID is enough.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All edges between the two nodes are considered.\r\n     * * \"out\": Only edges that start at this node and end at the given one are\r\n     * selected.\r\n     * * \"inc\": Only edges that start at the given node and end at this one are\r\n     * chosen.\r\n     */\r\n    * iterEdgesBetween(node, direction) {\r\n        node      = Graph.toNodeId(node);\r\n        direction = direction || \"all\"; // TODO change to default parameter (babel bug)\r\n\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        if (adjacencyList.has(node)) {\r\n            yield* adjacencyList.get(node).values();\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Returns the number of edges between this node and the given node. The\r\n     * result depends on the direction.\r\n     *\r\n     * @param {String|Node} node\r\n     * The other ending point of the edges. Specifying an ID is enough.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All edges between the two nodes are considered.\r\n     * * \"out\": Only edges that start at this node and end at the given one are\r\n     * selected.\r\n     * * \"inc\": Only edges that start at the given node and end at this one are\r\n     * chosen.\r\n     *\r\n     * @return {Number}\r\n     * The number of edges between this node and the given node.\r\n     */\r\n    getNumberOfEdgesBetween(node, direction = \"all\") {\r\n        node = Graph.toNodeId(node);\r\n\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return adjacencyList.has(node) ? adjacencyList.get(node).size : 0;\r\n    }\r\n\r\n    /**\r\n     * Returns if the given edge is incident to this node and the given one. The\r\n     * result depends on the specified direction. Passing in the ID for the node\r\n     * or the edge is enough.\r\n     *\r\n     * @param {String|Node} node\r\n     * The other ending point of the edge. Giving an ID suffices.\r\n     *\r\n     * @param {String|Edge} edge\r\n     * The edge to test. Specifying an ID is enough.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All edges between the two nodes are considered.\r\n     * * \"out\": Only edges that start at this node and end at the given one are\r\n     * selected.\r\n     * * \"inc\": Only edges that start at the given node and end at this one are\r\n     * chosen.\r\n     *\r\n     * @return {Boolean}\r\n     * If the given edge is incident to this node and the given one.\r\n     */\r\n    isEdgeBetween(node, edge, direction = \"all\") {\r\n        node = Graph.toNodeId(node);\r\n        edge = Graph.toEdgeId(edge);\r\n\r\n        const adjacencyList = this.adjacencyLists[direction];\r\n        if (!adjacencyList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return adjacencyList.has(node) &&\r\n               adjacencyList.get(node).has(edge);\r\n    }\r\n\r\n    /**\r\n     * Iterates over the IDs of incident edges. The result depends on the\r\n     * direction.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All incident edges are considered.\r\n     * * \"out\": Only edges that start at this node are selected.\r\n     * * \"inc\": Only edges that end at this node are chosen.\r\n     */\r\n    * iterIncidentEdges(direction) {\r\n        direction = direction || \"all\"; // TODO change to default parameter (babel bug)\r\n\r\n        const incidenceList = this.incidenceLists[direction];\r\n        if (!incidenceList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        yield* incidenceList.values();\r\n    }\r\n\r\n    /**\r\n     * Returns the the degree of this node. This is the number of incident\r\n     * edges. The result depends on the direction.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All incident edges are considered.\r\n     * * \"out\": Only edges that start at this node are selected (outdegree).\r\n     * * \"inc\": Only edges that end at this node are chosen (indegree).\r\n     *\r\n     * @return {Number}\r\n     * The number of selected edges.\r\n     */\r\n    getNumberOfIncidentEdges(direction = \"all\") {\r\n        const incidenceList = this.incidenceLists[direction];\r\n        if (!incidenceList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return incidenceList.size;\r\n    }\r\n\r\n    /**\r\n     * Returns if the given edge is incident to this node. The result depends on\r\n     * the given direction.\r\n     *\r\n     * @param {String|Edge} edge\r\n     * The edge to test for incidency. Specifying the ID is sufficient.\r\n     *\r\n     * @param {String} [direction=\"all\"]\r\n     * * \"all\": All incident edges are considered.\r\n     * * \"out\": Only edges that start at this node are selected.\r\n     * * \"inc\": Only edges that end at this node are chosen.\r\n     *\r\n     * @return {Boolean}\r\n     * If the given edge is incident to this node.\r\n     */\r\n    isIncidentEdge(edge, direction = \"all\") {\r\n        edge = Graph.toEdgeId(edge);\r\n\r\n        const incidenceList = this.incidenceLists[direction];\r\n        if (!incidenceList) {\r\n            throw new Error(`The direction ${direction} is invalid.`);\r\n        }\r\n        return incidenceList.has(edge);\r\n    }\r\n\r\n\r\n    /**\r\n     * Adds a new outgoing edge.\r\n     *\r\n     * @param {Edge} edgeObj\r\n     * The edge to add.\r\n     *\r\n     * @ignore\r\n     */\r\n    addOutgoingEdge(edgeObj) {\r\n        const edgeId = edgeObj.id;\r\n\r\n        // Update incidence lists\r\n        this.incidenceLists.all.add(edgeId);\r\n        this.incidenceLists.out.add(edgeId);\r\n\r\n        // Update adjacency lists\r\n        const adjacencyAll = this.adjacencyLists.all,\r\n              adjacencyOut = this.adjacencyLists.out,\r\n              targetId     = edgeObj.targetId;\r\n\r\n        if (!adjacencyAll.has(targetId)) {\r\n            adjacencyAll.set(targetId, new Set());\r\n        }\r\n        adjacencyAll.get(targetId).add(edgeId);\r\n\r\n        if (!adjacencyOut.has(targetId)) {\r\n            adjacencyOut.set(targetId, new Set());\r\n        }\r\n        adjacencyOut.get(targetId).add(edgeId);\r\n    }\r\n\r\n    /**\r\n     * Adds a new incoming edge.\r\n     *\r\n     * @param {Edge} edgeObj\r\n     * The edge to add.\r\n     *\r\n     * @ignore\r\n     */\r\n    addIncomingEdge(edgeObj) {\r\n        const edgeId = edgeObj.id;\r\n\r\n        // Update incidence lists\r\n        this.incidenceLists.all.add(edgeId);\r\n        this.incidenceLists.inc.add(edgeId);\r\n\r\n        // Update adjacency lists\r\n        const adjacencyAll = this.adjacencyLists.all,\r\n              adjacencyInc = this.adjacencyLists.inc,\r\n              sourceId     = edgeObj.sourceId;\r\n\r\n        if (!adjacencyAll.has(sourceId)) {\r\n            adjacencyAll.set(sourceId, new Set());\r\n        }\r\n        adjacencyAll.get(sourceId).add(edgeId);\r\n\r\n        if (!adjacencyInc.has(sourceId)) {\r\n            adjacencyInc.set(sourceId, new Set());\r\n        }\r\n        adjacencyInc.get(sourceId).add(edgeId);\r\n    }\r\n\r\n    /**\r\n     * Removes the given outgoing edge.\r\n     *\r\n     * @param {Edge} edgeObj\r\n     * The edge to remove.\r\n     *\r\n     * @ignore\r\n     */\r\n    removeOutgoingEdge(edgeObj) {\r\n        const edgeId = edgeObj.id;\r\n\r\n        // Update incidence lists\r\n        this.incidenceLists.all.delete(edgeId);\r\n        this.incidenceLists.out.delete(edgeId);\r\n\r\n        // Update adjacency lists\r\n        const adjacencyAll      = this.adjacencyLists.all,\r\n              adjacencyOut      = this.adjacencyLists.out,\r\n              targetId          = edgeObj.targetId,\r\n              adjacencyAllEdges = adjacencyAll.get(targetId),\r\n              adjacencyOutEdges = adjacencyOut.get(targetId);\r\n\r\n        adjacencyAllEdges.delete(edgeId);\r\n        if (adjacencyAllEdges.size === 0) {\r\n            adjacencyAll.delete(targetId);\r\n        }\r\n\r\n        adjacencyOutEdges.delete(edgeId);\r\n        if (adjacencyOutEdges.size === 0) {\r\n            adjacencyOut.delete(targetId);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Removes the given incoming edge.\r\n     *\r\n     * @param {Edge} edgeObj\r\n     * The edge to remove.\r\n     *\r\n     * @ignore\r\n     */\r\n    removeIncomingEdge(edgeObj) {\r\n        const edgeId = edgeObj.id;\r\n\r\n        // Update incidence lists\r\n        this.incidenceLists.all.delete(edgeId);\r\n        this.incidenceLists.inc.delete(edgeId);\r\n\r\n        // Update adjacency lists\r\n        const adjacencyAll      = this.adjacencyLists.all,\r\n              adjacencyInc      = this.adjacencyLists.inc,\r\n              sourceId          = edgeObj.sourceId,\r\n              adjacencyAllEdges = adjacencyAll.get(sourceId),\r\n              adjacencyIncEdges = adjacencyInc.get(sourceId);\r\n\r\n        adjacencyAllEdges.delete(edgeId);\r\n        if (adjacencyAllEdges.size === 0) {\r\n            adjacencyAll.delete(sourceId);\r\n        }\r\n\r\n        adjacencyIncEdges.delete(edgeId);\r\n        if (adjacencyIncEdges.size === 0) {\r\n            adjacencyInc.delete(sourceId);\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Returns a textual representation of this node.\r\n     *\r\n     * @return {String}\r\n     * A textual representation of this node.\r\n     *\r\n     * @override\r\n     */\r\n    toString() {\r\n        return this.id;\r\n    }\r\n}\r\n\r\n/**\r\n * Provides IDs.\r\n *\r\n * @type {IDGenerator}\r\n * @private\r\n */\r\nNode.idGenerator = new IDGenerator(\"g\");\r\n"
+  },
+  {
+    "__docId__": 52,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "memberof": "src/Node.js",
+    "longname": "src/Node.js~Node",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/Node.js",
+    "importStyle": "Node",
+    "description": "A node in a graph.",
+    "lineNumber": 10,
+    "interface": false,
+    "implements": [
+      "Observable"
+    ]
+  },
+  {
+    "__docId__": 53,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 15,
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 54,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "id",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#id",
+    "access": null,
+    "description": "The ID of this node.",
+    "lineNumber": 22,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 55,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#graph",
+    "access": null,
+    "description": "The graph that contains this node. This property will be set after\nadding the node to a graph.",
+    "lineNumber": 30,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 56,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "adjacencyLists",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#adjacencyLists",
+    "access": "private",
+    "description": "Stores information about adjacent nodes.",
+    "lineNumber": 51,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Map<String, Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_adjacencyLists.all",
+        "description": "Maps from IDs of all adjacent nodes to the IDs of the edges between\nthe nodes."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Map<String, Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_adjacencyLists.out",
+        "description": "Maps from the IDs of all nodes that are the target node of at least\none edge starting at this node to the corresponding edge IDs."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Map<String, Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_adjacencyLists.inc",
+        "description": "Maps from the IDs of all nodes that are the source node of at least\none edge ending at this node to the corresponding edge IDs."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 57,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "incidenceLists",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#incidenceLists",
+    "access": "private",
+    "description": "Stores information about incident edges.",
+    "lineNumber": 73,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_incidenceLists.all",
+        "description": "The IDs of all incident edges."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_incidenceLists.out",
+        "description": "The IDs of all outgoing edges."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Set<String>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "_incidenceLists.inc",
+        "description": "The IDs of all incoming edges."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterAdjacentNodes",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#iterAdjacentNodes",
+    "access": null,
+    "description": "Iterates over the IDs of adjacent nodes. The result depends on the\ngiven direction.",
+    "lineNumber": 91,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All adjacent nodes are considered.\n* \"out\": Only nodes that are the target node of at least one edge\nstarting at this node are selected.\n* \"inc\": Only nodes that are the source node of at least one edge ending\nat this node are chosen."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfAdjacentNodes",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#getNumberOfAdjacentNodes",
+    "access": null,
+    "description": "Returns the number of adjacent nodes. The result depends on the given\ndirection.",
+    "lineNumber": 115,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All adjacent nodes are considered.\n* \"out\": Only nodes that are the target node of at least one edge\nstarting at this node are selected.\n* \"inc\": Only nodes that are the source node of at least one edge ending\nat this node are chosen."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The number of adjacent nodes."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 60,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isAdjacentNode",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#isAdjacentNode",
+    "access": null,
+    "description": "Returns if the given node is adjacent to this one. The result depends on\nthe supplied direction.",
+    "lineNumber": 140,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node to test for adjacency. Specifying the ID is sufficient."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All adjacent nodes are considered.\n* \"out\": Only nodes that are the target node of at least one edge\nstarting at this node are selected.\n* \"inc\": Only nodes that are the source node of at least one edge ending\nat this node are chosen."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "If the given node is adjacent to this one."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 61,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterEdgesBetween",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#iterEdgesBetween",
+    "access": null,
+    "description": "Iterates over the IDs of the edges between this node and the given node.\nThe result depends on the direction.",
+    "lineNumber": 164,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The other ending point of the edges. Passing in an ID is enough."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All edges between the two nodes are considered.\n* \"out\": Only edges that start at this node and end at the given one are\nselected.\n* \"inc\": Only edges that start at the given node and end at this one are\nchosen."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfEdgesBetween",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#getNumberOfEdgesBetween",
+    "access": null,
+    "description": "Returns the number of edges between this node and the given node. The\nresult depends on the direction.",
+    "lineNumber": 194,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The other ending point of the edges. Specifying an ID is enough."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All edges between the two nodes are considered.\n* \"out\": Only edges that start at this node and end at the given one are\nselected.\n* \"inc\": Only edges that start at the given node and end at this one are\nchosen."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The number of edges between this node and the given node."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 63,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isEdgeBetween",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#isEdgeBetween",
+    "access": null,
+    "description": "Returns if the given edge is incident to this node and the given one. The\nresult depends on the specified direction. Passing in the ID for the node\nor the edge is enough.",
+    "lineNumber": 225,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The other ending point of the edge. Giving an ID suffices."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edge",
+        "description": "The edge to test. Specifying an ID is enough."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All edges between the two nodes are considered.\n* \"out\": Only edges that start at this node and end at the given one are\nselected.\n* \"inc\": Only edges that start at the given node and end at this one are\nchosen."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "If the given edge is incident to this node and the given one."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 64,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iterIncidentEdges",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#iterIncidentEdges",
+    "access": null,
+    "description": "Iterates over the IDs of incident edges. The result depends on the\ndirection.",
+    "lineNumber": 246,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All incident edges are considered.\n* \"out\": Only edges that start at this node are selected.\n* \"inc\": Only edges that end at this node are chosen."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfIncidentEdges",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#getNumberOfIncidentEdges",
+    "access": null,
+    "description": "Returns the the degree of this node. This is the number of incident\nedges. The result depends on the direction.",
+    "lineNumber": 268,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All incident edges are considered.\n* \"out\": Only edges that start at this node are selected (outdegree).\n* \"inc\": Only edges that end at this node are chosen (indegree)."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The number of selected edges."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 66,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isIncidentEdge",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#isIncidentEdge",
+    "access": null,
+    "description": "Returns if the given edge is incident to this node. The result depends on\nthe given direction.",
+    "lineNumber": 291,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edge",
+        "description": "The edge to test for incidency. Specifying the ID is sufficient."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "\"all\"",
+        "defaultRaw": "all",
+        "name": "direction",
+        "description": "* \"all\": All incident edges are considered.\n* \"out\": Only edges that start at this node are selected.\n* \"inc\": Only edges that end at this node are chosen."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "If the given edge is incident to this node."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 67,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addOutgoingEdge",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#addOutgoingEdge",
+    "access": null,
+    "description": "Adds a new outgoing edge.",
+    "lineNumber": 310,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeObj",
+        "description": "The edge to add."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 68,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addIncomingEdge",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#addIncomingEdge",
+    "access": null,
+    "description": "Adds a new incoming edge.",
+    "lineNumber": 341,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeObj",
+        "description": "The edge to add."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 69,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeOutgoingEdge",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#removeOutgoingEdge",
+    "access": null,
+    "description": "Removes the given outgoing edge.",
+    "lineNumber": 372,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeObj",
+        "description": "The edge to remove."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 70,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeIncomingEdge",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#removeIncomingEdge",
+    "access": null,
+    "description": "Removes the given incoming edge.",
+    "lineNumber": 405,
+    "ignore": true,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Edge"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "edgeObj",
+        "description": "The edge to remove."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 71,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toString",
+    "memberof": "src/Node.js~Node",
+    "longname": "src/Node.js~Node#toString",
+    "access": null,
+    "description": "Returns a textual representation of this node.",
+    "lineNumber": 438,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "A textual representation of this node."
+    },
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 72,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/Path.js",
+    "memberof": null,
+    "longname": "src/Path.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Graph from \"./Graph.js\";\r\n\r\n/**\r\n * A path through a graph.\r\n */\r\nexport default class Path {\r\n\r\n    /**\r\n     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes\r\n     * The nodes visited by this path in order. Specifying IDs is enough.\r\n     */\r\n    constructor(nodes) {\r\n        nodes = Graph.makeNodesIterable(nodes);\r\n\r\n        /**\r\n         * If this path is a cycle. This means the first and last node are the\r\n         * same and the length of the path is at least 1.\r\n         *\r\n         * @type {Boolean}\r\n         */\r\n        this.isCycle = true;\r\n\r\n        /**\r\n         * If the path is a simple cycle. This means it is a cycle and no node\r\n         * except the first and last node is visited twice.\r\n         *\r\n         * @type {Boolean}\r\n         */\r\n        this.isSimpleCycle = true;\r\n\r\n        /**\r\n         * If the path is simple. This means no node is visited twice.\r\n         *\r\n         * @type {Boolean}\r\n         */\r\n        this.isSimplePath = true;\r\n\r\n        /**\r\n         * The IDs of the nodes visited by this path in order.\r\n         *\r\n         * @type {String[]}\r\n         * @private\r\n         */\r\n        this.nodeIds = [];\r\n\r\n        /**\r\n         * Counts how often a node is visited by this path.\r\n         *\r\n         * @type {Map<String, Number>}\r\n         * @private\r\n         */\r\n        this.visitCounter = new Map();\r\n\r\n        // Normalize path\r\n        for (let node of nodes) {\r\n            const nodeId = Graph.toNodeId(node);\r\n            this.nodeIds.push(nodeId);\r\n        }\r\n\r\n        // Analyze path\r\n        for (let i = 0, len = this.nodeIds.length; i < len; i++) {\r\n            const nodeId = this.nodeIds[i];\r\n\r\n            if (this.visitCounter.has(nodeId)) {\r\n                const c = this.visitCounter.get(nodeId);\r\n                this.visitCounter.set(nodeId, c + 1);\r\n                this.isSimplePath = false;\r\n                if (i < len - 1) {\r\n                    this.isSimpleCycle = false;\r\n                }\r\n            } else {\r\n                this.visitCounter.set(nodeId, 1);\r\n            }\r\n        }\r\n\r\n        this.isCycle = this.nodeIds.length > 1 &&\r\n                       this.nodeIds[0] === this.nodeIds.slice(-1)[0];\r\n        this.isSimpleCycle = this.isSimpleCycle && this.isCycle;\r\n    }\r\n\r\n    /**\r\n     * Returns the length of this path. The length is one lower than the number\r\n     * of nodes on the path.\r\n     *\r\n     * @return {Number}\r\n     * The length of the path.\r\n     */\r\n    getLength() {\r\n        return this.nodeIds.length - 1;\r\n    }\r\n\r\n    /**\r\n     * Returns how often the given node is visited by the path.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node to test.\r\n     *\r\n     * @return {Number}\r\n     * How often the node is visited.\r\n     */\r\n    getNumberOfVisits(node) {\r\n        node = Graph.toNodeId(node);\r\n        return this.visitCounter.has(node) ? this.visitCounter.get(node) : 0;\r\n    }\r\n\r\n    /**\r\n     * Tests if the given node lies on this path.\r\n     *\r\n     * @param {String|Node} node\r\n     * The node to test. Specifying an ID is enough.\r\n     *\r\n     * @return {Boolean}\r\n     * If the given node lies on this path.\r\n     */\r\n    isVisited(node) {\r\n        node = Graph.toNodeId(node);\r\n\r\n        return this.visitCounter.has(node);\r\n    }\r\n\r\n    /**\r\n     * Returns an array with the IDs of the nodes on the path in order.\r\n     *\r\n     * @return {String[]}\r\n     * The IDs of the nodes on the path.\r\n     */\r\n    toArray() {\r\n        return this.nodeIds;\r\n    }\r\n\r\n    /**\r\n     * Returns a textual representation of this path.\r\n     *\r\n     * @return {String}\r\n     * A textual representation of this path.\r\n     */\r\n    toString() {\r\n        let result = \"\";\r\n\r\n        for (let i = 0, len = this.nodeIds.length; i < len; i++) {\r\n            result += this.nodeIds[i];\r\n            if (i < len - 1) {\r\n                result += \" ~> \";\r\n            }\r\n        }\r\n\r\n        return result;\r\n    }\r\n}\r\n"
+  },
+  {
+    "__docId__": 73,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Path",
+    "memberof": "src/Path.js",
+    "longname": "src/Path.js~Path",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/Path.js",
+    "importStyle": "Path",
+    "description": "A path through a graph.",
+    "lineNumber": 6,
+    "interface": false
+  },
+  {
+    "__docId__": 74,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 12,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Iterator<String>",
+          "Node",
+          "Iterator<Node>"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "nodes",
+        "description": "The nodes visited by this path in order. Specifying IDs is enough."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 75,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isCycle",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isCycle",
+    "access": null,
+    "description": "If this path is a cycle. This means the first and last node are the\nsame and the length of the path is at least 1.",
+    "lineNumber": 21,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 76,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isSimpleCycle",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isSimpleCycle",
+    "access": null,
+    "description": "If the path is a simple cycle. This means it is a cycle and no node\nexcept the first and last node is visited twice.",
+    "lineNumber": 29,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 77,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isSimplePath",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isSimplePath",
+    "access": null,
+    "description": "If the path is simple. This means no node is visited twice.",
+    "lineNumber": 36,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 78,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "nodeIds",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#nodeIds",
+    "access": "private",
+    "description": "The IDs of the nodes visited by this path in order.",
+    "lineNumber": 44,
+    "type": {
+      "nullable": null,
+      "types": [
+        "String[]"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 79,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "visitCounter",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#visitCounter",
+    "access": "private",
+    "description": "Counts how often a node is visited by this path.",
+    "lineNumber": 52,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<String, Number>"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 80,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isSimplePath",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isSimplePath",
+    "access": null,
+    "description": null,
+    "lineNumber": 67,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 81,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isSimpleCycle",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isSimpleCycle",
+    "access": null,
+    "description": null,
+    "lineNumber": 69,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 82,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isCycle",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isCycle",
+    "access": null,
+    "description": null,
+    "lineNumber": 76,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "isSimpleCycle",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isSimpleCycle",
+    "access": null,
+    "description": null,
+    "lineNumber": 78,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 84,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getLength",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#getLength",
+    "access": null,
+    "description": "Returns the length of this path. The length is one lower than the number\nof nodes on the path.",
+    "lineNumber": 88,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "The length of the path."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 85,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNumberOfVisits",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#getNumberOfVisits",
+    "access": null,
+    "description": "Returns how often the given node is visited by the path.",
+    "lineNumber": 101,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node to test."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Number"
+      ],
+      "spread": false,
+      "description": "How often the node is visited."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 86,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "isVisited",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#isVisited",
+    "access": null,
+    "description": "Tests if the given node lies on this path.",
+    "lineNumber": 115,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String",
+          "Node"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "node",
+        "description": "The node to test. Specifying an ID is enough."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": "If the given node lies on this path."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 87,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toArray",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#toArray",
+    "access": null,
+    "description": "Returns an array with the IDs of the nodes on the path in order.",
+    "lineNumber": 127,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String[]"
+      ],
+      "spread": false,
+      "description": "The IDs of the nodes on the path."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 88,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "toString",
+    "memberof": "src/Path.js~Path",
+    "longname": "src/Path.js~Path#toString",
+    "access": null,
+    "description": "Returns a textual representation of this path.",
+    "lineNumber": 137,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String"
+      ],
+      "spread": false,
+      "description": "A textual representation of this path."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 89,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/plugins/EdgeHashIndex.js",
+    "memberof": null,
+    "longname": "src/plugins/EdgeHashIndex.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import HashIndex from \"./HashIndex.js\";\r\n\r\n/**\r\n * An index that maps from a hash value to the IDs of all edges with that hash\r\n * value. It adds a getter and an iterator to a graph when it is plugged in.\r\n */\r\nexport default class EdgeHashIndex extends HashIndex {\r\n\r\n    /**\r\n     * At least one of the function names should be provided otherwise the data\r\n     * stored in this index cannot be accessed.\r\n     *\r\n     * @param {Function} hashFunction\r\n     * A function that gets a node as input and returns a deterministic,\r\n     * immutable value.\r\n     *\r\n     * @param {Object} [mixinNames={}]\r\n     * Provides names for the mixin functions.\r\n     *\r\n     * @param {String} [mixinNames.getterName]\r\n     * The name of the getter function. This returns the IDs of all edges with\r\n     * the given hash. It is also possible to provide an edge object instead of\r\n     * a hash and set the second parameter to true. Then the edge is hashed\r\n     * first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.iteratorName]\r\n     * The name of the iterator function. This iterates over the IDs of all\r\n     * edges with the given hash. It is also possible to provide an edge object\r\n     * instead of a hash and set the second parameter to true. Then the edge is\r\n     * hashed first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.counterName]\r\n     * The name of the counter function. This returns the number of all edges\r\n     * with the given hash. It is also possible to provide an edge object\r\n     * instead of a hash and set the second parameter to true. Then the edge is\r\n     * hashed first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.testerName]\r\n     * The name of the tester function. This tests whether edges with the given\r\n     * hash value exist. It is also possible to provide an edge object instead\r\n     * of a hash and set the second parameter to true. Then the edge is hashed\r\n     * first and the result is used as hash.\r\n     */\r\n    constructor(hashFunction, {getterName, iteratorName, counterName, testerName} = {}) {\r\n        super(hashFunction);\r\n\r\n        /**\r\n         * The names of the mixin functions.\r\n         *\r\n         * @type {Object}\r\n         *\r\n         * @property {String} mixinNames.getterName\r\n         * The name of the getter function.\r\n         *\r\n         * @property {String} mixinNames.iteratorName\r\n         * The name of the iterator function.\r\n         *\r\n         * @property {String} mixinNames.counterName\r\n         * The name of the counter function.\r\n         *\r\n         * @property {String} mixinNames.testerName\r\n         * The name of the tester function.\r\n         *\r\n         * @private\r\n         */\r\n        this.mixinNames = {getterName, iteratorName, counterName, testerName};\r\n\r\n        /**\r\n         * The graph this plugin was added to.\r\n         *\r\n         * @type {Graph}\r\n         */\r\n        this.graph = undefined;\r\n    }\r\n\r\n    /**\r\n     * @override\r\n     */\r\n    register(graph) {\r\n        this.graph = graph;\r\n\r\n        // Add mixins\r\n        if (this.mixinNames.getterName) {\r\n            graph.addMethod(this.mixinNames.getterName, this.get, this);\r\n        }\r\n        if (this.mixinNames.iteratorName) {\r\n            graph.addMethod(this.mixinNames.iteratorName, this.iter, this);\r\n        }\r\n        if (this.mixinNames.counterName) {\r\n            graph.addMethod(this.mixinNames.counterName, this.count, this);\r\n        }\r\n        if (this.mixinNames.testerName) {\r\n            graph.addMethod(this.mixinNames.testerName, this.test, this);\r\n        }\r\n\r\n        // Add listeners\r\n        graph.addListener([\"addEdges\", \"afterUpdateEdges\"],     this.add,     this)\r\n             .addListener([\"removeEdges\", \"beforeUpdateEdges\"], this.remove,  this)\r\n             .addListener(\"reindexEdges\",                       this.reindex, this);\r\n\r\n        // Add edges\r\n        this.reindex();\r\n    }\r\n\r\n    /**\r\n     * Returns a new EdgeHashIndex using the same hash function and mixin names.\r\n     *\r\n     * @return {EdgeHashIndex}\r\n     * A copy of this plugin.\r\n     *\r\n     * @override\r\n     */\r\n    clone() {\r\n        return new EdgeHashIndex(this.hash, this.mixinNames);\r\n    }\r\n\r\n    /**\r\n     * Clear the complete index and add all edges again.\r\n     *\r\n     * @param {Event} [e]\r\n     * The event causing this request.\r\n     *\r\n     * @return {[type]}   [description]\r\n     */\r\n    reindex(e) {\r\n        this.hashToIds.clear();\r\n        this.idToHash.clear();\r\n        this.add({data: this.graph.iterEdges()});\r\n    }\r\n}\r\n"
+  },
+  {
+    "__docId__": 90,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "EdgeHashIndex",
+    "memberof": "src/plugins/EdgeHashIndex.js",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/plugins/EdgeHashIndex.js",
+    "importStyle": "EdgeHashIndex",
+    "description": "An index that maps from a hash value to the IDs of all edges with that hash\nvalue. It adds a getter and an iterator to a graph when it is plugged in.",
+    "lineNumber": 7,
+    "interface": false,
+    "extends": [
+      "src/plugins/HashIndex.js~HashIndex"
+    ]
+  },
+  {
+    "__docId__": 91,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#constructor",
+    "access": null,
+    "description": "At least one of the function names should be provided otherwise the data\nstored in this index cannot be accessed.",
+    "lineNumber": 44,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "hashFunction",
+        "description": "A function that gets a node as input and returns a deterministic,\nimmutable value."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "{}",
+        "defaultRaw": {},
+        "name": "mixinNames",
+        "description": "Provides names for the mixin functions."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.getterName",
+        "description": "The name of the getter function. This returns the IDs of all edges with\nthe given hash. It is also possible to provide an edge object instead of\na hash and set the second parameter to true. Then the edge is hashed\nfirst and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.iteratorName",
+        "description": "The name of the iterator function. This iterates over the IDs of all\nedges with the given hash. It is also possible to provide an edge object\ninstead of a hash and set the second parameter to true. Then the edge is\nhashed first and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.counterName",
+        "description": "The name of the counter function. This returns the number of all edges\nwith the given hash. It is also possible to provide an edge object\ninstead of a hash and set the second parameter to true. Then the edge is\nhashed first and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.testerName",
+        "description": "The name of the tester function. This tests whether edges with the given\nhash value exist. It is also possible to provide an edge object instead\nof a hash and set the second parameter to true. Then the edge is hashed\nfirst and the result is used as hash."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 92,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "mixinNames",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#mixinNames",
+    "access": "private",
+    "description": "The names of the mixin functions.",
+    "lineNumber": 66,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.getterName",
+        "description": "The name of the getter function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.iteratorName",
+        "description": "The name of the iterator function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.counterName",
+        "description": "The name of the counter function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.testerName",
+        "description": "The name of the tester function."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 93,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#graph",
+    "access": null,
+    "description": "The graph this plugin was added to.",
+    "lineNumber": 73,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 94,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "register",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#register",
+    "access": null,
+    "description": null,
+    "lineNumber": 79,
+    "params": [
+      {
+        "name": "graph",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 95,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#graph",
+    "access": null,
+    "description": null,
+    "lineNumber": 80,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 96,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "clone",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#clone",
+    "access": null,
+    "description": "Returns a new EdgeHashIndex using the same hash function and mixin names.",
+    "lineNumber": 113,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "EdgeHashIndex"
+      ],
+      "spread": false,
+      "description": "A copy of this plugin."
+    },
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 97,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "reindex",
+    "memberof": "src/plugins/EdgeHashIndex.js~EdgeHashIndex",
+    "longname": "src/plugins/EdgeHashIndex.js~EdgeHashIndex#reindex",
+    "access": null,
+    "description": "Clear the complete index and add all edges again.",
+    "lineNumber": 125,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Event"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "e",
+        "description": "The event causing this request."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "[type]"
+      ],
+      "spread": false,
+      "description": "[description]"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 98,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/plugins/HashIndex.js",
+    "memberof": null,
+    "longname": "src/plugins/HashIndex.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import {Plugin} from \"@ignavia/util\";\r\n\r\n/**\r\n * An index that maps from a hash value to all objects with that hash value.\r\n */\r\nexport default class HashIndex extends Plugin {\r\n\r\n    /**\r\n     * @param {Function} hashFunction\r\n     * A function that gets an object as input and returns a deterministic,\r\n     * immutable value. If an object should not be included in the index the\r\n     * function can return undefined.\r\n     */\r\n    constructor(hashFunction) {\r\n        super();\r\n\r\n        /**\r\n         * A function that gets an object as input and returns a deterministic,\r\n         * immutable value.\r\n         *\r\n         * @type {Function}\r\n         * @protected\r\n         */\r\n        this.hash = hashFunction;\r\n\r\n        /**\r\n         * Maps from a hash value to a set with the IDs of all corresponding\r\n         * objects.\r\n         *\r\n         * @type {Map<*, Set<String>>}\r\n         * @protected\r\n         */\r\n        this.hashToIds = new Map();\r\n\r\n        this.idToHash = new Map();\r\n    }\r\n\r\n    /**\r\n     * Returns an array containing the IDs of the objects with the given hash\r\n     * value.\r\n     *\r\n     * @param {*} param\r\n     * The hash value or the object to hash.\r\n     *\r\n     * @param {Boolean} [hashParam=false]\r\n     * Whether the first argument has to be hashed first before using it as a\r\n     * key.\r\n     *\r\n     * @return {String[]}\r\n     * The IDs of the selected objects.\r\n     *\r\n     * @private\r\n     */\r\n    get(param, hashParam = false) {\r\n        return [...this.iter(param, hashParam)];\r\n    }\r\n\r\n    /**\r\n     * Iterates over the IDs of the objects with the given hash value.\r\n     *\r\n     * @param {*} param\r\n     * The hash value.\r\n     *\r\n     * @param {Boolean} [hashParam=false]\r\n     * Whether the first argument has to be hashed first before using it as a\r\n     * key.\r\n     *\r\n     * @private\r\n     */\r\n    * iter(param, hashParam) {\r\n        hashParam = hashParam || false; // TODO change to default parameter (babel bug)\r\n\r\n        if (hashParam) {\r\n            param = this.hash(param);\r\n        }\r\n        if (this.data.has(param)) {\r\n            yield* this.data.get(param).values();\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Returns the number of objects with the given hash value.\r\n     *\r\n     * @param {*} param\r\n     * The hash value.\r\n     *\r\n     * @param {Boolean} [hashParam=false]\r\n     * Whether the first argument has to be hashed first before using it as a\r\n     * key.\r\n     *\r\n     * @private\r\n     */\r\n    count(param, hashParam = false) {\r\n        if (hashParam) {\r\n            param = this.hash(param);\r\n        }\r\n        return this.data.has(param) ? this.data.get(param).size : 0;\r\n    }\r\n\r\n    /**\r\n     * Tests if objects with the given hash value exist.\r\n     *\r\n     * @param {*} param\r\n     * The hash value.\r\n     *\r\n     * @param {Boolean} [hashParam=false]\r\n     * Whether the first argument has to be hashed first before using it as a\r\n     * key.\r\n     *\r\n     * @private\r\n     */\r\n    test(param, hashParam = false) {\r\n        if (hashParam) {\r\n            param = this.hash(param);\r\n        }\r\n        return this.data.has(param);\r\n    }\r\n\r\n    /**\r\n     * Adds the objects to the index.\r\n     *\r\n     * @param {Event} e\r\n     * The received event.\r\n     *\r\n     * @private\r\n     */\r\n    add(e) {\r\n        const objs = e.data;\r\n\r\n        for (let obj of objs) {\r\n            const key = this.hash(obj);\r\n\r\n            if (key !== undefined) {\r\n                if (!this.data.has(key)) {\r\n                    this.data.set(key, new Set()) ;\r\n                }\r\n                this.data.get(key).add(obj.id);\r\n            }\r\n        }\r\n    }\r\n\r\n    /**\r\n     * Removes the objects from the index.\r\n     *\r\n     * @param {Event} e\r\n     * The received event.\r\n     *\r\n     * @private\r\n     */\r\n    remove(e) {\r\n        const objs = e.data;\r\n\r\n        for (let obj of objs) {\r\n            const key = this.hash(obj);\r\n            if (this.data.has(key)) {\r\n                const set = this.data.get(key);\r\n\r\n                set.delete(obj.id);\r\n                if (set.size === 0) {\r\n                    this.data.delete(key);\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\n"
+  },
+  {
+    "__docId__": 99,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "HashIndex",
+    "memberof": "src/plugins/HashIndex.js",
+    "longname": "src/plugins/HashIndex.js~HashIndex",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/plugins/HashIndex.js",
+    "importStyle": "HashIndex",
+    "description": "An index that maps from a hash value to all objects with that hash value.",
+    "lineNumber": 6,
+    "interface": false,
+    "extends": [
+      "@ignavia/util~Plugin"
+    ]
+  },
+  {
+    "__docId__": 100,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "hashFunction",
+        "description": "A function that gets an object as input and returns a deterministic,\nimmutable value. If an object should not be included in the index the\nfunction can return undefined."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 101,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "hash",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#hash",
+    "access": "protected",
+    "description": "A function that gets an object as input and returns a deterministic,\nimmutable value.",
+    "lineNumber": 24,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Function"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 102,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "hashToIds",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#hashToIds",
+    "access": "protected",
+    "description": "Maps from a hash value to a set with the IDs of all corresponding\nobjects.",
+    "lineNumber": 33,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Map<*, Set<String>>"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 103,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "idToHash",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#idToHash",
+    "access": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 104,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "get",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#get",
+    "access": "private",
+    "description": "Returns an array containing the IDs of the objects with the given hash\nvalue.",
+    "lineNumber": 54,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "param",
+        "description": "The hash value or the object to hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "hashParam",
+        "description": "Whether the first argument has to be hashed first before using it as a\nkey."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String[]"
+      ],
+      "spread": false,
+      "description": "The IDs of the selected objects."
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 105,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "iter",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#iter",
+    "access": "private",
+    "description": "Iterates over the IDs of the objects with the given hash value.",
+    "lineNumber": 70,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "param",
+        "description": "The hash value."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "hashParam",
+        "description": "Whether the first argument has to be hashed first before using it as a\nkey."
+      }
+    ],
+    "generator": true
+  },
+  {
+    "__docId__": 106,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "count",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#count",
+    "access": "private",
+    "description": "Returns the number of objects with the given hash value.",
+    "lineNumber": 93,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "param",
+        "description": "The hash value."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "hashParam",
+        "description": "Whether the first argument has to be hashed first before using it as a\nkey."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 107,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "test",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#test",
+    "access": "private",
+    "description": "Tests if objects with the given hash value exist.",
+    "lineNumber": 112,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "param",
+        "description": "The hash value."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Boolean"
+        ],
+        "spread": false,
+        "optional": true,
+        "defaultValue": "false",
+        "defaultRaw": false,
+        "name": "hashParam",
+        "description": "Whether the first argument has to be hashed first before using it as a\nkey."
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 108,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "add",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#add",
+    "access": "private",
+    "description": "Adds the objects to the index.",
+    "lineNumber": 127,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Event"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "e",
+        "description": "The received event."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 109,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "remove",
+    "memberof": "src/plugins/HashIndex.js~HashIndex",
+    "longname": "src/plugins/HashIndex.js~HashIndex#remove",
+    "access": "private",
+    "description": "Removes the objects from the index.",
+    "lineNumber": 150,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Event"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "e",
+        "description": "The received event."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 110,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/plugins/NodeHashIndex.js",
+    "memberof": null,
+    "longname": "src/plugins/NodeHashIndex.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import HashIndex from \"./HashIndex.js\";\r\n\r\n/**\r\n * An index that maps from a hash value to the IDs of all nodes with that hash\r\n * value. It adds a getter and an iterator to a graph when it is plugged in.\r\n */\r\nexport default class NodeHashIndex extends HashIndex {\r\n\r\n    /**\r\n     * @param {Function} hashFunction\r\n     * A function that gets a node as input and returns a deterministic,\r\n     * immutable value.\r\n     *\r\n     * @param {Object} mixinNames\r\n     * Provides names for the mixin functions.\r\n     *\r\n     * @param {String} [mixinNames.getterName]\r\n     * The name of the getter function. This returns the IDs of all nodes with\r\n     * the given hash. It is also possible to provide a node object instead of\r\n     * a hash and set the second parameter to true. Then the node is hashed\r\n     * first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.iteratorName]\r\n     * The name of the iterator function. This iterates over the IDs of all\r\n     * nodes with the given hash. It is also possible to provide a node object\r\n     * instead of a hash and set the second parameter to true. Then the node is\r\n     * hashed first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.counterName]\r\n     * The name of the counter function. This returns the number of all nodes\r\n     * with the given hash. It is also possible to provide a node object\r\n     * instead of a hash and set the second parameter to true. Then the node is\r\n     * hashed first and the result is used as hash.\r\n     *\r\n     * @param {String} [mixinNames.testerName]\r\n     * The name of the tester function. This tests whether nodes with the given\r\n     * hash value exist. It is also possible to provide a node object instead of\r\n     * a hash and set the second parameter to true. Then the node is hashed\r\n     * first and the result is used as hash.\r\n     */\r\n    constructor(hashFunction, {getterName, iteratorName, counterName, testerName} = {}) {\r\n        super(hashFunction);\r\n\r\n        /**\r\n         * The names of the mixin functions.\r\n         *\r\n         * @type {Object}\r\n         *\r\n         * @property {String} mixinNames.getterName\r\n         * The name of the getter function.\r\n         *\r\n         * @property {String} mixinNames.iteratorName\r\n         * The name of the iterator function.\r\n         *\r\n         * @property {String} mixinNames.counterName\r\n         * The name of the counter function.\r\n         *\r\n         * @property {String} mixinNames.testerName\r\n         * The name of the tester function.\r\n         *\r\n         * @private\r\n         */\r\n        this.mixinNames = {getterName, iteratorName, counterName, testerName};\r\n\r\n        /**\r\n         * The graph this plugin was added to.\r\n         *\r\n         * @type {Graph}\r\n         */\r\n        this.graph = undefined;\r\n    }\r\n\r\n    /**\r\n     * @override\r\n     */\r\n    register(graph) {\r\n        this.graph = graph;\r\n\r\n        // Add mixins\r\n        if (this.mixinNames.getterName) {\r\n            graph.addMethod(this.mixinNames.getterName, this.get, this);\r\n        }\r\n        if (this.mixinNames.iteratorName) {\r\n            graph.addMethod(this.mixinNames.iteratorName, this.iter, this);\r\n        }\r\n        if (this.mixinNames.counterName) {\r\n            graph.addMethod(this.mixinNames.counterName, this.count, this);\r\n        }\r\n        if (this.mixinNames.testerName) {\r\n            graph.addMethod(this.mixinNames.testerName, this.test, this);\r\n        }\r\n\r\n        // Add listeners\r\n        graph.addListener([\"addNodes\", \"afterUpdateNodes\"],     this.add,     this) // TODO\r\n             .addListener([\"removeNodes\", \"beforeUpdateNodes\"], this.remove,  this)\r\n             .addListener(\"reindexNodes\",                       this.reindex, this);\r\n\r\n        // Add nodes\r\n        this.reindex();\r\n    }\r\n\r\n    /**\r\n     * Returns a new NodeHashIndex using the same hash function and mixin names.\r\n     *\r\n     * @return {NodeHashIndex}\r\n     * A copy of this plugin.\r\n     *\r\n     * @override\r\n     */\r\n    clone() {\r\n        return new NodeHashIndex(this.hash, this.mixinNames);\r\n    }\r\n\r\n    /**\r\n     * Clear the complete index and add all nodes again.\r\n     *\r\n     * @param {Event} [e]\r\n     * The event causing this request.\r\n     *\r\n     * @return {[type]}   [description]\r\n     */\r\n    reindex(e) {\r\n        this.hashToIds.clear();\r\n        this.idToHash.clear();\r\n        this.add({data: this.graph.iterNodes()});\r\n    }\r\n}\r\n"
+  },
+  {
+    "__docId__": 111,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "NodeHashIndex",
+    "memberof": "src/plugins/NodeHashIndex.js",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "access": null,
+    "export": true,
+    "importPath": "@ignavia/earl/src/plugins/NodeHashIndex.js",
+    "importStyle": "NodeHashIndex",
+    "description": "An index that maps from a hash value to the IDs of all nodes with that hash\nvalue. It adds a getter and an iterator to a graph when it is plugged in.",
+    "lineNumber": 7,
+    "interface": false,
+    "extends": [
+      "src/plugins/HashIndex.js~HashIndex"
+    ]
+  },
+  {
+    "__docId__": 112,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 41,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "hashFunction",
+        "description": "A function that gets a node as input and returns a deterministic,\nimmutable value."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames",
+        "description": "Provides names for the mixin functions."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.getterName",
+        "description": "The name of the getter function. This returns the IDs of all nodes with\nthe given hash. It is also possible to provide a node object instead of\na hash and set the second parameter to true. Then the node is hashed\nfirst and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.iteratorName",
+        "description": "The name of the iterator function. This iterates over the IDs of all\nnodes with the given hash. It is also possible to provide a node object\ninstead of a hash and set the second parameter to true. Then the node is\nhashed first and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.counterName",
+        "description": "The name of the counter function. This returns the number of all nodes\nwith the given hash. It is also possible to provide a node object\ninstead of a hash and set the second parameter to true. Then the node is\nhashed first and the result is used as hash."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "mixinNames.testerName",
+        "description": "The name of the tester function. This tests whether nodes with the given\nhash value exist. It is also possible to provide a node object instead of\na hash and set the second parameter to true. Then the node is hashed\nfirst and the result is used as hash."
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 113,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "mixinNames",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#mixinNames",
+    "access": "private",
+    "description": "The names of the mixin functions.",
+    "lineNumber": 63,
+    "properties": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.getterName",
+        "description": "The name of the getter function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.iteratorName",
+        "description": "The name of the iterator function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.counterName",
+        "description": "The name of the counter function."
+      },
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mixinNames.testerName",
+        "description": "The name of the tester function."
+      }
+    ],
+    "type": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 114,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#graph",
+    "access": null,
+    "description": "The graph this plugin was added to.",
+    "lineNumber": 70,
+    "type": {
+      "nullable": null,
+      "types": [
+        "Graph"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 115,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "register",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#register",
+    "access": null,
+    "description": null,
+    "lineNumber": 76,
+    "params": [
+      {
+        "name": "graph",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 116,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "graph",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#graph",
+    "access": null,
+    "description": null,
+    "lineNumber": 77,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 117,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "clone",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#clone",
+    "access": null,
+    "description": "Returns a new NodeHashIndex using the same hash function and mixin names.",
+    "lineNumber": 110,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "NodeHashIndex"
+      ],
+      "spread": false,
+      "description": "A copy of this plugin."
+    },
+    "override": true,
+    "generator": false
+  },
+  {
+    "__docId__": 118,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "reindex",
+    "memberof": "src/plugins/NodeHashIndex.js~NodeHashIndex",
+    "longname": "src/plugins/NodeHashIndex.js~NodeHashIndex#reindex",
+    "access": null,
+    "description": "Clear the complete index and add all nodes again.",
+    "lineNumber": 122,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Event"
+        ],
+        "spread": false,
+        "optional": true,
+        "name": "e",
+        "description": "The event causing this request."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "[type]"
+      ],
+      "spread": false,
+      "description": "[description]"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 119,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "src/plugins/plugins.js",
+    "memberof": null,
+    "longname": "src/plugins/plugins.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "export {default as HashIndex}     from \"./HashIndex.js\";\r\nexport {default as NodeHashIndex} from \"./NodeHashIndex.js\";\r\nexport {default as EdgeHashIndex} from \"./EdgeHashIndex.js\";\r\n"
+  },
+  {
+    "__docId__": 121,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 122,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 123,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 124,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 125,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 126,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 127,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 128,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 129,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 130,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 131,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 132,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 133,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 134,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 135,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 136,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 137,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 138,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 139,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 140,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 141,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 142,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 143,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 144,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 145,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 146,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 147,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 148,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 149,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 150,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 151,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 152,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 153,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 154,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 155,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 156,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 157,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 158,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 159,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 160,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 161,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 162,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 163,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 164,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 165,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 166,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 167,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 169,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 170,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 171,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 172,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 173,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 174,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 175,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 176,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": null,
+    "builtinExternal": true
+  }
+]

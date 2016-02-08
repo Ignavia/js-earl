@@ -1,0 +1,9 @@
+doc/
+jspm_packages/
+src/
+test/
+.gitbugtraq
+.gitignore
+.npmignore
+esdoc.json
+jspm.*
