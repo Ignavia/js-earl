@@ -446,4 +446,4 @@ export default class Node {
  * @type {IDGenerator}
  * @private
  */
-Node.idGenerator = new IDGenerator("g");
+Node.idGenerator = new IDGenerator("n");

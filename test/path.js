@@ -119,7 +119,7 @@ export default function () {
 
             const p0 = new Path([n0, n1, n2, n1]);
 
-            it("should return how often a node is visited by a path", function () {
+            it("should return if a node lies on this path", function () {
                 const r0 = p0.isVisited(n0);
                 expect(r0).to.equal(true);
 

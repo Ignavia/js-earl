@@ -9,6 +9,18 @@ export default function () {
     /** @test {Node} */
     describe("Node", function () {
 
+        /** @test {Node#constructor} */
+        describe("#constructor", function () {
+            const n0 = new Node(),
+                  n1 = new Node();
+
+            it("should set node IDs", function () {
+                expect(n0.id).to.be.a("string");
+                expect(n1.id).to.be.a("string");
+                expect(n0.id).to.not.equal(n1.id);
+            });
+        });
+
         /** @test {Node#iterAdjacentNodes} */
         describe("#iterAdjacentNodes", function () {
             const g0 = new Graph();

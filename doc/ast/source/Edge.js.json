@@ -1757,8 +1757,8 @@
           "arguments": [
             {
               "type": "Literal",
-              "value": "g",
-              "raw": "\"g\"",
+              "value": "e",
+              "raw": "\"e\"",
               "range": [
                 1494,
                 1497

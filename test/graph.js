@@ -21,8 +21,9 @@ export default function () {
                   g1 = new Graph();
 
             it("should set graph IDs", function () {
-                expect(g0.id).to.equal("g0");
-                expect(g1.id).to.equal("g1");
+                expect(g0.id).to.be.a("string");
+                expect(g1.id).to.be.a("string");
+                expect(g0.id).to.not.equal(g1.id);
             });
         });
 

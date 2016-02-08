@@ -305,32 +305,6 @@ export default class Graph {
     }
 
     /**
-     * Notifies all indexes that their node data is deprecated. Note that this
-     * operation is rather expensive. It is preferred to pass changes via
-     * beforeUpdateNodes and afterUpdateNodes events.
-     *
-     * @emits {Event}
-     * The type property is set to "reindexNodes", the source is this graph and
-     * the data is empty.
-     */
-    reindexNodes() {
-        this[fireEvent]("reindexNodes"); // TODO remove
-    }
-
-    /**
-     * Notifies all indexes that their edge data is deprecated. Note that this
-     * operation is rather expensive. It is preferred to pass changes via
-     * beforeUpdateEdges and afterUpdateEdges events.
-     *
-     * @emits {Event}
-     * The type property is set to "reindexEdges", the source is this graph and
-     * the data is empty.
-     */
-    reindexEdges() {
-        this[fireEvent]("reindexEdges"); // TODO remove
-    }
-
-    /**
      * Returns the node with the given ID.
      *
      * @param {String} nodeId

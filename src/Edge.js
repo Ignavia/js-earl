@@ -67,4 +67,4 @@ export default class Edge {
  * @type {IDGenerator}
  * @private
  */
-Edge.idGenerator = new IDGenerator("g");
+Edge.idGenerator = new IDGenerator("e");

@@ -1,7 +1,7 @@
 {
-  "coverage": "98.79%",
-  "expectCount": 83,
-  "actualCount": 82,
+  "coverage": "100%",
+  "expectCount": 64,
+  "actualCount": 64,
   "files": {
     "src/BreadthFirstTree.js": {
       "expectCount": 5,
@@ -13,31 +13,14 @@
       "actualCount": 7,
       "undocumentLines": []
     },
-    "src/plugins/EdgeHashIndex.js": {
-      "expectCount": 6,
-      "actualCount": 6,
-      "undocumentLines": []
-    },
     "src/Graph.js": {
-      "expectCount": 30,
-      "actualCount": 30,
+      "expectCount": 28,
+      "actualCount": 28,
       "undocumentLines": []
-    },
-    "src/plugins/HashIndex.js": {
-      "expectCount": 5,
-      "actualCount": 4,
-      "undocumentLines": [
-        35
-      ]
     },
     "src/Node.js": {
       "expectCount": 14,
       "actualCount": 14,
-      "undocumentLines": []
-    },
-    "src/plugins/NodeHashIndex.js": {
-      "expectCount": 6,
-      "actualCount": 6,
       "undocumentLines": []
     },
     "src/Path.js": {

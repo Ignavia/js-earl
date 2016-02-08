@@ -12,33 +12,15 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "@ignavia/earl/src/plugins/edgehashindex.js~edgehashindex",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html",
-    "<span>EdgeHashIndex</span> <span class=\"search-result-import-path\">@ignavia/earl/src/plugins/EdgeHashIndex.js</span>",
-    "class"
-  ],
-  [
     "@ignavia/earl/src/graph.js~graph",
     "class/src/Graph.js~Graph.html",
     "<span>Graph</span> <span class=\"search-result-import-path\">@ignavia/earl/src/Graph.js</span>",
     "class"
   ],
   [
-    "@ignavia/earl/src/plugins/hashindex.js~hashindex",
-    "class/src/plugins/HashIndex.js~HashIndex.html",
-    "<span>HashIndex</span> <span class=\"search-result-import-path\">@ignavia/earl/src/plugins/HashIndex.js</span>",
-    "class"
-  ],
-  [
     "@ignavia/earl/src/node.js~node",
     "class/src/Node.js~Node.html",
     "<span>Node</span> <span class=\"search-result-import-path\">@ignavia/earl/src/Node.js</span>",
-    "class"
-  ],
-  [
-    "@ignavia/earl/src/plugins/nodehashindex.js~nodehashindex",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html",
-    "<span>NodeHashIndex</span> <span class=\"search-result-import-path\">@ignavia/earl/src/plugins/NodeHashIndex.js</span>",
     "class"
   ],
   [
@@ -564,18 +546,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/graph.js~graph#reindexedges",
-    "class/src/Graph.js~Graph.html#instance-method-reindexEdges",
-    "src/Graph.js~Graph#reindexEdges",
-    "method"
-  ],
-  [
-    "src/graph.js~graph#reindexnodes",
-    "class/src/Graph.js~Graph.html#instance-method-reindexNodes",
-    "src/Graph.js~Graph#reindexNodes",
-    "method"
-  ],
-  [
     "src/graph.js~graph#removeedges",
     "class/src/Graph.js~Graph.html#instance-method-removeEdges",
     "src/Graph.js~Graph#removeEdges",
@@ -777,114 +747,6 @@ window.esdocSearchIndex = [
     "src/earl.js",
     "file/src/earl.js.html",
     "src/earl.js",
-    "file"
-  ],
-  [
-    "src/plugins/edgehashindex.js",
-    "file/src/plugins/EdgeHashIndex.js.html",
-    "src/plugins/EdgeHashIndex.js",
-    "file"
-  ],
-  [
-    "src/plugins/edgehashindex.js~edgehashindex#clone",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html#instance-method-clone",
-    "src/plugins/EdgeHashIndex.js~EdgeHashIndex#clone",
-    "method"
-  ],
-  [
-    "src/plugins/edgehashindex.js~edgehashindex#constructor",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html#instance-constructor-constructor",
-    "src/plugins/EdgeHashIndex.js~EdgeHashIndex#constructor",
-    "method"
-  ],
-  [
-    "src/plugins/edgehashindex.js~edgehashindex#graph",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html#instance-member-graph",
-    "src/plugins/EdgeHashIndex.js~EdgeHashIndex#graph",
-    "member"
-  ],
-  [
-    "src/plugins/edgehashindex.js~edgehashindex#register",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html#instance-method-register",
-    "src/plugins/EdgeHashIndex.js~EdgeHashIndex#register",
-    "method"
-  ],
-  [
-    "src/plugins/edgehashindex.js~edgehashindex#reindex",
-    "class/src/plugins/EdgeHashIndex.js~EdgeHashIndex.html#instance-method-reindex",
-    "src/plugins/EdgeHashIndex.js~EdgeHashIndex#reindex",
-    "method"
-  ],
-  [
-    "src/plugins/hashindex.js",
-    "file/src/plugins/HashIndex.js.html",
-    "src/plugins/HashIndex.js",
-    "file"
-  ],
-  [
-    "src/plugins/hashindex.js~hashindex#constructor",
-    "class/src/plugins/HashIndex.js~HashIndex.html#instance-constructor-constructor",
-    "src/plugins/HashIndex.js~HashIndex#constructor",
-    "method"
-  ],
-  [
-    "src/plugins/hashindex.js~hashindex#hash",
-    "class/src/plugins/HashIndex.js~HashIndex.html#instance-member-hash",
-    "src/plugins/HashIndex.js~HashIndex#hash",
-    "member"
-  ],
-  [
-    "src/plugins/hashindex.js~hashindex#hashtoids",
-    "class/src/plugins/HashIndex.js~HashIndex.html#instance-member-hashToIds",
-    "src/plugins/HashIndex.js~HashIndex#hashToIds",
-    "member"
-  ],
-  [
-    "src/plugins/hashindex.js~hashindex#idtohash",
-    "class/src/plugins/HashIndex.js~HashIndex.html#instance-member-idToHash",
-    "src/plugins/HashIndex.js~HashIndex#idToHash",
-    "member"
-  ],
-  [
-    "src/plugins/nodehashindex.js",
-    "file/src/plugins/NodeHashIndex.js.html",
-    "src/plugins/NodeHashIndex.js",
-    "file"
-  ],
-  [
-    "src/plugins/nodehashindex.js~nodehashindex#clone",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html#instance-method-clone",
-    "src/plugins/NodeHashIndex.js~NodeHashIndex#clone",
-    "method"
-  ],
-  [
-    "src/plugins/nodehashindex.js~nodehashindex#constructor",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html#instance-constructor-constructor",
-    "src/plugins/NodeHashIndex.js~NodeHashIndex#constructor",
-    "method"
-  ],
-  [
-    "src/plugins/nodehashindex.js~nodehashindex#graph",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html#instance-member-graph",
-    "src/plugins/NodeHashIndex.js~NodeHashIndex#graph",
-    "member"
-  ],
-  [
-    "src/plugins/nodehashindex.js~nodehashindex#register",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html#instance-method-register",
-    "src/plugins/NodeHashIndex.js~NodeHashIndex#register",
-    "method"
-  ],
-  [
-    "src/plugins/nodehashindex.js~nodehashindex#reindex",
-    "class/src/plugins/NodeHashIndex.js~NodeHashIndex.html#instance-method-reindex",
-    "src/plugins/NodeHashIndex.js~NodeHashIndex#reindex",
-    "method"
-  ],
-  [
-    "src/plugins/plugins.js",
-    "file/src/plugins/plugins.js.html",
-    "src/plugins/plugins.js",
     "file"
   ]
 ]
