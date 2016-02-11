@@ -1,8 +1,10 @@
 {
     "source": "./src",
     "destination": "./doc",
-    "access": ["public", "protected"],
-    "title": "JavaScript Earl",
     "index": "./README.md",
-    "package": "./package.json"
+    "package": "./package.json",
+    "title": "JavaScript Earl",
+    "manual": {
+        "changelog": ["CHANGELOG.md"]
+    }
 }

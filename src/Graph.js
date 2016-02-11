@@ -1,3 +1,5 @@
+import "babel-regenerator-runtime"; // TODO remove when not needed anymore
+
 import {EventManager, extensibleMixin, IDGenerator, observableMixin, observableSymbols} from "@ignavia/util";
 const fireEvent = observableSymbols.fireEvent;
 

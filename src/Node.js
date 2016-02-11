@@ -1,3 +1,5 @@
+import "babel-regenerator-runtime"; // TODO remove when not needed anymore
+
 import {IDGenerator} from "@ignavia/util";
 
 import Graph from "./Graph.js";
