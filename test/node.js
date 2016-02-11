@@ -34,7 +34,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the IDs of all adjacent nodes (direction="all")`, function () {
             const r0 = [...n1.iterAdjacentNodes("all")];
@@ -88,7 +88,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the number of adjacent nodes (direction="all")`, function () {
             const r0 = n1.getNumberOfAdjacentNodes("all");
@@ -129,7 +129,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return if the node is adjacent (direction="all")`, function () {
             const r0 = n1.isAdjacentNode(n0, "all");
@@ -182,7 +182,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the IDs of the edges between the two nodes (direction="all")`, function () {
             const r0 = [...n1.iterEdgesBetween(n0, "all")];
@@ -236,7 +236,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the number of edges between the two nodes (direction="all")`, function () {
             const r0 = n1.getNumberOfEdgesBetween(n0, "all");
@@ -277,7 +277,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return if the edge is between the two nodes (direction="all")`, function () {
             const r0 = n1.isEdgeBetween(n0, e0, "all");
@@ -334,7 +334,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the IDs of all incident edges (direction="all")`, function () {
             const r0 = [...n1.iterIncidentEdges("all")];
@@ -389,7 +389,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return the IDs of all adjacent nodes (direction="all")`, function () {
             const r0 = n1.getNumberOfIncidentEdges("all");
@@ -431,7 +431,7 @@ describe("Node", function () {
               e2 = new Edge(n0, n2),
               e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
-        g0.removeEdges([e2, e3]);
+        g0.removeEdges(e2, e3);
 
         it(`should return if the edge is incident (direction="all")`, function () {
             const r0 = n1.isIncidentEdge(e0, "all");

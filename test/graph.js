@@ -155,7 +155,7 @@ describe("Graph", function () {
         });
 
         it("should return the deleted nodes and edges", function () {
-            const r0 = g0.removeNodes([n1.id, n2]);
+            const r0 = g0.removeNodes(n1.id, n2);
             expect(r0.nodes).to.contain(n1);
             expect(r0.nodes).to.contain(n2);
             expect(r0.nodes.length).to.equal(2);
@@ -201,7 +201,7 @@ describe("Graph", function () {
         });
 
         it("should return the deleted edges", function () {
-            const r0 = g0.removeEdges([e1.id, e2]);
+            const r0 = g0.removeEdges(e1.id, e2);
             expect(r0).to.contain(e1);
             expect(r0).to.contain(e2);
             expect(r0.length).to.equal(2);

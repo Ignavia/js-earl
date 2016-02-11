@@ -208,7 +208,7 @@ export default class Graph {
     /**
      * Removes the given nodes and all incident edges.
      *
-     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes
+     * @param {...String|...Node} nodes
      * The nodes to remove. Passing in IDs is enough.
      *
      * @return {Object}
@@ -220,9 +220,7 @@ export default class Graph {
      * is an array containing the deleted nodes and another property edges doing
      * the same for the edges.
      */
-    removeNodes(nodes) {
-        nodes = Graph.makeNodesIterable(nodes);
-
+    removeNodes(...nodes) {
         const deleted = {
             nodes: [],
             edges: []
@@ -235,7 +233,7 @@ export default class Graph {
             }
 
             // Remove incident edges
-            const deletedEdges = this.removeEdges(nodeObj.iterIncidentEdges());
+            const deletedEdges = this.removeEdges(...nodeObj.iterIncidentEdges());
             Array.prototype.push.apply(deleted.edges, deletedEdges);
 
             // Update node data
@@ -256,7 +254,7 @@ export default class Graph {
     /**
      * Removes the given edges.
      *
-     * @param {String|Iterator<String>|Edge|Iterator<Edge>} edges
+     * @param {...String|...Edge} edges
      * The edges to remove. Passing in IDs is enough.
      *
      * @return {Edge[]}
@@ -266,7 +264,7 @@ export default class Graph {
      * The type property is set to "removeEdges", the source is this graph and
      * the data is an array containing all deleted nodes.
      */
-    removeEdges(edges) {
+    removeEdges(...edges) {
         edges = Graph.makeEdgesIterable(edges);
 
         const deleted = [];
