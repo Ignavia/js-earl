@@ -60,7 +60,7 @@ export default class BreadthFirstTree {
         for (let currentId = node; currentId; currentId = this.parent(currentId)) {
             path.unshift(currentId);
         }
-        return new Path(path);
+        return new Path(...path);
     }
 
     /**

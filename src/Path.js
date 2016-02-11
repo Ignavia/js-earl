@@ -6,11 +6,10 @@ import Graph from "./Graph.js";
 export default class Path {
 
     /**
-     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes
+     * @param {...String|...Node} nodes
      * The nodes visited by this path in order. Specifying IDs is enough.
      */
-    constructor(nodes) {
-        nodes = Graph.makeNodesIterable(nodes);
+    constructor(...nodes) {
 
         /**
          * If this path is a cycle. This means the first and last node are the
