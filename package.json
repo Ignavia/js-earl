@@ -18,7 +18,7 @@
     "url": "https://github.com/Ignavia/js-earl.git"
   },
   "scripts": {
-    "build": "jspm build ./src/earl.js ./dist/earl.js --format umd --global-name \"IGNAVIA_EARL\" --global-deps \"{'@ignavia/util': 'IGNAVIA_UTIL'}\" --skip-source-maps --minify",
+    "build": "jspm build ./src/earl.js - @ignavia/util - babel-regenerator-runtime  ./dist/earl.js --format cjs --skip-source-maps --minify",
     "coverage": "babel-node node_modules/isparta/bin/isparta cover --report text --report html node_modules/mocha/bin/_mocha -- --reporter dot",
     "doc": "esdoc -c esdoc.json",
     "test": "mocha --compilers js:babel-register"
