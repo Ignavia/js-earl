@@ -1,7 +1,6 @@
 import "babel-regenerator-runtime"; // TODO remove when not needed anymore
 
-import {EventManager, extensibleMixin, IDGenerator, observableMixin, observableSymbols} from "@ignavia/util";
-const fireEvent = observableSymbols.fireEvent;
+import {EventManager, extensibleExtendedMixin, IDGenerator, observableExtendedMixin} from "@ignavia/util";
 
 import Node             from "./Node.js";
 import Edge             from "./Edge.js";
@@ -143,7 +142,7 @@ export default class Graph {
         }
 
         // Notify listeners
-        this[fireEvent](EventManager.makeEvent({
+        this.fireEvent(EventManager.makeEvent({
             subject: this,
             type:    "addNodes",
             data:    nodeObjs
@@ -196,7 +195,7 @@ export default class Graph {
         }
 
         // Notify listeners
-        this[fireEvent](EventManager.makeEvent({
+        this.fireEvent(EventManager.makeEvent({
             subject: this,
             type:   "addEdges",
             data:   edgeObjs
@@ -242,7 +241,7 @@ export default class Graph {
         }
 
         // Notify listeners
-        this[fireEvent](EventManager.makeEvent({
+        this.fireEvent(EventManager.makeEvent({
             subject: this,
             type:    "removeNodes",
             data:    deleted.nodes
@@ -286,7 +285,7 @@ export default class Graph {
         }
 
         // Notify listeners
-        this[fireEvent](EventManager.makeEvent({
+        this.fireEvent(EventManager.makeEvent({
             subject: this,
             type:    "removeEdges",
             data:    deleted
@@ -687,7 +686,7 @@ export default class Graph {
 Graph.idGenerator = new IDGenerator("g");
 
 // Make graphs observable
-Object.assign(Graph.prototype, observableMixin);
+Object.assign(Graph.prototype, observableExtendedMixin);
 
 // Make graphs extensible
-Object.assign(Graph.prototype, extensibleMixin);
+Object.assign(Graph.prototype, extensibleExtendedMixin);

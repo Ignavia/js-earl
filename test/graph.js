@@ -2,12 +2,6 @@
 /* global it */
 import {expect} from "chai";
 
-import {extensibleSymbols as extSym, observableSymbols as obsSym} from "@ignavia/util";
-const addMethod   = extSym.addMethod,
-      addPlugin   = extSym.addPlugin,
-      addListener = obsSym.addListener;
-
-
 import {Graph, Node, Edge} from "../src/earl.js";
 
 /** @test {Graph} */
@@ -45,7 +39,7 @@ describe("Graph", function () {
 
         it("should notify listeners", function () {
             let r0;
-            g0[addListener](e => r0 = e, "addNodes");
+            g0.addListener(e => r0 = e, "addNodes");
 
             const n2 = new Node();
             g0.addNodes(n2);
@@ -99,7 +93,7 @@ describe("Graph", function () {
 
         it("should notify listeners", function () {
             let r0;
-            g0[addListener](e => r0 = e, "addEdges");
+            g0.addListener(e => r0 = e, "addEdges");
 
             const e2 = new Edge(n0, n1);
             g0.addEdges(e2);
@@ -146,7 +140,7 @@ describe("Graph", function () {
 
         it("should notify listeners", function () {
             let r0;
-            g0[addListener](e => r0 = e, "removeNodes");
+            g0.addListener(e => r0 = e, "removeNodes");
             g0.removeNodes(n0);
 
             expect(r0.type).to.equal("removeNodes");
@@ -192,7 +186,7 @@ describe("Graph", function () {
 
         it("should notify listeners", function () {
             let r0;
-            g0[addListener](e => r0 = e, "removeEdges");
+            g0.addListener(e => r0 = e, "removeEdges");
             g0.removeEdges(e0);
 
             expect(r0.type).to.equal("removeEdges");
@@ -675,7 +669,7 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         it("should add a method to the graph", function () {
-            g0[addMethod]("greet0", () => "Hello");
+            g0.addMethod("greet0", () => "Hello");
             expect(g0.greet0()).to.equal("Hello");
         });
     });
@@ -687,7 +681,7 @@ describe("Graph", function () {
         it("should call the register method of a plugin", function () {
             let r0;
             const p0 = {register: () => r0 = true};
-            g0[addPlugin](p0);
+            g0.addPlugin(p0);
             expect(r0).to.equal(true);
         });
     });
