@@ -422,15 +422,13 @@ export default class Graph {
      * Creates a new graph containing all specified nodes and all edges that
      * start and end at nodes from this set.
      *
-     * @param {String|Iterator<String>|Node|Iterator<Node>} nodes
+     * @param {...String|...Node} nodes
      * The nodes to include in the result graph. Passing in IDs is enough.
      *
      * @return {Graph}
      * The resulting graph.
      */
-    generateMaximumSubgraphWith(nodes) {
-        nodes = Graph.makeEdgesIterable(nodes);
-
+    generateMaximumSubgraphWith(...nodes) {
         const result    = new Graph();
         result.parentId = this.id;
 
@@ -469,15 +467,13 @@ export default class Graph {
      * Creates a graph containing all specified edges and the nodes they start
      * and end at.
      *
-     * @param {String|Iterator<String>|Edge|Iterator<Edge>} edges
+     * @param {...String|...Edge} edges
      * The edges to include in the result graph. Passing in IDs is sufficient.
      *
      * @return {Graph}
      * The resulting graph.
      */
-    generateMinimumSubgraphWith(edges) {
-        edges = Graph.makeEdgesIterable(edges);
-
+    generateMinimumSubgraphWith(...edges) {
         const result    = new Graph();
         result.parentId = this.id;
 

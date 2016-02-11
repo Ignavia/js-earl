@@ -406,7 +406,7 @@ describe("Graph", function () {
         g0.addEdges(e0, e1, e2, e3, e4);
 
         it("should return a new graph with the given nodes and all edges between them", function() {
-            const g1 = g0.generateMaximumSubgraphWith([n0, n1.id, n2]);
+            const g1 = g0.generateMaximumSubgraphWith(n0, n1.id, n2);
 
             const r0 = [...g1.iterNodes({
                 map: (n, g) => n.parentId
@@ -445,7 +445,7 @@ describe("Graph", function () {
         g0.addEdges(e0, e1, e2, e3, e4);
 
         it("should return a new graph with the given edges and all incident nodes", function() {
-            const g1 = g0.generateMinimumSubgraphWith([e0, e1, e2]);
+            const g1 = g0.generateMinimumSubgraphWith(e0, e1.id, e2);
 
             const r0 = [...g1.iterNodes({
                 map: (n, g) => n.parentId
