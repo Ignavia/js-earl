@@ -124,7 +124,7 @@ export default class Graph {
     /**
      * Adds the given nodes to the graph model.
      *
-     * @param {Node|Iterator<Node>} nodeObjs
+     * @param {...Node} nodeObjs
      * The nodes to add.
      *
      * @return {Graph}
@@ -133,25 +133,20 @@ export default class Graph {
      * @emits {Event}
      * The type property is set to "addNodes", the source is this graph and the
      * data is an array containing the inserted nodes.
-     *
      */
-    addNodes(nodeObjs) {
-        nodeObjs = Graph.makeNodesIterable(nodeObjs);
-
-        const inserted = [];
+    addNodes(...nodeObjs) {
 
         // Add nodes
         for (let nodeObj of nodeObjs) {
             nodeObj.graph = this;
             this.nodes.set(nodeObj.id, nodeObj);
-            inserted.push(nodeObj);
         }
 
         // Notify listeners
         this[fireEvent](EventManager.makeEvent({
             subject: this,
             type:    "addNodes",
-            data:    inserted
+            data:    nodeObjs
         }));
 
         return this;
@@ -161,7 +156,7 @@ export default class Graph {
      * Adds the given edges to the graph model. Note that the graph must contain
      * both the source and the target node of each edge.
      *
-     * @param {Edge|Iterator<Edge>} edgeObjs
+     * @param {...Edge} edgeObjs
      * The edges to add.
      *
      * @return {Graph}
@@ -177,10 +172,7 @@ export default class Graph {
      * The type property is set to "addEdges", the source is this graph and the
      * data is an array with the inserted edges.
      */
-    addEdges(edgeObjs) {
-        edgeObjs = Graph.makeEdgesIterable(edgeObjs);
-
-        const inserted = [];
+    addEdges(...edgeObjs) {
 
         // Add edges
         for (let edgeObj of edgeObjs) {
@@ -197,7 +189,6 @@ export default class Graph {
             // Update edge data
             edgeObj.graph = this;
             this.edges.set(edgeObj.id, edgeObj);
-            inserted.push(edgeObj);
 
             // Update incident nodes
             sourceObj.addOutgoingEdge(edgeObj);
@@ -208,7 +199,7 @@ export default class Graph {
         this[fireEvent](EventManager.makeEvent({
             subject: this,
             type:   "addEdges",
-            data:   inserted
+            data:   edgeObjs
         }));
 
         return this;

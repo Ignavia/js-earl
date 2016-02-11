@@ -10,10 +10,10 @@ describe("Edge", function () {
     /** @test {Edge#constructor} */
     describe("#constructor", function () {
         const n0 = new Node(),
-                n1 = new Node();
+              n1 = new Node();
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1);
+              e1 = new Edge(n0, n1);
 
         it("should set the source ID", function () {
             expect(e0.sourceId).to.equal(n0.id);
@@ -33,7 +33,7 @@ describe("Edge", function () {
     /** @test {Edge#toString} */
     describe("#toString", function() {
         const n0 = new Node(),
-                n1 = new Node();
+              n1 = new Node();
 
         const e0 = new Edge(n0, n1);
 

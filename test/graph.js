@@ -16,7 +16,7 @@ describe("Graph", function () {
     /** @test {Graph#constructor} */
     describe("#constructor", function () {
         const g0 = new Graph(),
-                g1 = new Graph();
+              g1 = new Graph();
 
         it("should set graph IDs", function () {
             expect(g0.id).to.be.a("string");
@@ -30,9 +30,8 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0]);
-        g0.addNodes(n1);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         it("should set the graph reference in the node", function () {
             expect(n0.graph).to.equal(g0);
@@ -67,24 +66,23 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1);
-        g0.addEdges(e0);
-        g0.addEdges([e1]);
+              e1 = new Edge(n0, n1);
+        g0.addEdges(e0, e1);;
 
         it("should throw if a source ID is invalid", function () {
             const e2 = new Edge("no_id", n0),
-                    f  = () => g0.addEdges(e2);
+                  f  = () => g0.addEdges(e2);
 
             expect(f).to.throw(Error);
         });
 
         it("should throw if a target ID is invalid", function () {
             const e2 = new Edge(n0, "no_id"),
-                    f  = () => g0.addEdges(e2);
+                  f  = () => g0.addEdges(e2);
 
             expect(f).to.throw(Error);
         });
@@ -122,14 +120,14 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node();
-        g0.addNodes([n0, n1, n2, n3]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node();
+        g0.addNodes(n0, n1, n2, n3);
 
         const e0 = new Edge(n0, n3),
-                e1 = new Edge(n1, n2);
-        g0.addEdges([e0, e1]);
+              e1 = new Edge(n1, n2);
+        g0.addEdges(e0, e1);
 
         g0.removeNodes(n3);
 
@@ -175,14 +173,14 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1),
-                e2 = new Edge(n0, n1),
-                e3 = new Edge(n0, n1);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n0, n1),
+              e2 = new Edge(n0, n1),
+              e3 = new Edge(n0, n1);
+        g0.addEdges(e0, e1, e2, e3);
 
         g0.removeEdges(e3);
 
@@ -218,8 +216,8 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         it("should return the number of nodes", function () {
             const r0 = g0.getNumberOfNodes();
@@ -232,12 +230,12 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1);
-        g0.addEdges([e0, e1]);
+              e1 = new Edge(n0, n1);
+        g0.addEdges(e0, e1);
 
         it("should return the number of edges", function () {
             const r0 = g0.getNumberOfEdges();
@@ -250,8 +248,8 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         it("should return all node IDs", function () {
             const r0 = [...g0.iterNodeIds()];
@@ -265,12 +263,12 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1);
-        g0.addEdges([e0, e1]);
+              e1 = new Edge(n0, n1);
+        g0.addEdges(e0, e1);
 
         it("should return all edge IDs", function () {
             let r0 = [...g0.iterEdgeIds()];
@@ -284,8 +282,8 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         it("should return all nodes in the graph (no extra parameters)", function () {
             const r0 = [...g0.iterNodes()];
@@ -337,12 +335,12 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node();
-        g0.addNodes([n0, n1]);
+              n1 = new Node();
+        g0.addNodes(n0, n1);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n0, n1);
-        g0.addEdges([e0, e1]);
+              e1 = new Edge(n0, n1);
+        g0.addEdges(e0, e1);
 
         it("should return all edges in the graph (no extra parameters)", function () {
             const r0 = [...g0.iterEdges()];
@@ -394,18 +392,18 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node(),
-                n4 = new Node();
-        g0.addNodes([n0, n1, n2, n3, n4]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node(),
+              n4 = new Node();
+        g0.addNodes(n0, n1, n2, n3, n4);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n0),
-                e2 = new Edge(n1, n2),
-                e3 = new Edge(n3, n1),
-                e4 = new Edge(n0, n4);
-        g0.addEdges([e0, e1, e2, e3, e4]);
+              e1 = new Edge(n1, n0),
+              e2 = new Edge(n1, n2),
+              e3 = new Edge(n3, n1),
+              e4 = new Edge(n0, n4);
+        g0.addEdges(e0, e1, e2, e3, e4);
 
         it("should return a new graph with the given nodes and all edges between them", function() {
             const g1 = g0.generateMaximumSubgraphWith([n0, n1.id, n2]);
@@ -433,18 +431,18 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node(),
-                n4 = new Node();
-        g0.addNodes([n0, n1, n2, n3, n4]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node(),
+              n4 = new Node();
+        g0.addNodes(n0, n1, n2, n3, n4);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n0),
-                e2 = new Edge(n1, n2),
-                e3 = new Edge(n3, n1),
-                e4 = new Edge(n0, n4);
-        g0.addEdges([e0, e1, e2, e3, e4]);
+              e1 = new Edge(n1, n0),
+              e2 = new Edge(n1, n2),
+              e3 = new Edge(n3, n1),
+              e4 = new Edge(n0, n4);
+        g0.addEdges(e0, e1, e2, e3, e4);
 
         it("should return a new graph with the given edges and all incident nodes", function() {
             const g1 = g0.generateMinimumSubgraphWith([e0, e1, e2]);
@@ -472,23 +470,23 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node(),
-                n4 = new Node(),
-                n5 = new Node(),
-                n6 = new Node();
-        g0.addNodes([n0, n1, n2, n3, n4, n5, n6]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node(),
+              n4 = new Node(),
+              n5 = new Node(),
+              n6 = new Node();
+        g0.addNodes(n0, n1, n2, n3, n4, n5, n6);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n0),
-                e2 = new Edge(n1, n2),
-                e3 = new Edge(n3, n1),
-                e4 = new Edge(n0, n4),
-                e5 = new Edge(n4, n0),
-                e6 = new Edge(n4, n5),
-                e7 = new Edge(n5, n4);
-        g0.addEdges([e0, e1, e2, e3, e4, e5, e6, e7]);
+              e1 = new Edge(n1, n0),
+              e2 = new Edge(n1, n2),
+              e3 = new Edge(n3, n1),
+              e4 = new Edge(n0, n4),
+              e5 = new Edge(n4, n0),
+              e6 = new Edge(n4, n5),
+              e7 = new Edge(n5, n4);
+        g0.addEdges(e0, e1, e2, e3, e4, e5, e6, e7);
 
         it(`should visit all nodes reachable from the root in DFS order (direction="all")`, function () {
             const r0 = [...g0.iterDFSVisit(n0)];
@@ -547,23 +545,23 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node(),
-                n4 = new Node(),
-                n5 = new Node(),
-                n6 = new Node();
-        g0.addNodes([n0, n1, n2, n3, n4, n5, n6]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node(),
+              n4 = new Node(),
+              n5 = new Node(),
+              n6 = new Node();
+        g0.addNodes(n0, n1, n2, n3, n4, n5, n6);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n0),
-                e2 = new Edge(n1, n2),
-                e3 = new Edge(n3, n1),
-                e4 = new Edge(n0, n4),
-                e5 = new Edge(n4, n0),
-                e6 = new Edge(n4, n5),
-                e7 = new Edge(n5, n4);
-        g0.addEdges([e0, e1, e2, e3, e4, e5, e6, e7]);
+              e1 = new Edge(n1, n0),
+              e2 = new Edge(n1, n2),
+              e3 = new Edge(n3, n1),
+              e4 = new Edge(n0, n4),
+              e5 = new Edge(n4, n0),
+              e6 = new Edge(n4, n5),
+              e7 = new Edge(n5, n4);
+        g0.addEdges(e0, e1, e2, e3, e4, e5, e6, e7);
 
         it(`should visit all nodes reachable from the root in BFS order (direction="all")`, function () {
             const r0 = [...g0.iterBFSVisit(n0)];
@@ -602,23 +600,23 @@ describe("Graph", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node(),
-                n4 = new Node(),
-                n5 = new Node(),
-                n6 = new Node();
-        g0.addNodes([n0, n1, n2, n3, n4, n5, n6]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node(),
+              n4 = new Node(),
+              n5 = new Node(),
+              n6 = new Node();
+        g0.addNodes(n0, n1, n2, n3, n4, n5, n6);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n0),
-                e2 = new Edge(n1, n2),
-                e3 = new Edge(n3, n1),
-                e4 = new Edge(n0, n4),
-                e5 = new Edge(n4, n0),
-                e6 = new Edge(n4, n5),
-                e7 = new Edge(n5, n4);
-        g0.addEdges([e0, e1, e2, e3, e4, e5, e6, e7]);
+              e1 = new Edge(n1, n0),
+              e2 = new Edge(n1, n2),
+              e3 = new Edge(n3, n1),
+              e4 = new Edge(n0, n4),
+              e5 = new Edge(n4, n0),
+              e6 = new Edge(n4, n5),
+              e7 = new Edge(n5, n4);
+        g0.addEdges(e0, e1, e2, e3, e4, e5, e6, e7);
 
         it(`should compute a breadth first tree (direction="all")`, function () {
             const r0 = g0.computeBreadthFirstTree(n0);

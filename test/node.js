@@ -10,7 +10,7 @@ describe("Node", function () {
     /** @test {Node#constructor} */
     describe("#constructor", function () {
         const n0 = new Node(),
-                n1 = new Node();
+              n1 = new Node();
 
         it("should set node IDs", function () {
             expect(n0.id).to.be.a("string");
@@ -24,16 +24,16 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node(),
-                n3 = new Node();
-        g0.addNodes([n0, n1, n2, n3]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node();
+        g0.addNodes(n0, n1, n2, n3);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n2),
-                e2 = new Edge(n0, n2),
-                e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the IDs of all adjacent nodes (direction="all")`, function () {
@@ -79,15 +79,15 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node();
-        g0.addNodes([n0, n1, n2]);
+              n1 = new Node(),
+              n2 = new Node();
+        g0.addNodes(n0, n1, n2);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n2),
-                e2 = new Edge(n0, n2),
-                e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the number of adjacent nodes (direction="all")`, function () {
@@ -120,15 +120,15 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node();
-        g0.addNodes([n0, n1, n2]);
+              n1 = new Node(),
+              n2 = new Node();
+        g0.addNodes(n0, n1, n2);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n2),
-                e2 = new Edge(n0, n2),
-                e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return if the node is adjacent (direction="all")`, function () {
@@ -173,15 +173,15 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node();
-        g0.addNodes([n0, n1, n2]);
+              n1 = new Node(),
+              n2 = new Node();
+        g0.addNodes(n0, n1, n2);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n2),
-                e2 = new Edge(n0, n2),
-                e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the IDs of the edges between the two nodes (direction="all")`, function () {
@@ -227,15 +227,15 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-                n1 = new Node(),
-                n2 = new Node();
-        g0.addNodes([n0, n1, n2]);
+              n1 = new Node(),
+              n2 = new Node();
+        g0.addNodes(n0, n1, n2);
 
         const e0 = new Edge(n0, n1),
-                e1 = new Edge(n1, n2),
-                e2 = new Edge(n0, n2),
-                e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the number of edges between the two nodes (direction="all")`, function () {
@@ -268,15 +268,15 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-            n1 = new Node(),
-            n2 = new Node();
-        g0.addNodes([n0, n1, n2]);
+              n1 = new Node(),
+              n2 = new Node();
+        g0.addNodes(n0, n1, n2);
 
         const e0 = new Edge(n0, n1),
-            e1 = new Edge(n1, n2),
-            e2 = new Edge(n0, n2),
-            e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return if the edge is between the two nodes (direction="all")`, function () {
@@ -324,16 +324,16 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-            n1 = new Node(),
-            n2 = new Node(),
-            n3 = new Node();
-        g0.addNodes([n0, n1, n2, n3]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node();
+        g0.addNodes(n0, n1, n2, n3);
 
         const e0 = new Edge(n0, n1),
-            e1 = new Edge(n1, n2),
-            e2 = new Edge(n0, n2),
-            e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the IDs of all incident edges (direction="all")`, function () {
@@ -379,16 +379,16 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-            n1 = new Node(),
-            n2 = new Node(),
-            n3 = new Node();
-        g0.addNodes([n0, n1, n2, n3]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node();
+        g0.addNodes(n0, n1, n2, n3);
 
         const e0 = new Edge(n0, n1),
-            e1 = new Edge(n1, n2),
-            e2 = new Edge(n0, n2),
-            e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return the IDs of all adjacent nodes (direction="all")`, function () {
@@ -421,16 +421,16 @@ describe("Node", function () {
         const g0 = new Graph();
 
         const n0 = new Node(),
-            n1 = new Node(),
-            n2 = new Node(),
-            n3 = new Node();
-        g0.addNodes([n0, n1, n2, n3]);
+              n1 = new Node(),
+              n2 = new Node(),
+              n3 = new Node();
+        g0.addNodes(n0, n1, n2, n3);
 
         const e0 = new Edge(n0, n1),
-            e1 = new Edge(n1, n2),
-            e2 = new Edge(n0, n2),
-            e3 = new Edge(n2, n0);
-        g0.addEdges([e0, e1, e2, e3]);
+              e1 = new Edge(n1, n2),
+              e2 = new Edge(n0, n2),
+              e3 = new Edge(n2, n0);
+        g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges([e2, e3]);
 
         it(`should return if the edge is incident (direction="all")`, function () {
