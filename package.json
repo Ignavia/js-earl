@@ -24,7 +24,8 @@
     "test": "mocha --compilers js:babel-register"
   },
   "dependencies": {
-    "@ignavia/util": "^1.1.6"
+    "@ignavia/util": "^1.1.6",
+    "babel-regenerator-runtime": "^6.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",
@@ -50,6 +51,8 @@
       "plugin-babel": "systemjs-plugin-babel@^0.0.2"
     },
     "peerDependencies": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha"
     }
   }
