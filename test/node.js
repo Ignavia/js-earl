@@ -38,39 +38,35 @@ describe("Node", function () {
 
         it(`should return the IDs of all adjacent nodes (direction="all")`, function () {
             const r0 = [...n1.iterAdjacentNodes("all")];
-            expect(r0).to.contain(n0.id);
-            expect(r0).to.contain(n2.id);
-            expect(r0.length).to.equal(2);
+            expect(r0).to.have.members([n0.id, n2.id]);
 
             const r1 = [...n0.iterAdjacentNodes()];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterAdjacentNodes()];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it(`should return the IDs of outgoing adjacent nodes (direction="out")`, function () {
             const r0 = [...n1.iterAdjacentNodes("out")];
-            expect(r0).to.contain(n2.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([n2.id]);
 
             const r1 = [...n0.iterAdjacentNodes("out")];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterAdjacentNodes("out")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it(`should return the IDs of incoming adjacent nodes (direction="inc")`, function () {
             const r0 = [...n1.iterAdjacentNodes("inc")];
-            expect(r0).to.contain(n0.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([n0.id]);
 
             const r1 = [...n0.iterAdjacentNodes("inc")];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterAdjacentNodes("inc")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
     });
 
@@ -186,15 +182,13 @@ describe("Node", function () {
 
         it(`should return the IDs of the edges between the two nodes (direction="all")`, function () {
             const r0 = [...n1.iterEdgesBetween(n0, "all")];
-            expect(r0).to.contain(e0.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([e0.id]);
 
             const r1 = [...n1.iterEdgesBetween(n2.id)];
-            expect(r1).to.contain(e1.id);
-            expect(r1.length).to.equal(1);
+            expect(r1).to.have.members([e1.id]);
 
             const r3 = [...n0.iterEdgesBetween(n2)];
-            expect(r3.length).to.equal(0);
+            expect(r3).to.be.empty;
         });
 
         it(`should return the IDs of the edges starting at this node and ending at the given one (direction="out")`, function () {
@@ -202,23 +196,21 @@ describe("Node", function () {
             expect(r0.length).to.equal(0);
 
             const r1 = [...n1.iterEdgesBetween(n2, "out")];
-            expect(r1).to.contain(e1.id);
-            expect(r1.length).to.equal(1);
+            expect(r1).to.have.members([e1.id]);
 
             const r2 = [...n0.iterEdgesBetween(n2, "out")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it(`should return the IDs of the edges starting at the given node and ending at this one (direction="inc")`, function () {
             const r0 = [...n1.iterEdgesBetween(n0, "inc")];
-            expect(r0).to.contain(e0.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([e0.id]);
 
             const r1 = [...n1.iterEdgesBetween(n2, "inc")];
-            expect(r1.length).to.equal(0);
+            expect(r1).to.be.empty;
 
             const r2 = [...n0.iterEdgesBetween(n2, "inc")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
     });
 
@@ -338,39 +330,35 @@ describe("Node", function () {
 
         it(`should return the IDs of all incident edges (direction="all")`, function () {
             const r0 = [...n1.iterIncidentEdges("all")];
-            expect(r0).to.contain(e0.id);
-            expect(r0).to.contain(e1.id);
-            expect(r0.length).to.equal(2);
+            expect(r0).to.have.members([e0.id, e1.id]);
 
             const r1 = [...n0.iterIncidentEdges()];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterIncidentEdges()];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it(`should return the IDs of outgoing edges (direction="out")`, function () {
             const r0 = [...n1.iterIncidentEdges("out")];
-            expect(r0).to.contain(e1.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([e1.id]);
 
             const r1 = [...n0.iterIncidentEdges("out")];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterIncidentEdges("out")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it(`should return the IDs of incoming edges (direction="inc")`, function () {
             const r0 = [...n1.iterIncidentEdges("inc")];
-            expect(r0).to.contain(e0.id);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([e0.id]);
 
             const r1 = [...n0.iterIncidentEdges("inc")];
             expect(r1).to.not.contain(n2.id);
 
             const r2 = [...n3.iterIncidentEdges("inc")];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
     });
 
