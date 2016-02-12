@@ -1,6 +1,10 @@
 /* global describe */
 /* global it */
-import {expect} from "chai";
+import chai, {expect} from "chai";
+import chaiSinon      from "sinon-chai";
+chai.use(chaiSinon);
+
+import sinon from "sinon";
 
 import {Graph, Node, Edge} from "../src/earl.js";
 
@@ -38,15 +42,17 @@ describe("Graph", function () {
         });
 
         it("should notify listeners", function () {
-            let r0;
-            g0.addListener(e => r0 = e, "addNodes");
+            const spy = sinon.spy();
+            g0.addListener(spy, "addNodes");
 
             const n2 = new Node();
             g0.addNodes(n2);
 
-            expect(r0.type).to.equal("addNodes");
-            expect(r0.data).to.contain(n2);
-            expect(r0.data.length).to.equal(1);
+            expect(spy).to.have.been.calledOnce;
+            const e = spy.args[0][0];
+            expect(e.source).to.equal(g0);
+            expect(e.type).to.equal("addNodes");
+            expect(e.data).to.have.members([n2]);
         });
 
         it("should return the graph object", function () {
@@ -65,7 +71,7 @@ describe("Graph", function () {
 
         const e0 = new Edge(n0, n1),
               e1 = new Edge(n0, n1);
-        g0.addEdges(e0, e1);;
+        g0.addEdges(e0, e1);
 
         it("should throw if a source ID is invalid", function () {
             const e2 = new Edge("no_id", n0),
@@ -92,15 +98,17 @@ describe("Graph", function () {
         });
 
         it("should notify listeners", function () {
-            let r0;
-            g0.addListener(e => r0 = e, "addEdges");
+            const spy = sinon.spy();
+            g0.addListener(spy, "addEdges");
 
             const e2 = new Edge(n0, n1);
             g0.addEdges(e2);
 
-            expect(r0.type).to.equal("addEdges");
-            expect(r0.data).to.contain(e2);
-            expect(r0.data.length).to.equal(1);
+            expect(spy).to.have.been.calledOnce;
+            const e = spy.args[0][0];
+            expect(e.source).to.equal(g0);
+            expect(e.type).to.equal("addEdges");
+            expect(e.data).to.have.members([e2]);
         });
 
         it("should return the graph object", function () {
@@ -127,10 +135,7 @@ describe("Graph", function () {
 
         it("should remove the selected nodes", function () {
             const r0 = [...g0.iterNodes()];
-            expect(r0).to.contain(n0);
-            expect(r0).to.contain(n1);
-            expect(r0).to.contain(n2);
-            expect(r0.length).to.equal(3);
+            expect(r0).to.have.members([n0, n1, n2]);
         });
 
         it("should remove incident edges", function () {
@@ -139,22 +144,21 @@ describe("Graph", function () {
         });
 
         it("should notify listeners", function () {
-            let r0;
-            g0.addListener(e => r0 = e, "removeNodes");
+            const spy = sinon.spy();
+            g0.addListener(spy, "removeNodes");
             g0.removeNodes(n0);
 
-            expect(r0.type).to.equal("removeNodes");
-            expect(r0.data).to.contain(n0);
-            expect(r0.data.length).to.equal(1);
+            expect(spy).to.have.been.calledOnce;
+            const e = spy.args[0][0];
+            expect(e.source).to.equal(g0);
+            expect(e.type).to.equal("removeNodes");
+            expect(e.data).to.have.members([n0]);
         });
 
         it("should return the deleted nodes and edges", function () {
             const r0 = g0.removeNodes(n1.id, n2);
-            expect(r0.nodes).to.contain(n1);
-            expect(r0.nodes).to.contain(n2);
-            expect(r0.nodes.length).to.equal(2);
-            expect(r0.edges).to.contain(e1);
-            expect(r0.edges.length).to.equal(1);
+            expect(r0.nodes).to.have.members([n1, n2]);
+            expect(r0.edges).to.have.members([e1]);
 
             const r1 = g0.removeNodes("n4");
             expect(r1.nodes.length).to.equal(0);
@@ -180,25 +184,24 @@ describe("Graph", function () {
 
         it("should remove the selected edges", function () {
             const r0 = [...g0.iterEdges()];
-            expect(r0).to.contain(e0);
-            expect(r0.length).to.equal(3);
+            expect(r0).to.have.members([e0, e1, e2]);
         });
 
         it("should notify listeners", function () {
-            let r0;
-            g0.addListener(e => r0 = e, "removeEdges");
+            const spy = sinon.spy();
+            g0.addListener(spy, "removeEdges");
             g0.removeEdges(e0);
 
-            expect(r0.type).to.equal("removeEdges");
-            expect(r0.data).to.contain(e0);
-            expect(r0.data.length).to.equal(1);
+            expect(spy).to.have.been.calledOnce;
+            const e = spy.args[0][0];
+            expect(e.source).to.equal(g0);
+            expect(e.type).to.equal("removeEdges");
+            expect(e.data).to.have.members([e0]);
         });
 
         it("should return the deleted edges", function () {
             const r0 = g0.removeEdges(e1.id, e2);
-            expect(r0).to.contain(e1);
-            expect(r0).to.contain(e2);
-            expect(r0.length).to.equal(2);
+            expect(r0).to.have.members([e1, e2]);
 
             const r1 = g0.removeEdges("e4");
             expect(r1.length).to.equal(0);
@@ -247,8 +250,7 @@ describe("Graph", function () {
 
         it("should return all node IDs", function () {
             const r0 = [...g0.iterNodeIds()];
-            expect(r0).to.contain(n0.id);
-            expect(r0).to.contain(n1.id);
+            expect(r0).to.have.members([n0.id, n1.id]);
         });
     });
 
@@ -266,8 +268,7 @@ describe("Graph", function () {
 
         it("should return all edge IDs", function () {
             let r0 = [...g0.iterEdgeIds()];
-            expect(r0).to.contain(e0.id);
-            expect(r0).to.contain(e1.id);
+            expect(r0).to.have.members([e0.id, e1.id]);
         });
     });
 
@@ -281,46 +282,40 @@ describe("Graph", function () {
 
         it("should return all nodes in the graph (no extra parameters)", function () {
             const r0 = [...g0.iterNodes()];
-            expect(r0).to.contain(n0);
-            expect(r0).to.contain(n1);
-            expect(r0.length).to.equal(2);
+            expect(r0).to.have.members([n0, n1]);
         });
 
         it("should return the selected nodes (given nodes parameter)", function () {
             const r0 = [...g0.iterNodes({
                 nodes: n0.id
             })];
-            expect(r0).to.contain(n0);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([n0]);
 
             const r1 = [...g0.iterNodes({
                 nodes: [n0.id, n1.id]
             })];
-            expect(r1).to.contain(n0);
-            expect(r1).to.contain(n1);
-            expect(r1.length).to.equal(2);
+            expect(r1).to.have.members([n0, n1]);
 
             const r2 = [...g0.iterNodes({
                 nodes: []
             })];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it("should apply the function to all nodes (given map parameter)", function () {
             const r0 = [...g0.iterNodes({
                 map: (n, g) => `${g.id}:${n.id}`
             })];
-            expect(r0).to.contain(`${g0.id}:${n0.id}`);
-            expect(r0).to.contain(`${g0.id}:${n1.id}`);
-            expect(r0.length).to.equal(2);
+            const s0 = `${g0.id}:${n0.id}`,
+                  s1 = `${g0.id}:${n1.id}`;
+            expect(r0).to.have.members([s0, s1]);
         });
 
         it("should return all nodes that pass the test (given filter parameter)", function () {
             const r0 = [...g0.iterNodes({
-                filter: (n, g) => n.id === n1.id
+                filter: (n) => n.id === n1.id
             })];
-            expect(r0).to.contain(n1);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([n1]);
         });
     });
 
@@ -338,46 +333,41 @@ describe("Graph", function () {
 
         it("should return all edges in the graph (no extra parameters)", function () {
             const r0 = [...g0.iterEdges()];
-            expect(r0).to.contain(e0);
-            expect(r0).to.contain(e1);
-            expect(r0.length).to.equal(2);
+            expect(r0).to.have.members([e0, e1]);
         });
 
         it("should return the selected edges (given edges parameter)", function () {
             const r0 = [...g0.iterEdges({
                 edges: e0.id
             })];
-            expect(r0).to.contain(e0);
+            expect(r0).to.have.members([e0]);
             expect(r0.length).to.equal(1);
 
             const r1 = [...g0.iterEdges({
                 edges: [e0.id, e1.id]
             })];
-            expect(r1).to.contain(e0);
-            expect(r1).to.contain(e1);
-            expect(r1.length).to.equal(2);
+            expect(r1).to.have.members([e0, e1]);
 
             const r2 = [...g0.iterEdges({
                 edges: []
             })];
-            expect(r2.length).to.equal(0);
+            expect(r2).to.be.empty;
         });
 
         it("should apply the function to all edges (given map parameter)", function () {
             const r0 = [...g0.iterEdges({
                 map: (e, g) => `${g.id}:${e.id}`
             })];
-            expect(r0).to.contain(`${g0.id}:${e0.id}`);
-            expect(r0).to.contain(`${g0.id}:${e1.id}`);
-            expect(r0.length).to.equal(2);
+            const s0 = `${g0.id}:${e0.id}`,
+                  s1 = `${g0.id}:${e1.id}`;
+            expect(r0).to.have.members([s0, s1]);
         });
 
         it("should return all edges that pass the test (given filter parameter)", function () {
             const r0 = [...g0.iterEdges({
-                filter: (e, g) => e.id === e0.id
+                filter: (e) => e.id === e0.id
             })];
-            expect(r0).to.contain(e0);
-            expect(r0.length).to.equal(1);
+            expect(r0).to.have.members([e0]);
         });
     });
 
@@ -403,20 +393,14 @@ describe("Graph", function () {
             const g1 = g0.generateMaximumSubgraphWith(n0, n1.id, n2);
 
             const r0 = [...g1.iterNodes({
-                map: (n, g) => n.parentId
+                map: (n) => n.parentId
             })];
-            expect(r0).to.contain(n0.id);
-            expect(r0).to.contain(n1.id);
-            expect(r0).to.contain(n2.id);
-            expect(r0.length).to.equal(3);
+            expect(r0).to.have.members([n0.id, n1.id, n2.id]);
 
             const r1 = [...g1.iterEdges({
-                map: (e, g) => e.parentId
+                map: (e) => e.parentId
             })];
-            expect(r1).to.contain(e0.id);
-            expect(r1).to.contain(e1.id);
-            expect(r1).to.contain(e2.id);
-            expect(r1.length).to.equal(3);
+            expect(r1).to.have.members([e0.id, e1.id, e2.id]);
         });
     });
 
@@ -442,20 +426,14 @@ describe("Graph", function () {
             const g1 = g0.generateMinimumSubgraphWith(e0, e1.id, e2);
 
             const r0 = [...g1.iterNodes({
-                map: (n, g) => n.parentId
+                map: (n) => n.parentId
             })];
-            expect(r0).to.contain(n0.id);
-            expect(r0).to.contain(n1.id);
-            expect(r0).to.contain(n2.id);
-            expect(r0.length).to.equal(3);
+            expect(r0).to.have.members([n0.id, n1.id, n2.id]);
 
             const r1 = [...g1.iterEdges({
-                map: (e, g) => e.parentId
+                map: (e) => e.parentId
             })];
-            expect(r1).to.contain(e0.id);
-            expect(r1).to.contain(e1.id);
-            expect(r1).to.contain(e2.id);
-            expect(r1.length).to.equal(3);
+            expect(r1).to.have.members([e0.id, e1.id, e2.id]);
         });
     });
 
@@ -484,8 +462,7 @@ describe("Graph", function () {
 
         it(`should visit all nodes reachable from the root in DFS order (direction="all")`, function () {
             const r0 = [...g0.iterDFSVisit(n0)];
-            expect(r0).to.contain(n2);
-            expect(r0).to.contain(n3);
+            expect(r0).to.include.members([n2, n3]);
             expect(r0.length).to.equal(6);
 
             expect(r0[0]).to.equal(n0);
@@ -560,31 +537,24 @@ describe("Graph", function () {
         it(`should visit all nodes reachable from the root in BFS order (direction="all")`, function () {
             const r0 = [...g0.iterBFSVisit(n0)];
             expect(r0[0]).to.equal(n0);
-            expect([r0[1], r0[2]]).to.contain(n1);
-            expect([r0[1], r0[2]]).to.contain(n4);
-            expect([r0[3], r0[4], r0[5]]).to.contain(n2);
-            expect([r0[3], r0[4], r0[5]]).to.contain(n3);
-            expect([r0[3], r0[4], r0[5]]).to.contain(n5);
+            expect([r0[1], r0[2]]).to.have.members([n1, n4]);
+            expect([r0[3], r0[4], r0[5]]).to.have.members([n2, n3, n5]);
             expect(r0.length).to.equal(6);
         });
 
         it(`should visit all nodes reachable from the root in BFS order (direction="out")`, function () {
             const r0 = [...g0.iterBFSVisit(n0, "out")];
             expect(r0[0]).to.equal(n0);
-            expect([r0[1], r0[2]]).to.contain(n1);
-            expect([r0[1], r0[2]]).to.contain(n4);
-            expect([r0[3], r0[4]]).to.contain(n2);
-            expect([r0[3], r0[4]]).to.contain(n5);
+            expect([r0[1], r0[2]]).to.have.members([n1, n4]);
+            expect([r0[3], r0[4]]).to.have.members([n2, n5]);
             expect(r0.length).to.equal(5);
         });
 
         it(`should visit all nodes reachable from the root in BFS order (direction="inc")`, function () {
             const r0 = [...g0.iterBFSVisit(n0, "inc")];
             expect(r0[0]).to.equal(n0);
-            expect([r0[1], r0[2]]).to.contain(n1);
-            expect([r0[1], r0[2]]).to.contain(n4);
-            expect([r0[3], r0[4]]).to.contain(n3);
-            expect([r0[3], r0[4]]).to.contain(n5);
+            expect([r0[1], r0[2]]).to.have.members([n1, n4]);
+            expect([r0[3], r0[4]]).to.have.members([n3, n5]);
             expect(r0.length).to.equal(5);
         });
     });

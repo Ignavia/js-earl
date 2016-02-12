@@ -1,4 +1,4 @@
-import "babel-regenerator-runtime"; // TODO remove when not needed anymore
+import "babel-regenerator-runtime"; // TODO remove when not needed anymore (babel bug)
 
 import {EventManager, extensibleExtendedMixin, IDGenerator, observableExtendedMixin} from "@ignavia/util";
 
@@ -50,7 +50,7 @@ export default class Graph {
 
     /**
      * A helper function for other functions that can take a single node ID, an
-     * iterator for node IDs, a single node or an iterator for nodes and returns
+     * Iterable for node IDs, a single node or an Iterable for nodes and returns
      * an iterable object.
      *
      * @param {String|Iterator<String>|Node|Iterator<String>} nodes
@@ -68,7 +68,7 @@ export default class Graph {
 
     /**
      * A helper function for other functions that can take a single edge ID, an
-     * iterator for edge IDs, a single edge or an iterator for edges and returns
+     * Iterable for edge IDs, a single edge or an Iterable for edges and returns
      * an iterable object.
      *
      * @param {String|Iterator<String>|Edge|Iterator<String>} edges
@@ -142,10 +142,11 @@ export default class Graph {
         }
 
         // Notify listeners
+        let g = this;
         this.fireEvent(EventManager.makeEvent({
-            subject: this,
-            type:    "addNodes",
-            data:    nodeObjs
+            source: g,
+            type:   "addNodes",
+            data:   nodeObjs
         }));
 
         return this;
@@ -196,9 +197,9 @@ export default class Graph {
 
         // Notify listeners
         this.fireEvent(EventManager.makeEvent({
-            subject: this,
-            type:   "addEdges",
-            data:   edgeObjs
+            source: this,
+            type:  "addEdges",
+            data:  edgeObjs
         }));
 
         return this;
@@ -242,9 +243,9 @@ export default class Graph {
 
         // Notify listeners
         this.fireEvent(EventManager.makeEvent({
-            subject: this,
-            type:    "removeNodes",
-            data:    deleted.nodes
+            source: this,
+            type:   "removeNodes",
+            data:   deleted.nodes
         }));
 
         return deleted;
@@ -286,9 +287,9 @@ export default class Graph {
 
         // Notify listeners
         this.fireEvent(EventManager.makeEvent({
-            subject: this,
-            type:    "removeEdges",
-            data:    deleted
+            source: this,
+            type:   "removeEdges",
+            data:   deleted
         }));
 
         return deleted;
@@ -341,14 +342,14 @@ export default class Graph {
     }
 
     /**
-     * An iterator for the node IDs in this graph.
+     * An Iterable for the node IDs in this graph.
      */
     * iterNodeIds() {
         yield* this.nodes.keys();
     }
 
     /**
-     * An iterator for the edge IDs in this graph.
+     * An Iterable for the edge IDs in this graph.
      */
     * iterEdgeIds() {
         yield* this.edges.keys();
@@ -363,18 +364,18 @@ export default class Graph {
      * @param {Object} [options={}]
      * Used for various options.
      *
-     * @param {Function} [options.filter=(n, g)=>true]
+     * @param {Function} [options.filter=()=>true]
      * The filter function to apply. It gets a node as the first parameter
      * and this graph as the second.
      *
-     * @param {Function} [options.map=(n, g)=>n]
+     * @param {Function} [options.map=(n)=>n]
      * The function to use for mapping. It gets a node as the first parameter
      * and this graph as the second.
      *
      * @param {String|Iterator<String>|Node|Iterator<Node>} [options.nodes]
      * Restricts the nodes to iterate over. Passing in IDs is enough.
      */
-    * iterNodes({filter = (n, g)=>true, map = (n, g)=>n, nodes = this.nodes.values()} = {}) {
+    * iterNodes({filter = ()=>true, map = (n)=>n, nodes = this.nodes.values()} = {}) {
         nodes = Graph.makeNodesIterable(nodes);
 
         for (let node of nodes) {
@@ -395,18 +396,18 @@ export default class Graph {
      * @param {Object} [options={}]
      * Used for various options.
      *
-     * @param {Function} [options.filter=(e, g)=>true]
+     * @param {Function} [options.filter=()=>true]
      * The filter function to apply. It gets an edge as the first parameter
      * and this graph as the second.
      *
-     * @param {Function} [options.map=(e, g)=>e]
+     * @param {Function} [options.map=(e)=>e]
      * The function to use for mapping. It gets a node as the first parameter
      * and this graph as the second.
      *
      * @param {String|Iterator<String>|Edge|Iterator<Edge>} [options.edges]
      * Restricts the edges to iterate over. Specifying IDs is sufficient.
      */
-    * iterEdges({filter = (e, g)=>true, map = (e, g)=>e, edges = this.edges.values()} = {}) {
+    * iterEdges({filter = ()=>true, map = (e)=>e, edges = this.edges.values()} = {}) {
         edges = Graph.makeEdgesIterable(edges);
 
         for (let edge of edges) {

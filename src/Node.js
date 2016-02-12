@@ -1,4 +1,4 @@
-import "babel-regenerator-runtime"; // TODO remove when not needed anymore
+import "babel-regenerator-runtime"; // TODO remove when not needed anymore (babel bug)
 
 import {IDGenerator} from "@ignavia/util";
 
