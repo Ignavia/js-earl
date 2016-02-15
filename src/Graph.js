@@ -142,12 +142,13 @@ export default class Graph {
         }
 
         // Notify listeners
-        let g = this;
-        this.fireEvent(EventManager.makeEvent({
-            source: g,
-            type:   "addNodes",
-            data:   nodeObjs
-        }));
+        if (nodeObjs.length > 0) {
+            this.fireEvent(EventManager.makeEvent({
+                source: this,
+                type:   "addNodes",
+                data:   nodeObjs
+            }));
+        }
 
         return this;
     }
@@ -196,11 +197,13 @@ export default class Graph {
         }
 
         // Notify listeners
-        this.fireEvent(EventManager.makeEvent({
-            source: this,
-            type:  "addEdges",
-            data:  edgeObjs
-        }));
+        if (edgeObjs.length > 0) {
+            this.fireEvent(EventManager.makeEvent({
+                source: this,
+                type:  "addEdges",
+                data:  edgeObjs
+            }));
+        }
 
         return this;
     }
@@ -242,11 +245,13 @@ export default class Graph {
         }
 
         // Notify listeners
-        this.fireEvent(EventManager.makeEvent({
-            source: this,
-            type:   "removeNodes",
-            data:   deleted.nodes
-        }));
+        if (deleted.nodes.length > 0) {
+            this.fireEvent(EventManager.makeEvent({
+                source: this,
+                type:   "removeNodes",
+                data:   deleted.nodes
+            }));
+        }
 
         return deleted;
     }
@@ -286,11 +291,13 @@ export default class Graph {
         }
 
         // Notify listeners
-        this.fireEvent(EventManager.makeEvent({
-            source: this,
-            type:   "removeEdges",
-            data:   deleted
-        }));
+        if (deleted.length > 0) {
+            this.fireEvent(EventManager.makeEvent({
+                source: this,
+                type:   "removeEdges",
+                data:   deleted
+            }));
+        }
 
         return deleted;
     }
