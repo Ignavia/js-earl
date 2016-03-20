@@ -113,7 +113,6 @@ export default class Path {
      */
     isVisited(node) {
         node = Graph.toNodeId(node);
-
         return this.visitCounter.has(node);
     }
 

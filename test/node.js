@@ -1,13 +1,8 @@
-/* global describe */
-/* global it */
 import {expect} from "chai";
 
 import {Graph, Node, Edge} from "../src/earl.js";
 
-/** @test {Node} */
 describe("Node", function () {
-
-    /** @test {Node#constructor} */
     describe("#constructor", function () {
         const n0 = new Node(),
               n1 = new Node();
@@ -19,20 +14,19 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#iterAdjacentNodes} */
     describe("#iterAdjacentNodes", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node(),
-              n3 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
+        const n3 = new Node();
         g0.addNodes(n0, n1, n2, n3);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -70,19 +64,18 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#getNumberOfAdjacentNodes} */
     describe("#getNumberOfAdjacentNodes", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
         g0.addNodes(n0, n1, n2);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -111,19 +104,18 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#isAdjacentNode} */
     describe("#isAdjacentNode", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
         g0.addNodes(n0, n1, n2);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -164,19 +156,18 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#iterEdgesBetween} */
     describe("#iterEdgesBetween", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
         g0.addNodes(n0, n1, n2);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -214,19 +205,18 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#getNumberOfEdgesBetween} */
     describe("#getNumberOfEdgesBetween", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
         g0.addNodes(n0, n1, n2);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -255,19 +245,18 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#isEdgeBetween} */
     describe("#isEdgeBetween", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
         g0.addNodes(n0, n1, n2);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -311,20 +300,19 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#iterIncidentEdges} */
     describe("#iterIncidentEdges", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node(),
-              n3 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
+        const n3 = new Node();
         g0.addNodes(n0, n1, n2, n3);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -362,20 +350,19 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#getNumberOfIncidentEdges } */
     describe("#getNumberOfIncidentEdges", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node(),
-              n3 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
+        const n3 = new Node();
         g0.addNodes(n0, n1, n2, n3);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -404,20 +391,19 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#isIncidentEdge } */
     describe("#isIncidentEdge", function () {
         const g0 = new Graph();
 
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node(),
-              n3 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
+        const n3 = new Node();
         g0.addNodes(n0, n1, n2, n3);
 
-        const e0 = new Edge(n0, n1),
-              e1 = new Edge(n1, n2),
-              e2 = new Edge(n0, n2),
-              e3 = new Edge(n2, n0);
+        const e0 = new Edge(n0, n1);
+        const e1 = new Edge(n1, n2);
+        const e2 = new Edge(n0, n2);
+        const e3 = new Edge(n2, n0);
         g0.addEdges(e0, e1, e2, e3);
         g0.removeEdges(e2, e3);
 
@@ -461,7 +447,6 @@ describe("Node", function () {
         });
     });
 
-    /** @test {Node#toString } */
     describe("#toString", function () {
         const g0 = new Graph();
 

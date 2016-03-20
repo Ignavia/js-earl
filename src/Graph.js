@@ -177,8 +177,8 @@ export default class Graph {
 
         // Add edges
         for (let edgeObj of edgeObjs) {
-            const sourceObj = this.getNodeById(edgeObj.sourceId),
-                  targetObj = this.getNodeById(edgeObj.targetId);
+            const sourceObj = this.getNodeById(edgeObj.sourceId);
+            const targetObj = this.getNodeById(edgeObj.targetId);
 
             if (!sourceObj) {
                 throw new Error(`The source node ${edgeObj.sourceId} is invalid.`);
@@ -541,8 +541,8 @@ export default class Graph {
         root      = this.toNodeObj(root);
         direction = direction || "all"; // TODO change to default parameter (babel bug)
 
-        const stack   = [root],
-              visited = new Set();
+        const stack   = [root];
+        const visited = new Set();
 
         while (stack.length > 0) {
             const currentObj = stack.pop();
@@ -573,8 +573,8 @@ export default class Graph {
         root = this.toNodeObj(root);
         direction = direction || "all"; // TODO change to default parameter (babel bug)
 
-        const queue   = [root],
-              visited = new Set();
+        const queue   = [root];
+        const visited = new Set();
 
         visited.add(root.id);
 
@@ -609,8 +609,8 @@ export default class Graph {
     computeBreadthFirstTree(root, direction = "all") {
         root = this.toNodeObj(root);
 
-        const queue  = [root],
-              result = new Map();
+        const queue  = [root];
+        const result = new Map();
 
         result.set(root.id, {
             parentId: undefined,

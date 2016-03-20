@@ -1,24 +1,19 @@
-/* global describe */
-/* global it */
 import {expect} from "chai";
 
 import {Node, Path} from "../src/earl.js";
 
-/** @test {Path} */
 describe("Path", function () {
-
-    /** @test {Path#constructor} */
     describe("#constructor", function () {
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
 
-        const p0 = new Path(n0),
-              p1 = new Path(n0, n0),
-              p2 = new Path(n0, n1, n1, n0),
-              p3 = new Path(n0, n1, n2),
-              p4 = new Path(n0, n1, n2, n1),
-              p5 = new Path(n0, n0, n0);
+        const p0 = new Path(n0);
+        const p1 = new Path(n0, n0);
+        const p2 = new Path(n0, n1, n1, n0);
+        const p3 = new Path(n0, n1, n2);
+        const p4 = new Path(n0, n1, n2, n1);
+        const p5 = new Path(n0, n0, n0);
 
         it("should set the isCycle variable", function () {
             expect(p0.isCycle).to.equal(false);
@@ -48,14 +43,13 @@ describe("Path", function () {
         });
     });
 
-    /** @test {Path#getLength} */
     describe("#getLength", function () {
-        const n0 = new Node(),
-              n1 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
 
-        const p0 = new Path(n0),
-              p1 = new Path(n0.id, n1),
-              p2 = new Path();
+        const p0 = new Path(n0);
+        const p1 = new Path(n0.id, n1);
+        const p2 = new Path();
 
         it("should return the length of the path", function () {
             const r0 = p0.getLength();
@@ -69,11 +63,10 @@ describe("Path", function () {
         });
     });
 
-    /** @test {Path#getNumberOfVisits} */
     describe("#getNumberOfVisits", function () {
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
 
         const p0 = new Path(n0, n1, n2, n1);
 
@@ -92,11 +85,10 @@ describe("Path", function () {
         });
     });
 
-    /** @test {Path#isVisited} */
     describe("#isVisited", function () {
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
 
         const p0 = new Path(n0, n1, n2, n1);
 
@@ -115,13 +107,12 @@ describe("Path", function () {
         });
     });
 
-    /** @test {Path#toArray} */
     describe("#toArray", function () {
-       const n0 = new Node();
+        const n0 = new Node();
 
-        const p0 = new Path(n0),
-              p1 = new Path(n0.id),
-              p2 = new Path();
+        const p0 = new Path(n0);
+        const p1 = new Path(n0.id);
+        const p2 = new Path();
 
         it("should return an array with the IDs of the nodes on the path in order", function () {
             const r0 = p0.toArray();
@@ -137,11 +128,10 @@ describe("Path", function () {
         });
     });
 
-    /** @test {Path#toString} */
     describe("#toString", function() {
-        const n0 = new Node(),
-              n1 = new Node(),
-              n2 = new Node();
+        const n0 = new Node();
+        const n1 = new Node();
+        const n2 = new Node();
 
         const p0 = new Path(n0, n1, n2);
 
