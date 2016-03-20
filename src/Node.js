@@ -1,13 +1,9 @@
-import "babel-regenerator-runtime"; // TODO remove when not needed anymore (babel bug)
-
 import {IDGenerator} from "@ignavia/util";
 
 import Graph from "./Graph.js";
 
 /**
  * A node in a graph.
- *
- * @implements {Observable}
  */
 export default class Node {
 

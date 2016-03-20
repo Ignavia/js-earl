@@ -1,5 +1,3 @@
-import "babel-regenerator-runtime"; // TODO remove when not needed anymore (babel bug)
-
 import {EventManager, extensibleExtendedMixin, IDGenerator, observableExtendedMixin} from "@ignavia/util";
 
 import Node             from "./Node.js";
@@ -392,7 +390,6 @@ export default class Graph {
             }
         }
     }
-
 
     /**
      * Iterates over the edges in the graph. If the edges parameter is specified

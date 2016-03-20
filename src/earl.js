@@ -1,4 +1,6 @@
-export {default as Graph} from "./Graph.js";
-export {default as Node}  from "./Node.js";
-export {default as Edge}  from "./Edge.js";
-export {default as Path}  from "./Path.js";
+import "babel-regenerator-runtime";
+
+export Graph from "./Graph.js";
+export Node  from "./Node.js";
+export Edge  from "./Edge.js";
+export Path  from "./Path.js";

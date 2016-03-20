@@ -4,8 +4,6 @@ import Graph from "./Graph.js";
 
 /**
  * An edge in a graph.
- *
- * @implements {Observable}
  */
 export default class Edge {
 
