@@ -296,7 +296,6 @@ export default class Node {
         return incidenceList.has(edge);
     }
 
-
     /**
      * Adds a new outgoing edge.
      *
