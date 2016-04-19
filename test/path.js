@@ -3,6 +3,15 @@ import {expect} from "chai";
 import {Node, Path} from "../src/earl.js";
 
 describe("Path", function () {
+    describe("#fromJSON", function () {
+        it("should convert a plain JSON object back to a Path object", function () {
+            const n0 = new Node("n0");
+            const n1 = new Node("n1");
+            const r  = Path.fromJSON(new Path(n0, n1).toJSON());
+            expect(r.toArray()).to.eql(["n0", "n1"]);
+        });
+    });
+
     describe("#constructor", function () {
         const n0 = new Node();
         const n1 = new Node();
@@ -133,10 +142,19 @@ describe("Path", function () {
         const n1 = new Node();
         const n2 = new Node();
 
-        const p0 = new Path(n0, n1, n2);
+        const p = new Path(n0, n1, n2);
 
         it("should return a string", function () {
-            expect(p0.toString()).to.be.a("string");
+            expect(p.toString()).to.be.a("string");
+        });
+    });
+
+    describe("#toJSON", function () {
+        it("should encode all information to reconstruct the node object", function () {
+            const n0 = new Node("n0");
+            const n1 = new Node("n1");
+            const r  = new Path(n0, n1).toJSON();
+            expect(r.nodes).to.eql(["n0", "n1"]);
         });
     });
 });

@@ -7,6 +7,21 @@ import sinon from "sinon";
 import {Graph, Node, Edge} from "../src/earl.js";
 
 describe("Graph", function () {
+    describe("#fromJSON", function () {
+        it("should convert a plain JSON object back to a Graph object", function () {
+            const g = new Graph({
+                nodes: [new Node("n0"), new Node("n1")],
+                edges: [new Edge("n0", "n1", "e0")],
+                id:    "g0"
+            });
+
+            const r = Graph.fromJSON(g.toJSON());
+            expect(r.id).to.equal("g0");
+            expect([...r.iterNodeIds()]).to.have.members(["n0", "n1"]);
+            expect([...r.iterEdgeIds()]).to.have.members(["e0"]);
+        });
+    });
+
     describe("#constructor", function () {
         const g0 = new Graph();
         const g1 = new Graph();
@@ -615,30 +630,45 @@ describe("Graph", function () {
     });
 
     describe("#addMethod", function () {
-        const g0 = new Graph();
+        const g = new Graph();
 
         it("should add a method to the graph", function () {
-            g0.addMethod("greet0", () => "Hello");
-            expect(g0.greet0()).to.equal("Hello");
+            g.addMethod("greet0", () => "Hello");
+            expect(g.greet0()).to.equal("Hello");
         });
     });
 
     describe("#addPlugins", function () {
-        const g0 = new Graph();
+        const g = new Graph();
 
         it("should call the register method of a plugin", function () {
-            let r0;
-            const p0 = {register: () => r0 = true};
-            g0.addPlugin(p0);
-            expect(r0).to.equal(true);
+            let r;
+            const p = {register: () => r = true};
+            g.addPlugin(p);
+            expect(r).to.equal(true);
         });
     });
 
     describe("#toString", function () {
-        const g0 = new Graph();
+        const g = new Graph();
 
         it("should return a string", function () {
-            expect(g0.toString()).to.be.a("string");
+            expect(g.toString()).to.be.a("string");
+        });
+    });
+
+    describe("#toJSON", function() {
+        it("should encode all information to reconstruct the graph object", function () {
+            const g = new Graph({
+                nodes: [new Node("n0"), new Node("n1")],
+                edges: [new Edge("n0", "n1")],
+                id:    "g0"
+            });
+
+            const r = g.toJSON();
+            expect(r.id).to.equal("g0");
+            expect(r.nodes.length).to.equal(2);
+            expect(r.edges.length).to.equal(1);
         });
     });
 });

@@ -13,6 +13,23 @@ import BreadthFirstTree from "./BreadthFirstTree.js";
 export default class Graph {
 
     /**
+     * Turns a plain JSON object back to a graph object.
+     *
+     * @param {Object} json
+     * The plain object to convert.
+     *
+     * @return {Graph}
+     * The resulting graph object.
+     */
+    static fromJSON(json) {
+        return new Graph({
+            nodes: json.nodes.map(obj => Node.fromJSON(obj)),
+            edges: json.edges.map(obj => Edge.fromJSON(obj)),
+            id:    json.id
+        });
+    }
+
+    /**
      * A helper function to turn a node or its ID into an ID.
      *
      * @param {String|Node} node
@@ -83,15 +100,24 @@ export default class Graph {
     }
 
     /**
-     * @param {String} id
-     * The ID of this graph. It must have the form /g[0-9]+/.
+     * @param {Object} obj
+     * The options object.
+     *
+     * @param {Iterable} [obj.nodes=[]]
+     * The nodes to add to the graph initially.
+     *
+     * @param {Iterable} [obj.edges=[]]
+     * The edges to add to the graph initially.
+     *
+     * @param {String} [id]
+     * The ID of this graph.
      */
-    constructor(id = Graph.idGenerator.next()) {
-        if (/^g[0-9]+$/.test(id)) {
+    constructor({ nodes = [], edges = [], id } = {}) {
+        if (id && /^g[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^g([0-9]+)$/);
-            Graph.idGenerator.increaseToAtLeast(counter);
+            Graph.idGenerator.increaseToAtLeast(counter + 1);
         } else {
-            throw new Error("The ID of an edge must have the form /g[0-9]+/.");
+            id = Graph.idGenerator.next();
         }
 
         /**
@@ -123,6 +149,10 @@ export default class Graph {
          * @type {EventManager}
          */
         this.eventManager = new EventManager();
+
+        // Add initial nodes and edges
+        this.addNodes(...nodes);
+        this.addEdges(...edges);
     }
 
     /**
@@ -159,20 +189,15 @@ export default class Graph {
     }
 
     /**
-     * Adds the given edges to the graph model. Note that the graph must contain
-     * both the source and the target node of each edge.
+     * Adds the given edges to the graph model. If the graph does not contain
+     * either the source and the target node, they are created and added to the
+     * graph.
      *
      * @param {...Edge} edgeObjs
      * The edges to add.
      *
      * @return {Graph}
      * This graph to make the method chainable.
-     *
-     * @throws {Error}
-     * If a source node does not exist.
-     *
-     * @throws {Error}
-     * If a target node does not exist.
      *
      * @emits {Event}
      * The type property is set to "addEdges", the source is this graph and the
@@ -186,10 +211,10 @@ export default class Graph {
             const targetObj = this.getNodeById(edgeObj.targetId);
 
             if (!sourceObj) {
-                throw new Error(`The source node ${edgeObj.sourceId} is invalid.`);
+                this.addNodes(new Node(edgeObj.sourceId));
             }
             if (!targetObj) {
-                throw new Error(`The target node ${edgeObj.targetId} is invalid.`);
+                this.addNodes(new Node(edgeObj.targetId));
             }
 
             // Update edge data
@@ -686,6 +711,20 @@ export default class Graph {
      */
     toString() {
         return this.id;
+    }
+
+    /**
+     * Returns a JSON representation of this graph.
+     *
+     * @return {Object}
+     * A JSON representation of this graph.
+     */
+    toJSON() {
+        return {
+            nodes: [...this.nodes.values()].map(n => n.toJSON()),
+            edges: [...this.edges.values()].map(e => e.toJSON()),
+            id:    this.id
+        };
     }
 }
 

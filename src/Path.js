@@ -6,6 +6,19 @@ import Graph from "./Graph.js";
 export default class Path {
 
     /**
+     * Turns a plain JSON object back to a Path object.
+     *
+     * @param {Object} json
+     * The plain object to convert.
+     *
+     * @return {Path}
+     * The resulting path object.
+     */
+    static fromJSON(json) {
+        return new Path(...json.nodes);
+    }
+
+    /**
      * @param {...String|...Node} nodes
      * The nodes visited by this path in order. Specifying IDs is enough.
      */
@@ -143,5 +156,17 @@ export default class Path {
         }
 
         return result;
+    }
+
+    /**
+     * Returns a JSON representation of this path.
+     *
+     * @return {Object}
+     * A JSON representation of this path.
+     */
+    toJSON() {
+        return {
+            nodes: this.toArray()
+        };
     }
 }

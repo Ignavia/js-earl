@@ -11,6 +11,15 @@ describe("Edge", function () {
         this.e1 = new Edge(this.n0, this.n1);
     });
 
+    describe("#fromJSON", function () {
+        it("should convert a plain JSON object back to an Edge object", function () {
+            const r = Edge.fromJSON(new Edge("n0", "n1", "e0").toJSON());
+            expect(r.id).to.equal("e0");
+            expect(r.sourceId).to.equal("n0");
+            expect(r.targetId).to.equal("n1");
+        });
+    });
+
     describe("#constructor", function () {
         it("should set the source ID", function () {
             expect(this.e0.sourceId).to.equal(this.n0.id);
@@ -30,6 +39,15 @@ describe("Edge", function () {
     describe("#toString", function() {
         it("should return a string", function () {
             expect(this.e0.toString()).to.be.a("string");
+        });
+    });
+
+    describe("#toJSON", function() {
+        it("should encode all information to reconstruct the edge object", function () {
+            const r = new Edge("n0", "n1", "e0").toJSON();
+            expect(r.id).to.equal("e0");
+            expect(r.source).to.equal("n0");
+            expect(r.target).to.equal("n1");
         });
     });
 

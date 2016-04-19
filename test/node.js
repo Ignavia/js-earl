@@ -3,6 +3,13 @@ import {expect} from "chai";
 import {Graph, Node, Edge} from "../src/earl.js";
 
 describe("Node", function () {
+    describe("#fromJSON", function () {
+        it("should convert a plain JSON object back to a Node object", function () {
+            const r = Node.fromJSON(new Node("n0").toJSON());
+            expect(r.id).to.equal("n0");
+        });
+    });
+
     describe("#constructor", function () {
         const n0 = new Node(),
               n1 = new Node();
@@ -455,6 +462,13 @@ describe("Node", function () {
 
         it("should return a string", function () {
             expect(n0.toString()).to.be.a("string");
+        });
+    });
+
+    describe("#toJSON", function() {
+        it("should encode all information to reconstruct the node object", function () {
+            const r = new Node("n0").toJSON();
+            expect(r.id).to.equal("n0");
         });
     });
 });

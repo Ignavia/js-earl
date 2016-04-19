@@ -8,15 +8,28 @@ import Graph from "./Graph.js";
 export default class Node {
 
     /**
-     * @param {String} id
-     * The ID of this node. It must have the form /n[0-9]+/.
+     * Turns a plain JSON object back to a Node object.
+     *
+     * @param {Object} json
+     * The plain object to convert.
+     *
+     * @return {Node}
+     * The resulting node object.
      */
-    constructor(id = Node.idGenerator.next()) {
-        if (/^n[0-9]+$/.test(id)) {
+    static fromJSON(json) {
+        return new Node(json.id);
+    }
+
+    /**
+     * @param {String} [id]
+     * The ID of this node.
+     */
+    constructor(id) {
+        if (id && /^n[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^n([0-9]+)$/);
-            Node.idGenerator.increaseToAtLeast(counter);
+            Node.idGenerator.increaseToAtLeast(counter + 1);
         } else {
-            throw new Error("The ID of an edge must have the form /n[0-9]+/.");
+            id = Node.idGenerator.next();
         }
 
         /**
@@ -379,6 +392,18 @@ export default class Node {
      */
     toString() {
         return this.id;
+    }
+
+    /**
+     * Returns a JSON representation of this node.
+     *
+     * @return {Object}
+     * A JSON representation of this node.
+     */
+    toJSON() {
+        return {
+            id: this.id
+        };
     }
 }
 
