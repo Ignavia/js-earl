@@ -39,24 +39,24 @@ export default class Node {
          *
          * @type {Object}
          *
-         * @property {Map<String, Set<String>} _adjacencyLists.all
+         * @property {GumpMap} adjacencyLists.all
          * Maps from IDs of all adjacent nodes to the IDs of the edges between
          * the nodes.
          *
-         * @property {Map<String, Set<String>} _adjacencyLists.out
+         * @property {GumpMap} adjacencyLists.out
          * Maps from the IDs of all nodes that are the target node of at least
          * one edge starting at this node to the corresponding edge IDs.
          *
-         * @property {Map<String, Set<String>} _adjacencyLists.inc
+         * @property {GumpMap} adjacencyLists.inc
          * Maps from the IDs of all nodes that are the source node of at least
          * one edge ending at this node to the corresponding edge IDs.
          *
          * @private
          */
         this.adjacencyLists = {
-            all: new Map(),
-            out: new Map(),
-            inc: new Map()
+            all: new GumpMap(),
+            out: new GumpMap(),
+            inc: new GumpMap()
         };
 
         /**
@@ -64,13 +64,13 @@ export default class Node {
          *
          * @type {Object}
          *
-         * @property {Set<String>} _incidenceLists.all
+         * @property {Set<String>} incidenceLists.all
          * The IDs of all incident edges.
          *
-         * @property {Set<String>} _incidenceLists.out
+         * @property {Set<String>} incidenceLists.out
          * The IDs of all outgoing edges.
          *
-         * @property {Set<String>} _incidenceLists.inc
+         * @property {Set<String>} incidenceLists.inc
          * The IDs of all incoming edges.
          *
          * @private
@@ -313,25 +313,12 @@ export default class Node {
      */
     addOutgoingEdge(edgeObj) {
         const edgeId = edgeObj.id;
+        const targetId = edgeObj.targetId;
 
-        // Update incidence lists
+        this.adjacencyLists.all.add(targetId, edgeId);
+        this.adjacencyLists.out.add(targetId, edgeId);
         this.incidenceLists.all.add(edgeId);
         this.incidenceLists.out.add(edgeId);
-
-        // Update adjacency lists
-        const adjacencyAll = this.adjacencyLists.all;
-        const adjacencyOut = this.adjacencyLists.out;
-        const targetId     = edgeObj.targetId;
-
-        if (!adjacencyAll.has(targetId)) {
-            adjacencyAll.set(targetId, new Set());
-        }
-        adjacencyAll.get(targetId).add(edgeId);
-
-        if (!adjacencyOut.has(targetId)) {
-            adjacencyOut.set(targetId, new Set());
-        }
-        adjacencyOut.get(targetId).add(edgeId);
     }
 
     /**
@@ -344,25 +331,12 @@ export default class Node {
      */
     addIncomingEdge(edgeObj) {
         const edgeId = edgeObj.id;
+        const sourceId = edgeObj.sourceId;
 
-        // Update incidence lists
+        this.adjacencyLists.all.add(sourceId, edgeId);
+        this.adjacencyLists.inc.add(sourceId, edgeId);
         this.incidenceLists.all.add(edgeId);
         this.incidenceLists.inc.add(edgeId);
-
-        // Update adjacency lists
-        const adjacencyAll = this.adjacencyLists.all;
-        const adjacencyInc = this.adjacencyLists.inc;
-        const sourceId     = edgeObj.sourceId;
-
-        if (!adjacencyAll.has(sourceId)) {
-            adjacencyAll.set(sourceId, new Set());
-        }
-        adjacencyAll.get(sourceId).add(edgeId);
-
-        if (!adjacencyInc.has(sourceId)) {
-            adjacencyInc.set(sourceId, new Set());
-        }
-        adjacencyInc.get(sourceId).add(edgeId);
     }
 
     /**
@@ -375,26 +349,19 @@ export default class Node {
      */
     removeOutgoingEdge(edgeObj) {
         const edgeId = edgeObj.id;
+        const targetId = edgeObj.targetId;
 
-        // Update incidence lists
+        this.adjacencyLists.all.delete(targetId, edgeId);
+        this.adjacencyLists.out.delete(targetId, edgeId);
         this.incidenceLists.all.delete(edgeId);
         this.incidenceLists.out.delete(edgeId);
 
-        // Update adjacency lists
-        const adjacencyAll      = this.adjacencyLists.all;
-        const adjacencyOut      = this.adjacencyLists.out;
-        const targetId          = edgeObj.targetId;
-        const adjacencyAllEdges = adjacencyAll.get(targetId);
-        const adjacencyOutEdges = adjacencyOut.get(targetId);
-
-        adjacencyAllEdges.delete(edgeId);
-        if (adjacencyAllEdges.size === 0) {
-            adjacencyAll.delete(targetId);
+        if (this.adjacencyLists.all.get(targetId).size === 0) {
+            this.adjacencyLists.all.delete(targetId);
         }
 
-        adjacencyOutEdges.delete(edgeId);
-        if (adjacencyOutEdges.size === 0) {
-            adjacencyOut.delete(targetId);
+        if (this.adjacencyLists.out.get(targetId).size === 0) {
+            this.adjacencyLists.out.delete(targetId);
         }
     }
 
@@ -408,26 +375,19 @@ export default class Node {
      */
     removeIncomingEdge(edgeObj) {
         const edgeId = edgeObj.id;
+        const sourceId = edgeObj.sourceId;
 
-        // Update incidence lists
+        this.adjacencyLists.all.delete(sourceId, edgeId);
+        this.adjacencyLists.inc.delete(sourceId, edgeId);
         this.incidenceLists.all.delete(edgeId);
         this.incidenceLists.inc.delete(edgeId);
 
-        // Update adjacency lists
-        const adjacencyAll      = this.adjacencyLists.all;
-        const adjacencyInc      = this.adjacencyLists.inc;
-        const sourceId          = edgeObj.sourceId;
-        const adjacencyAllEdges = adjacencyAll.get(sourceId);
-        const adjacencyIncEdges = adjacencyInc.get(sourceId);
-
-        adjacencyAllEdges.delete(edgeId);
-        if (adjacencyAllEdges.size === 0) {
-            adjacencyAll.delete(sourceId);
+        if (this.adjacencyLists.all.get(sourceId).size === 0) {
+            this.adjacencyLists.all.delete(sourceId);
         }
 
-        adjacencyIncEdges.delete(edgeId);
-        if (adjacencyIncEdges.size === 0) {
-            adjacencyInc.delete(sourceId);
+        if (this.adjacencyLists.inc.get(sourceId).size === 0) {
+            this.adjacencyLists.inc.delete(sourceId);
         }
     }
 

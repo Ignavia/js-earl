@@ -25,7 +25,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
-        "@ignavia/util": "npm:@ignavia/util@1.3.1",
+        "@ignavia/util": "npm:@ignavia/util@1.3.2",
         "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
         "babel-plugin-transform-export-extensions": "npm:babel-plugin-transform-export-extensions@6.5.0",
         "babel-regenerator-runtime": "npm:babel-regenerator-runtime@6.5.0",
@@ -59,7 +59,7 @@ SystemJS.config({
                 "stream-browserify": "npm:stream-browserify@2.0.1"
             }
         },
-        "npm:@ignavia/util@1.3.1": {
+        "npm:@ignavia/util@1.3.2": {
             "map": {
                 "lodash": "npm:lodash@4.11.1"
             }
