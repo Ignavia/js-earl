@@ -81,18 +81,16 @@ describe("Graph", function () {
         const e1 = new Edge(n0, n1);
         g0.addEdges(e0, e1);
 
-        it("should throw if a source ID is invalid", function () {
+        it("should automatically create and add missing source nodes", function () {
             const e2 = new Edge("no_id", n0);
-            const f  = () => g0.addEdges(e2);
-
-            expect(f).to.throw(Error);
+            g0.addEdges(e2);
+            expect(g0.getNodeById("no_id")).to.not.be.undefined;
         });
 
-        it("should throw if a target ID is invalid", function () {
+        it("should automatically create and add missing target nodes", function () {
             const e2 = new Edge(n0, "no_id");
-            const f  = () => g0.addEdges(e2);
-
-            expect(f).to.throw(Error);
+            g0.addEdges(e2);
+            expect(g0.getNodeById("no_id")).to.not.be.undefined;
         });
 
         it("should set the graph reference in the edge", function () {
@@ -176,14 +174,10 @@ describe("Graph", function () {
     describe("#removeEdges", function () {
         const g0 = new Graph();
 
-        const n0 = new Node();
-        const n1 = new Node();
-        g0.addNodes(n0, n1);
-
-        const e0 = new Edge(n0, n1);
-        const e1 = new Edge(n0, n1);
-        const e2 = new Edge(n0, n1);
-        const e3 = new Edge(n0, n1);
+        const e0 = new Edge("n0", "n1");
+        const e1 = new Edge("n0", "n1");
+        const e2 = new Edge("n0", "n1");
+        const e3 = new Edge("n0", "n1");
         g0.addEdges(e0, e1, e2, e3);
 
         g0.removeEdges(e3);
@@ -230,12 +224,8 @@ describe("Graph", function () {
     describe("#getNumberOfEdges", function () {
         const g0 = new Graph();
 
-        const n0 = new Node();
-        const n1 = new Node();
-        g0.addNodes(n0, n1);
-
-        const e0 = new Edge(n0, n1);
-        const e1 = new Edge(n0, n1);
+        const e0 = new Edge("n0", "n1");
+        const e1 = new Edge("n0", "n1");
         g0.addEdges(e0, e1);
 
         it("should return the number of edges", function () {
@@ -260,12 +250,8 @@ describe("Graph", function () {
     describe("#iterEdgeIds", function () {
         const g0 = new Graph();
 
-        const n0 = new Node();
-        const n1 = new Node();
-        g0.addNodes(n0, n1);
-
-        const e0 = new Edge(n0, n1);
-        const e1 = new Edge(n0, n1);
+        const e0 = new Edge("n0", "n1");
+        const e1 = new Edge("n0", "n1");
         g0.addEdges(e0, e1);
 
         it("should return all edge IDs", function () {
@@ -323,12 +309,8 @@ describe("Graph", function () {
     describe("#iterEdges", function () {
         const g0 = new Graph();
 
-        const n0 = new Node();
-        const n1 = new Node();
-        g0.addNodes(n0, n1);
-
-        const e0 = new Edge(n0, n1);
-        const e1 = new Edge(n0, n1);
+        const e0 = new Edge("n0", "n1");
+        const e1 = new Edge("n0", "n1");
         g0.addEdges(e0, e1);
 
         it("should return all edges in the graph (no extra parameters)", function () {

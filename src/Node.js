@@ -28,8 +28,6 @@ export default class Node {
         if (id && /^n[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^n([0-9]+)$/);
             Node.idGenerator.increaseToAtLeast(counter + 1);
-        } else {
-            id = Node.idGenerator.next();
         }
 
         /**
@@ -37,7 +35,7 @@ export default class Node {
          *
          * @type {String}
          */
-        this.id = id;
+        this.id = id || Node.idGenerator.next();
 
         /**
          * The graph that contains this node. This property will be set after

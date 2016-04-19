@@ -116,8 +116,6 @@ export default class Graph {
         if (id && /^g[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^g([0-9]+)$/);
             Graph.idGenerator.increaseToAtLeast(counter + 1);
-        } else {
-            id = Graph.idGenerator.next();
         }
 
         /**
@@ -125,7 +123,7 @@ export default class Graph {
          *
          * @type {String}
          */
-        this.id = id;
+        this.id = id || Graph.idGenerator.next();
 
         /**
          * Contains all the nodes of the graph.
@@ -207,14 +205,16 @@ export default class Graph {
 
         // Add edges
         for (let edgeObj of edgeObjs) {
-            const sourceObj = this.getNodeById(edgeObj.sourceId);
-            const targetObj = this.getNodeById(edgeObj.targetId);
+            let sourceObj = this.getNodeById(edgeObj.sourceId);
+            let targetObj = this.getNodeById(edgeObj.targetId);
 
             if (!sourceObj) {
-                this.addNodes(new Node(edgeObj.sourceId));
+                sourceObj = new Node(edgeObj.sourceId);
+                this.addNodes(sourceObj);
             }
             if (!targetObj) {
-                this.addNodes(new Node(edgeObj.targetId));
+                targetObj = new Node(edgeObj.targetId);
+                this.addNodes(targetObj);
             }
 
             // Update edge data

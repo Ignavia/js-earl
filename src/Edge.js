@@ -34,8 +34,6 @@ export default class Edge {
         if (id && /^e[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^e([0-9]+)$/);
             Edge.idGenerator.increaseToAtLeast(counter + 1);
-        } else {
-            id = Edge.idGenerator.next();
         }
 
         /**
@@ -57,7 +55,7 @@ export default class Edge {
          *
          * @type {String}
          */
-        this.id = id;
+        this.id = id || Edge.idGenerator.next();
 
         /**
          * The graph that contains this edge. This property will be set after
