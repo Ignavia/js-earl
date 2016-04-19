@@ -54,9 +54,9 @@ export default class Node {
          * @private
          */
         this.adjacencyLists = {
-            all: new GumpMap(),
-            out: new GumpMap(),
-            inc: new GumpMap()
+            all: new GumpMap({autoPurgeEmptyContainers: true}),
+            out: new GumpMap({autoPurgeEmptyContainers: true}),
+            inc: new GumpMap({autoPurgeEmptyContainers: true})
         };
 
         /**
@@ -235,8 +235,7 @@ export default class Node {
         if (!adjacencyList) {
             throw new Error(`The direction ${direction} is invalid.`);
         }
-        return adjacencyList.has(node) &&
-               adjacencyList.get(node).has(edge);
+        return adjacencyList.has(node, edge);
     }
 
     /**
@@ -355,14 +354,6 @@ export default class Node {
         this.adjacencyLists.out.delete(targetId, edgeId);
         this.incidenceLists.all.delete(edgeId);
         this.incidenceLists.out.delete(edgeId);
-
-        if (this.adjacencyLists.all.get(targetId).size === 0) {
-            this.adjacencyLists.all.delete(targetId);
-        }
-
-        if (this.adjacencyLists.out.get(targetId).size === 0) {
-            this.adjacencyLists.out.delete(targetId);
-        }
     }
 
     /**
@@ -381,14 +372,6 @@ export default class Node {
         this.adjacencyLists.inc.delete(sourceId, edgeId);
         this.incidenceLists.all.delete(edgeId);
         this.incidenceLists.inc.delete(edgeId);
-
-        if (this.adjacencyLists.all.get(sourceId).size === 0) {
-            this.adjacencyLists.all.delete(sourceId);
-        }
-
-        if (this.adjacencyLists.inc.get(sourceId).size === 0) {
-            this.adjacencyLists.inc.delete(sourceId);
-        }
     }
 
     /**
