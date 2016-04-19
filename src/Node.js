@@ -93,9 +93,7 @@ export default class Node {
      * * "inc": Only nodes that are the source node of at least one edge ending
      * at this node are chosen.
      */
-    * iterAdjacentNodes(direction) {
-        direction = direction || "all"; // TODO change to default parameter (babel bug)
-
+    * iterAdjacentNodes(direction = "all") {
         const adjacencyList = this.adjacencyLists[direction];
         if (!adjacencyList) {
             throw new Error(`The direction ${direction} is invalid.`);
@@ -166,9 +164,8 @@ export default class Node {
      * * "inc": Only edges that start at the given node and end at this one are
      * chosen.
      */
-    * iterEdgesBetween(node, direction) {
-        node      = Graph.toNodeId(node);
-        direction = direction || "all"; // TODO change to default parameter (babel bug)
+    * iterEdgesBetween(node, direction = "all") {
+        node = Graph.toNodeId(node);
 
         const adjacencyList = this.adjacencyLists[direction];
         if (!adjacencyList) {
@@ -247,9 +244,7 @@ export default class Node {
      * * "out": Only edges that start at this node are selected.
      * * "inc": Only edges that end at this node are chosen.
      */
-    * iterIncidentEdges(direction) {
-        direction = direction || "all"; // TODO change to default parameter (babel bug)
-
+    * iterIncidentEdges(direction = "all") {
         const incidenceList = this.incidenceLists[direction];
         if (!incidenceList) {
             throw new Error(`The direction ${direction} is invalid.`);
