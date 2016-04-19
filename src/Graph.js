@@ -83,16 +83,23 @@ export default class Graph {
     }
 
     /**
-     *
+     * @param {String} id
+     * The ID of this graph. It must have the form /g[0-9]+/.
      */
-    constructor() {
+    constructor(id = Graph.idGenerator.next()) {
+        if (/^g[0-9]+$/.test(id)) {
+            const [, counter] = id.match(/^g([0-9]+)$/);
+            Graph.idGenerator.increaseToAtLeast(counter);
+        } else {
+            throw new Error("The ID of an edge must have the form /g[0-9]+/.");
+        }
 
         /**
          * The ID of this graph.
          *
          * @type {String}
          */
-        this.id = Graph.idGenerator.next();
+        this.id = id;
 
         /**
          * Contains all the nodes of the graph.

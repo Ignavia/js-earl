@@ -13,8 +13,17 @@ export default class Edge {
      *
      * @param {String|Node} target
      * The ID of the target node or the target node itself.
+     *
+     * @param {String} [id]
+     * The ID of this edge. If provided it must have the form /e[0-9]+/.
      */
-    constructor(source, target) {
+    constructor(source, target, id = Edge.idGenerator.next()) {
+        if (/^e[0-9]+$/.test(id)) {
+            const [, counter] = id.match(/^e([0-9]+)$/);
+            Edge.idGenerator.increaseToAtLeast(counter);
+        } else {
+            throw new Error("The ID of an edge must have the form /e[0-9]+/.");
+        }
 
         /**
          * The ID of the source node.
@@ -35,7 +44,7 @@ export default class Edge {
          *
          * @type {String}
          */
-        this.id = Edge.idGenerator.next();
+        this.id = id;
 
         /**
          * The graph that contains this edge. This property will be set after

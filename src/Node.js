@@ -1,4 +1,4 @@
-import {IDGenerator} from "@ignavia/util";
+import {GumpMap, IDGenerator} from "@ignavia/util";
 
 import Graph from "./Graph.js";
 
@@ -8,16 +8,23 @@ import Graph from "./Graph.js";
 export default class Node {
 
     /**
-     *
+     * @param {String} id
+     * The ID of this node. It must have the form /n[0-9]+/.
      */
-    constructor() {
+    constructor(id = Node.idGenerator.next()) {
+        if (/^n[0-9]+$/.test(id)) {
+            const [, counter] = id.match(/^n([0-9]+)$/);
+            Node.idGenerator.increaseToAtLeast(counter);
+        } else {
+            throw new Error("The ID of an edge must have the form /n[0-9]+/.");
+        }
 
         /**
          * The ID of this node.
          *
          * @type {String}
          */
-        this.id = Node.idGenerator.next();
+        this.id = id;
 
         /**
          * The graph that contains this node. This property will be set after
