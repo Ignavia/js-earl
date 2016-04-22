@@ -18,7 +18,7 @@
     "url": "https://github.com/Ignavia/js-earl.git"
   },
   "scripts": {
-    "build": "jspm build ./src/earl.js - @ignavia/util  ./dist/earl.js --format cjs --skip-source-maps --minify",
+    "build": "jspm build ./src/earl.js - @ignavia/util ./dist/earl.js --format cjs --skip-source-maps --minify",
     "doc": "esdoc -c esdoc.json",
     "test": "mocha --compilers js:babel-register"
   },
@@ -51,12 +51,13 @@
   "jspm": {
     "name": "@ignavia/earl",
     "dependencies": {
-      "@ignavia/util": "^1.1.7"
+      "@ignavia/util": "^1.1.7",
+      "lodash": "^4.6.1"
     },
     "devDependencies": {
       "babel-plugin-transform-export-extensions": "^6.5.0",
       "babel-regenerator-runtime": "^6.5.0",
-      "plugin-babel": "systemjs-plugin-babel@^0.0.2"
+      "plugin-babel": "systemjs-plugin-babel@^0.0.8"
     },
     "peerDependencies": {
       "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",

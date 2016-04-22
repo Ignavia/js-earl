@@ -522,13 +522,13 @@ export default class Graph {
                 continue;
             }
 
-            const sourceId = edgeObj.sourceId,
-                  targetId = edgeObj.targetId;
+            const sourceId = edgeObj.sourceId;
+            const targetId = edgeObj.targetId;
 
             // Add source node
             if (!idMap.has(sourceId)) {
-                const source  = this.getNodeById(sourceId),
-                      newNode = new Node();
+                const source  = this.getNodeById(sourceId);
+                const newNode = new Node();
                 newNode.parentId = source.id;
                 result.addNodes(newNode);
                 idMap.set(sourceId, newNode.id);
@@ -536,8 +536,8 @@ export default class Graph {
 
             // Add target node
             if (!idMap.has(targetId)) {
-                const target     = this.getNodeById(targetId),
-                      newNode    = new Node();
+                const target     = this.getNodeById(targetId);
+                const newNode    = new Node();
                 newNode.parentId = target.id;
                 result.addNodes(newNode);
                 idMap.set(targetId, newNode.id);
