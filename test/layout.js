@@ -1,6 +1,7 @@
 import {expect} from "chai";
 
 import {Vec2}   from "@ignavia/ella";
+
 import {Layout} from "../src/earl.js";
 
 describe("Layout", function () {
@@ -28,9 +29,19 @@ describe("Layout", function () {
         });
     });
 
-    describe("#moveNode", function () {
+    describe("#moveNodeTo", function () {
         it("should move a node", function () {
-            this.l.moveNode("n1", new Vec2(3, 1));
+            this.l.moveNodeTo("n1", new Vec2(3, 1));
+
+            const pos1 = this.l.getPosition("n1");
+            expect(pos1.x).to.equal(3);
+            expect(pos1.y).to.equal(1);
+        });
+    });
+
+    describe("#moveNodeBy", function () {
+        it("should move a node", function () {
+            this.l.moveNodeBy("n1", new Vec2(1, 1));
 
             const pos1 = this.l.getPosition("n1");
             expect(pos1.x).to.equal(3);
@@ -86,5 +97,9 @@ describe("Layout", function () {
             expect(pos3.x).to.be.closeTo(1, Number.EPSILON);
             expect(pos3.y).to.be.closeTo(-1, Number.EPSILON);
         });
+    });
+
+    after(function () {
+        delete this.l;
     });
 });

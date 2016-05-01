@@ -1,6 +1,8 @@
 import _ from "lodash";
 
-import {Vec2Builder} from "@ignavia/ella";
+import {Vec2} from "@ignavia/ella";
+
+import Layout from "./LayoutClass.js";
 
 /**
  * Moves the nodes in the given graph to a random position and returns the
@@ -29,9 +31,9 @@ import {Vec2Builder} from "@ignavia/ella";
  * represented by Vec2 object.
  */
 export default function (graph, {minX = 0, maxX = 1, minY = 0, maxY = 1} = {}) {
-    const result = new Map();
+    const result = new Layout();
     for (let node of graph.iterNodes()) {
-        result.set(node.id, new Vec2Builder(
+        result.moveNodeTo(node.id, new Vec2(
             _.random(minX, maxX),
             _.random(minY, maxY)
         ));
