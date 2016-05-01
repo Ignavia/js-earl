@@ -1,3 +1,5 @@
+import "babel-regenerator-runtime";
+
 import {GumpMap, IDGenerator} from "@ignavia/util";
 
 import Graph from "./Graph.js";
