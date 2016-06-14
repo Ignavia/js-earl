@@ -33,7 +33,7 @@ export default class Edge {
     constructor(source, target, id) {
         if (id && /^e[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^e([0-9]+)$/);
-            Edge.idGenerator.increaseToAtLeast(counter + 1);
+            Edge.idGenerator.increaseToAtLeast(Number(counter) + 1);
         }
 
         /**

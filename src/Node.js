@@ -29,7 +29,7 @@ export default class Node {
     constructor(id) {
         if (id && /^n[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^n([0-9]+)$/);
-            Node.idGenerator.increaseToAtLeast(counter + 1);
+            Node.idGenerator.increaseToAtLeast(Number(counter) + 1);
         }
 
         /**

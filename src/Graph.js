@@ -117,7 +117,7 @@ export default class Graph {
     constructor({ nodes = [], edges = [], id } = {}) {
         if (id && /^g[0-9]+$/.test(id)) {
             const [, counter] = id.match(/^g([0-9]+)$/);
-            Graph.idGenerator.increaseToAtLeast(counter + 1);
+            Graph.idGenerator.increaseToAtLeast(Number(counter) + 1);
         }
 
         /**
