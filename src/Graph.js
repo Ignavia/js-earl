@@ -1,5 +1,3 @@
-import "babel-regenerator-runtime";
-
 import {EventManager, extensibleExtendedMixin, IDGenerator, observableExtendedMixin} from "@ignavia/util";
 
 import Node             from "./Node.js";

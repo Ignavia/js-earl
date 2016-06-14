@@ -18,7 +18,7 @@
     "url": "https://github.com/Ignavia/js-earl.git"
   },
   "scripts": {
-    "build": "jspm build ./src/earl.js - @ignavia/util ./dist/earl.js --format cjs --skip-source-maps --minify",
+    "build": "jspm build ./src/earl.js - @ignavia/ella - @ignavia/util - lodash ./dist/earl.js --format cjs --skip-source-maps --minify",
     "doc": "esdoc -c esdoc.json",
     "test": "mocha --compilers js:babel-register"
   },
@@ -30,7 +30,6 @@
   "devDependencies": {
     "babel-plugin-transform-export-extensions": "^6.5.0",
     "babel-preset-es2015": "^6.5.0",
-    "babel-regenerator-runtime": "^6.5.0",
     "chai": "^3.5.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"
@@ -53,12 +52,12 @@
   "jspm": {
     "name": "@ignavia/earl",
     "dependencies": {
+      "@ignavia/ella": "^1.0.15",
       "@ignavia/util": "^1.1.7",
       "lodash": "^4.6.1"
     },
     "devDependencies": {
       "babel-plugin-transform-export-extensions": "^6.5.0",
-      "babel-regenerator-runtime": "^6.5.0",
       "plugin-babel": "systemjs-plugin-babel@^0.0.8"
     },
     "peerDependencies": {
@@ -77,28 +76,10 @@
       "vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
     },
     "overrides": {
-      "npm:esprima@2.7.2": {
-        "jspmNodeConversion": false
-      },
       "npm:inherits@2.0.1": {
         "ignore": [
           "test.js"
         ]
-      },
-      "npm:readable-stream@1.0.34": {
-        "map": {
-          "stream": "stream-browserify/index"
-        },
-        "systemjs": {
-          "main": "readable.js"
-        },
-        "dependencies": {
-          "core-util-is": "~1.0.0",
-          "isarray": "0.0.1",
-          "string_decoder": "~0.10.0",
-          "inherits": "~2.0.1",
-          "stream-browserify": "~1.0.0"
-        }
       }
     }
   }
