@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@ignavia/ella": "^1.0.15",
-    "@ignavia/util": "^1.1.7"
+    "@ignavia/util": "^1.1.7",
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
     "babel-plugin-transform-export-extensions": "^6.5.0",
