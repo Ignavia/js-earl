@@ -23,6 +23,7 @@ export default class {
 
         // Initial positions
         for (let [node, position] of positions) {
+            node = Graph.toNodeId(node);
             this.moveNodeTo(node, position);
         }
     }
