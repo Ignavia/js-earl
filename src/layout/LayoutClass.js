@@ -117,4 +117,11 @@ export default class {
         }
         this.moveAll(center);
     }
+
+    /**
+     * Yields all pairs [id, position].
+     */
+    * [Symbol.iterator]() {
+        yield* this.positions;
+    }
 }
