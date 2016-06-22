@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import {Vec2} from "@ignavia/ella";
 
-import Layout from "./LayoutClass.js";
+import Layout from "./Layout.js";
 
 /**
  * Moves the nodes in the given graph to a random position and returns the
@@ -34,8 +34,8 @@ export default function (graph, {minX = 0, maxX = 1, minY = 0, maxY = 1} = {}) {
     const result = new Layout();
     for (let node of graph.iterNodes()) {
         result.moveNodeTo(node.id, new Vec2(
-            _.random(minX, maxX),
-            _.random(minY, maxY)
+            _.random(minX, maxX, true),
+            _.random(minY, maxY, true)
         ));
     }
     return result;

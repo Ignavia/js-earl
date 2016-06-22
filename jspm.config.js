@@ -30,9 +30,8 @@ SystemJS.config({
     transpiler: "plugin-babel",
     packages: {
         "@ignavia/earl": {
-            "main": "earl.js",
+            "main": "index.js",
             "format": "esm",
-            "defaultExtension": "js",
             "meta": {
                 "*js": {
                     "babelOptions": {

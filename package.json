@@ -12,13 +12,13 @@
   "files": [
     "dist/"
   ],
-  "main": "dist/earl.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ignavia/js-earl.git"
   },
   "scripts": {
-    "build": "jspm build ./src/earl.js - @ignavia/ella - @ignavia/util - lodash ./dist/earl.js --format cjs --skip-source-maps --minify",
+    "build": "jspm build ./src/index.js - @ignavia/ella - @ignavia/util - lodash ./dist/earl.js --format cjs --skip-source-maps --minify",
     "doc": "esdoc -c esdoc.json",
     "test": "mocha --compilers js:babel-register"
   },
