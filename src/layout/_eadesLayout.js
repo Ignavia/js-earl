@@ -62,30 +62,30 @@ function repulsiveForce(distance, repulsiveForceCoef) {
  * @ignore
  */
 function calculateForceForNode(layout, graph, node1, params) {
-        const force = new Vec2Builder(0, 0);
-        const pos1  = layout.get(node1.id).toVec2();
+    const result = new Vec2Builder(0, 0);
+    const pos1   = layout.get(node1.id).toVec2();
 
-        for (let node2 of graph.iterNodes()) {
-            if (node1 === node2) {
-                continue;
-            }
-
-            const pos2       = layout.get(node2.id);
-            const connection = Vec2Builder.fromVec2(pos1.sub(pos2));
-            const distance   = connection.length;
-
-            if (node1.isAdjacentNode(node2)) {
-                const magnitude = springForce(distance, params.springForceCoef, params.idealDistance);
-                const direction = connection.mul(-1).normalize();
-                force.add(direction.mul(magnitude));
-            } else {
-                const magnitude = repulsiveForce(distance, params.repulsiveForceCoef);
-                const direction = connection.normalize();
-                force.add(direction.mul(magnitude));
-            }
+    for (let node2 of graph.iterNodes()) {
+        if (node1 === node2) {
+            continue;
         }
 
-        return force;
+        const pos2       = layout.get(node2.id);
+        const connection = Vec2Builder.fromVec2(pos1.sub(pos2));
+        const distance   = connection.length;
+
+        if (node1.isAdjacentNode(node2)) {
+            const magnitude = springForce(distance, params.springForceCoef, params.idealDistance);
+            const direction = connection.mul(-1).normalize();
+            result.add(direction.mul(magnitude));
+        } else {
+            const magnitude = repulsiveForce(distance, params.repulsiveForceCoef);
+            const direction = connection.normalize();
+            result.add(direction.mul(magnitude));
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -106,12 +106,12 @@ function calculateForceForNode(layout, graph, node1, params) {
  * @ignore
  */
 function calculateForces(layout, graph, params) {
-    const forces = new Map();
+    const result = new Map();
     for (let node1 of graph.iterNodes()) {
         const force = calculateForceForNode(layout, graph, node1, params);
-        forces.set(node1.id, force);
+        result.set(node1.id, force);
     }
-    return forces;
+    return result;
 }
 
 /**
@@ -180,7 +180,7 @@ export default function(graph, {
         nSteps              = 100,
     } = {}) {
 
-    const result = randomLayout({
+    const result = randomLayout(graph, {
         pos:    randomPos,
         width:  randomWidth,
         height: randomHeight,

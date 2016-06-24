@@ -1,3 +1,4 @@
-export Layout       from "./Layout.js";
-export eadesLayout  from "./eadesLayout.js";
-export randomLayout from "./randomLayout.js";
+export Layout             from "./Layout.js";
+export EadesLayout        from "./EadesLayout.js";
+export FruchtermannLayout from "./FruchtermannLayout.js";
+export RandomLayout       from "./RandomLayout.js";

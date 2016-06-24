@@ -4,6 +4,8 @@ import {Vec2} from "@ignavia/ella";
 
 import Layout from "./Layout.js";
 
+export default class RandomLayout {
+
 /**
  * Moves the nodes in the given graph to a random position and returns the
  * layout. The range of the x- and y-values can be restricted.
@@ -35,4 +37,6 @@ export default function (graph, {pos = new Vec2(0, 0), width = 1920, height = 10
         ));
     }
     return result;
+}
+
 }
