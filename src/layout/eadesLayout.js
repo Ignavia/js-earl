@@ -147,7 +147,7 @@ function adjustLayout(layout, forces, forceToDistanceCoef) {
  * The spring force between two adjacent nodes scales linearly with this
  * parameter.
  *
- * @param {Number} [obj.idealDistance=1]
+ * @param {Number} [obj.idealDistance=200]
  * If the distance between two adjacent nodes equals this value, the force is 0.
  *
  * @param {Number} [obj.repulsiveForceCoef=1]
@@ -162,7 +162,7 @@ function adjustLayout(layout, forces, forceToDistanceCoef) {
  */
 export default function(graph, {
         springForceCoef = 2,
-        idealDistance = 1,
+        idealDistance = 200,
         repulsiveForceCoef = 1,
         forceToDistanceCoef = 0.1,
         nSteps = 100

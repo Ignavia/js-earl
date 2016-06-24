@@ -53,7 +53,7 @@ SystemJS.config({
     ],
     map: {
         "@ignavia/ella": "npm:@ignavia/ella@1.0.15",
-        "@ignavia/util": "npm:@ignavia/util@1.3.3",
+        "@ignavia/util": "npm:@ignavia/util@1.4.0",
         "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
         "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
         "core-js": "npm:core-js@1.2.6",
@@ -72,7 +72,7 @@ SystemJS.config({
     packages: {
         "github:jspm/nodelibs-buffer@0.2.0-alpha": {
             "map": {
-                "buffer-browserify": "npm:buffer@4.6.0"
+                "buffer-browserify": "npm:buffer@4.7.0"
             }
         },
         "github:jspm/nodelibs-os@0.2.0-alpha": {
@@ -83,11 +83,6 @@ SystemJS.config({
         "github:jspm/nodelibs-stream@0.2.0-alpha": {
             "map": {
                 "stream-browserify": "npm:stream-browserify@2.0.1"
-            }
-        },
-        "npm:@ignavia/util@1.3.3": {
-            "map": {
-                "lodash": "npm:lodash@4.13.1"
             }
         },
         "npm:stream-browserify@2.0.1": {
@@ -107,11 +102,16 @@ SystemJS.config({
                 "isarray": "npm:isarray@1.0.0"
             }
         },
-        "npm:buffer@4.6.0": {
+        "npm:@ignavia/util@1.4.0": {
             "map": {
-                "isarray": "npm:isarray@1.0.0",
+                "lodash": "npm:lodash@4.13.1"
+            }
+        },
+        "npm:buffer@4.7.0": {
+            "map": {
+                "ieee754": "npm:ieee754@1.1.6",
                 "base64-js": "npm:base64-js@1.1.2",
-                "ieee754": "npm:ieee754@1.1.6"
+                "isarray": "npm:isarray@1.0.0"
             }
         }
     }

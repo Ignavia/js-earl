@@ -17,20 +17,20 @@ import Layout from "./Layout.js";
  * @param {Number} [obj.minX=0]
  * The minimum x-coordinate.
  *
- * @param {Number} [obj.maxX=1]
+ * @param {Number} [obj.maxX=1920]
  * The maximum x-coordinate.
  *
  * @param {Number} [obj.minY=0]
  * The minimum y-coordinate.
  *
- * @param {Number} [obj.maxY=1]
+ * @param {Number} [obj.maxY=1080]
  * The maximum y-coordinate.
  *
  * @return {Map}
  * The resulting layout. This is a map from node IDs to their position
  * represented by Vec2 object.
  */
-export default function (graph, {minX = 0, maxX = 1, minY = 0, maxY = 1} = {}) {
+export default function (graph, {minX = 0, maxX = 1920, minY = 0, maxY = 1080} = {}) {
     const result = new Layout();
     for (let node of graph.iterNodes()) {
         result.moveNodeTo(node.id, new Vec2(
