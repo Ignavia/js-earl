@@ -69,6 +69,14 @@ export default class FruchtermannLayout {
         );
 
         /**
+         * The area of the bounding rectangle.
+         *
+         * @type {number}
+         * @private
+         */
+        this.area = width * height;
+
+        /**
          * The ideal distance between nodes scales linearly with this factor.
          *
          * @type {number}
@@ -95,16 +103,56 @@ export default class FruchtermannLayout {
         this.nSteps = nSteps;
     }
 
-    idealDistance(graph, width, height, idealDistanceCoef) {
-        return this.idealDistanceCoef * Math.sqrt(width * height / graph.getNumberOfNodes());
+    /**
+     * Computes the ideal distance between nodes for the given graph.
+     *
+     * @param {Graph} graph
+     * The graph to layout.
+     *
+     * @return {number}
+     * A proposed distance between nodes.
+     */
+    computeIdealDistance(graph) {
+        return this.idealDistanceCoef * Math.sqrt(this.area / graph.getNumberOfNodes());
     }
 
-    attractiveForce(distance, idealDistance) {
-        return distance**2 / idealDistance;
+    /**
+     * Computes the distance between the two points and a normalized direction
+     * vector from the first to the second.
+     *
+     * @param {Vec2} uPos
+     * The first position.
+     *
+     * @param {Vec2} vPos
+     * The second position.
+     *
+     * @return {Object}
+     * The distance and direction.
+     *
+     * @private
+     */
+    computeConnection(uPos, vPos) {
+        const connection = vPos.sub(uPos);
+        return {
+            distance:  connection.length(),
+            direction: connection.normalize(),
+        };
     }
 
-    repulsiveForce(distance, idealDistance) {
-        return -(idealDistance**2) / distance;
+    computeAttractiveDisplacement(uPos, vPos, idealDistance) {
+        const {distance, direction} = this.computeConnection(uPos, vPos);
+        const displacementMagnitude = distance**2 / idealDistance;
+        return direction.mul(displacementMagnitude);
+    }
+
+    computeRepulsiveDisplacement(uPos, vPos, idealDistance) {
+        const {distance, direction} = this.computeConnection(uPos, vPos);
+        const displacementMagnitude = -(idealDistance**2) / distance;
+        return direction.mul(displacementMagnitude);
+    }
+
+    computeMaxDisplacement(step) {
+        return this.initialMaxDisplacement * (1 - step / nStep);
     }
 
     computeRepulsiveForces(graph, layout, idealDistance) {
@@ -118,21 +166,16 @@ export default class FruchtermannLayout {
                     continue;
                 }
                 const vPos = layout.get(v.id);
-                const connection = vPos.sub(uPos);
-
-                const distance = connection.length();
-                const direction = connection.normalize();
-                const magnitude = repulsiveForce(distance, idealDistance);
-
-                const change = direction.mul(magnitude);
+                const change = this.computeRepulsiveDisplacement(uPos, vPos, idealDistance);
 
                 const oldDisp = result.get(u.id);
-                oldDisp.add(change);
+                const newDisp = oldDisp.add(change);
+                result.set(o.id, newDisp);
             }
         }
         return result;
     }
-
+// Merge, structure of eades
     computeAttractiveForces(graph, layout, disp, idealDistance) {
         for (let e of graph.iterEdges()) {
             const u = e.sourceId;
@@ -141,35 +184,72 @@ export default class FruchtermannLayout {
             const uPos = layout.getPosition(u);
             const vPos = layout.getPosition(v);
 
-            const connection = vPos.sub(uPos);
-
-            const distance = connection.length();
-            const direction = connection.normalize();
-            const magnitude = attractiveForce(distance, idealDistance);
-
-            const change = direction.mul(magnitude);
+            const change = this.computeAttractiveDisplacement(uPos, vPos, idealDistance);
 
             const oldUDisp = disp.get(u);
-            oldUDisp.add(change);
+            const newUDisp = oldUDisp.add(change);
+            disp.set(u, newUDisp);
 
             const oldVDisp = disp.get(v);
-            oldVDisp.sub(change);
+            const newVDisp = oldVDisp.sub(change);
+            disp.set(v, newVDisp);
         }
     }
 
+    /**
+     * Calculates the displacements of the nodes given the current layout.
+     *
+     * @param {Graph} graph
+     * The graph to layout.
+     *
+     * @param {Map} layout
+     * The current layout of the graph.
+     *
+     * @param {number} idealDistance
+     * How far the nodes should ideally be apart.
+     *
+     * @return {Map}
+     * The force on the nodes.
+     *
+     * @private
+     */
     computeDisplacements(graph, layout, idealDistance) {
-        const result = computeRepulsiveForces(graph, layout, idealDistance);
-        computeAttractiveForces(graph, layout, result, idealDistance);
+        const result = new Map();
+
+        for (let u of graph.iterNodes()) {
+            const force = this.computeForceForNode(layout, graph, u);
+            result.set(u.id, force);
+        }
 
         return result;
     }
 
-    moveNodes() {
-
-    }
-
-    cool(initialTemperature, nSteps, step) {
-        return initialTemperature * (1 - step / nSteps);
+    /**
+     * Moves the nodes according to the displacements calculated in a
+     * simulation step.
+     *
+     * @param {Map} layout
+     * The current layout of the graph.
+     *
+     * @param {Map} displacements
+     * The calculated displacements.
+     *
+     * @param {number} maxDisplacement
+     * The maximum distance to move a node.
+     *
+     * @private
+     */
+    adjustLayout(layout, displacements, maxDisplacement) {
+        for (let [id, displacement] of displacements) {
+            const distance     = Math.min(maxDisplacement, displacement.length());
+            const direction    = displacement.normalize();
+            const displacement = direction.mul(distance);
+            const oldPos       = layout.getPosition(id);
+            const newPos       = oldPos.add(displacement);
+            const newX         = Math.max(this.min.x, Math.min(newPos.x, this.max.x));
+            const newY         = Math.max(this.min.y, Math.min(newPos.y, this.max.y));
+            layout.moveNodeT(id, new Vec2(newX, newY));
+        }
     }
 
     /**
@@ -179,14 +259,14 @@ export default class FruchtermannLayout {
      * The graph to layout.
      */
     layout(graph) {
-        const result      = this.randomLayout.layout(graph);
-        const idealDist   = idealDistance(graph, width, height, idealDistanceCoef);
-        let   temperature = initialTemperature;
+        const result        = this.randomLayout.layout(graph);
+        const idealDistance = this.computeIdealDistance(graph);
+        let   temperature   = initialTemperature;
 
-        for (let i = 1; i <= nSteps; i++) {
-            const displacements = computeDisplacements(graph, result, idealDistance);
-            moveNodes(layout, displacements, pos, width, height, temperature);
-            temperature = cool(initialTemperature, nSteps, i);
+        for (let i = 0; i < this.nSteps; i++) {
+            const displacements   = computeDisplacements(graph, result, idealDistance);
+            const maxDisplacement = this.computeMaxDisplacement(i);
+            this.adjustLayout(result, displacements, maxDisplacement);
         }
 
         return result;

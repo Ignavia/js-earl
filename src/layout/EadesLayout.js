@@ -105,6 +105,21 @@ export default class EadesLayout {
         this.nSteps = nSteps;
     }
 
+    /**
+     * Computes the distance between the two points and a normalized direction
+     * vector from the first to the second.
+     *
+     * @param {Vec2} uPos
+     * The first position.
+     *
+     * @param {Vec2} vPos
+     * The second position.
+     *
+     * @return {Object}
+     * The distance and direction.
+     *
+     * @private
+     */
     computeConnection(uPos, vPos) {
         const connection = vPos.sub(uPos);
         return {
@@ -164,7 +179,7 @@ export default class EadesLayout {
      *
      * @private
      */
-    calculateForceForNode(layout, graph, u) {
+    computeForceForNode(layout, graph, u) {
         const result = new Vec2(0, 0);
         const uPos   = layout.getPosition(u);
 
@@ -196,11 +211,11 @@ export default class EadesLayout {
      *
      * @private
      */
-    calculateForces(graph, layout) {
+    computeForces(graph, layout) {
         const result = new Map();
 
         for (let u of graph.iterNodes()) {
-            const force = this.calculateForceForNode(layout, graph, u);
+            const force = this.computeForceForNode(layout, graph, u);
             result.set(u.id, force);
         }
 
@@ -235,7 +250,7 @@ export default class EadesLayout {
         const result = this.randomLayout.layout(graph);
 
         for (let i = 0; i < this.nSteps; i++) {
-            const forces = this.calculateForces(graph, result);
+            const forces = this.computeForces(graph, result);
             this.adjustLayout(result, forces);
         }
 
