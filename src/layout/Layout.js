@@ -76,7 +76,7 @@ export default class Layout {
      * @param {Vec2|Vec2Builder} vector
      * The vector to add to the positions.
      */
-    moveAll(vector) {
+    moveAllBy(vector) {
         for (let [id, position] of this.positions) {
             this.moveNodeTo(id, position.add(vector));
         }
