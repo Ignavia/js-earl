@@ -14,28 +14,24 @@ import Layout from "./Layout.js";
  * @param {Object} obj
  * The options object.
  *
- * @param {Number} [obj.minX=0]
- * The minimum x-coordinate.
+ * @param {Vec2} [pos=new Vec2(0, 0)]
+ * The top left corner of the bounding rectangle.
  *
- * @param {Number} [obj.maxX=1920]
- * The maximum x-coordinate.
+ * @param {number} [width=1920]
+ * The width of the bounding rectangle.
  *
- * @param {Number} [obj.minY=0]
- * The minimum y-coordinate.
+ * @param {number} [height=1080]
+ * The height of the bounding rectangle.
  *
- * @param {Number} [obj.maxY=1080]
- * The maximum y-coordinate.
- *
- * @return {Map}
- * The resulting layout. This is a map from node IDs to their position
- * represented by Vec2 object.
+ * @return {Layout}
+ * The resulting layout.
  */
-export default function (graph, {minX = 0, maxX = 1920, minY = 0, maxY = 1080} = {}) {
+export default function (graph, {pos = new Vec2(0, 0), width = 1920, height = 1080} = {}) {
     const result = new Layout();
     for (let node of graph.iterNodes()) {
         result.moveNodeTo(node.id, new Vec2(
-            _.random(minX, maxX, true),
-            _.random(minY, maxY, true)
+            _.random(pos.x, pos.x + width,  true),
+            _.random(pos.y, pos.y + height, true)
         ));
     }
     return result;

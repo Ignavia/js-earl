@@ -5,7 +5,7 @@ import Graph from "../Graph.js";
 /**
  * A graph layout.
  */
-export default class {
+export default class Layout {
 
     /**
      * @param {Iterable} [positions=[]]
@@ -16,7 +16,7 @@ export default class {
         /**
          * Maps from node IDs to positions.
          *
-         * @type {Map<String, Vec2Builder>}
+         * @type {Map<string, Vec2Builder>}
          * @private
          */
         this.positions = new Map();
@@ -31,7 +31,7 @@ export default class {
     /**
      * Returns the position of the given node.
      *
-     * @param {String|Node} node
+     * @param {string|Node} node
      * The node to get the position for or its ID.
      *
      * @return {Vec2|Vec2Builder}
@@ -45,7 +45,7 @@ export default class {
     /**
      * Moves the given node to the new position.
      *
-     * @param {String|Node} node
+     * @param {string|Node} node
      * The node to move or its ID.
      *
      * @param {Vec2|Vec2Builder} newPosition
@@ -59,7 +59,7 @@ export default class {
     /**
      * Translates the given node by the given vector.
      *
-     * @param {String|Node} node
+     * @param {string|Node} node
      * The node to move or its ID.
      *
      * @param {Vec2|Vec2Builder} vector
@@ -83,12 +83,12 @@ export default class {
     }
 
     /**
-     * Stretches the layout from the given center by the given factor.
+     * Stretches the layout from the given center by the given factors.
      *
-     * @param {Number} factorX
+     * @param {number} factorX
      * The factor by which to stretch the layout in the x-direction.
      *
-     * @param {Number} factorY
+     * @param {number} factorY
      * The factor by which to stretch the layout in the y-direction.
      *
      * @param {Vec2|Vec2Builder} [center]
@@ -110,7 +110,7 @@ export default class {
     /**
      * Rotates the layout around the given center by the given angle.
      *
-     * @param {Number} angle
+     * @param {number} angle
      * The angle by which to rotate the layout.
      *
      * @param {Vec2|Vec2Builder} [center]

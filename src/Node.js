@@ -25,10 +25,7 @@ export default class Node {
      * The ID of this node.
      */
     constructor(id) {
-        if (id && /^n[0-9]+$/.test(id)) {
-            const [, counter] = id.match(/^n([0-9]+)$/);
-            Node.idGenerator.increaseToAtLeast(Number(counter) + 1);
-        }
+        Node.idGenerator.avoid(id);
 
         /**
          * The ID of this node.

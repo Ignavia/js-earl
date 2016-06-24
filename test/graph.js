@@ -4,7 +4,7 @@ chai.use(chaiSinon);
 
 import sinon from "sinon";
 
-import {Graph, Node, Edge} from "../src/earl.js";
+import {Graph, Node, Edge} from "../src/index.js";
 
 describe("Graph", function () {
     describe("#fromJSON", function () {

@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Graph, Node, Layout, randomLayout} from "../src/earl.js";
+import {Graph, Node, Layout, randomLayout} from "../src/index.js";
 
 describe("Layout", function () {
     before(function () {
@@ -17,12 +17,12 @@ describe("Layout", function () {
                 const l = randomLayout(this.g);
 
                 const pos0 = l.getPosition("n0");
-                expect(pos0.x).to.be.within(0, 1);
-                expect(pos0.y).to.be.within(0, 1);
+                expect(pos0.x).to.be.within(0, 1920);
+                expect(pos0.y).to.be.within(0, 1080);
 
                 const pos1 = l.getPosition("n1");
-                expect(pos1.x).to.be.within(0, 1);
-                expect(pos1.y).to.be.within(0, 1);
+                expect(pos1.x).to.be.within(0, 1920);
+                expect(pos1.y).to.be.within(0, 1080);
             }
         });
     });

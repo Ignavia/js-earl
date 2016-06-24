@@ -2,7 +2,7 @@ import {expect} from "chai";
 
 import {Vec2}   from "@ignavia/ella";
 
-import {Layout} from "../src/earl.js";
+import {Layout} from "../src/index.js";
 
 describe("Layout", function () {
     beforeEach(function () {
@@ -65,7 +65,7 @@ describe("Layout", function () {
 
     describe("#scaleAll", function () {
         it("should scale the layout", function () {
-            this.l.scaleAll(2, new Vec2(1, 0));
+            this.l.scaleAll(2, 3, new Vec2(1, 0));
 
             const pos1 = this.l.getPosition("n1");
             expect(pos1.x).to.equal(3);
@@ -77,7 +77,7 @@ describe("Layout", function () {
 
             const pos3 = this.l.getPosition("n3");
             expect(pos3.x).to.equal(1);
-            expect(pos3.y).to.equal(2);
+            expect(pos3.y).to.equal(3);
         });
     });
 

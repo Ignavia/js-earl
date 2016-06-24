@@ -140,8 +140,17 @@ function adjustLayout(layout, forces, forceToDistanceCoef) {
  * @param {Graph} graph
  * The graph to layout.
  *
- * @param {Object} obj
+ * @param {Object} [obj={}]
  * The options object.
+ *
+ * @param {Vec2} [randomPos=new Vec2(0, 0)]
+ * The top left corner of the bounding rectangle of the initial random layout.
+ *
+ * @param {number} [randomWidth=1920]
+ * The width of the bounding rectangle of the initial random layout.
+ *
+ * @param {number} [randomHeight=1080]
+ * The height of the bounding rectangle of the initial random layout.
  *
  * @param {Number} [obj.springForceCoef=2]
  * The spring force between two adjacent nodes scales linearly with this
@@ -161,17 +170,30 @@ function adjustLayout(layout, forces, forceToDistanceCoef) {
  * The number of simulation steps.
  */
 export default function(graph, {
-        springForceCoef = 2,
-        idealDistance = 200,
-        repulsiveForceCoef = 1,
+        randomPos           = new Vec2(0, 0),
+        randomWidth         = 1920,
+        randomHeight        = 1080,
+        springForceCoef     = 2,
+        idealDistance       = 200,
+        repulsiveForceCoef  = 1,
         forceToDistanceCoef = 0.1,
-        nSteps = 100
+        nSteps              = 100,
     } = {}) {
 
-    const result = randomLayout();
+    const result = randomLayout({
+        pos:    randomPos,
+        width:  randomWidth,
+        height: randomHeight,
+    });
+
     for (let i = 0; i < nSteps; i++) {
-        const forces = calculateForces(result, graph, {springForceCoef, idealDistance, repulsiveForceCoef});
+        const forces = calculateForces(result, graph, {
+            springForceCoef,
+            idealDistance,
+            repulsiveForceCoef,
+        });
         adjustLayout(result, forces, forceToDistanceCoef);
     }
+
     return result;
 }

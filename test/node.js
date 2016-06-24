@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Graph, Node, Edge} from "../src/earl.js";
+import {Graph, Node, Edge} from "../src/index.js";
 
 describe("Node", function () {
     describe("#fromJSON", function () {
