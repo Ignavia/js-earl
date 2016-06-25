@@ -2,9 +2,12 @@ import {Vec2Builder} from "@ignavia/ella";
 
 import RandomLayout from "./randomLayout.js";
 
+/**
+ * Layouts nodes using the Eades layout algorithm.
+ */
 export default class EadesLayout {
 
-    /*
+    /**
      * @param {Object} [obj={}]
      * The options object.
      *
@@ -129,10 +132,13 @@ export default class EadesLayout {
     }
 
     /**
-     * Calculates the magnitude of the spring force between two adjacent nodes.
+     * Calculates the the spring force between two adjacent nodes.
      *
-     * @param {number} distance
-     * How far the nodes are apart.
+     * @param {Vec2} uPos
+     * The position of the first node.
+     *
+     * @param {Vec2} vPos
+     * The position of the second node.
      *
      * @return {Vec2}
      * The force vector.
@@ -146,10 +152,13 @@ export default class EadesLayout {
     }
 
     /**
-     * Calculated the magnitude of the repulsive force between non-adjacent nodes.
+     * Calculated the the repulsive force between non-adjacent nodes.
      *
-     * @param {number} distance
-     * How far the nodes are apart.
+     * @param {Vec2} uPos
+     * The position of the first node.
+     *
+     * @param {Vec2} vPos
+     * The position of the second node.
      *
      * @return {Vec2}
      * The force vector.
@@ -165,11 +174,11 @@ export default class EadesLayout {
     /**
      * Calculates the force on the given node given a layout.
      *
-     * @param {Map} layout
-     * The current layout of the graph.
-     *
      * @param {Graph} graph
      * The graph to layout.
+     *
+     * @param {Map} layout
+     * The current layout of the graph.
      *
      * @param {Node} u
      * The node to calculate the force for.
@@ -179,7 +188,7 @@ export default class EadesLayout {
      *
      * @private
      */
-    computeForceForNode(layout, graph, u) {
+    computeForceForNode(graph, layout, u) {
         const result = new Vec2(0, 0);
         const uPos   = layout.getPosition(u);
 
@@ -215,7 +224,7 @@ export default class EadesLayout {
         const result = new Map();
 
         for (let u of graph.iterNodes()) {
-            const force = this.computeForceForNode(layout, graph, u);
+            const force = this.computeForceForNode(graph, layout, u);
             result.set(u.id, force);
         }
 

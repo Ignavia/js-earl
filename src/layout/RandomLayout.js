@@ -4,6 +4,9 @@ import {Vec2} from "@ignavia/ella";
 
 import Layout from "./Layout.js";
 
+/**
+ * Layouts nodes randomly within a bounding rectangle.
+ */
 export default class RandomLayout {
 
     /**
