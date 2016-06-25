@@ -49,9 +49,9 @@ describe("Layout", function () {
         });
     });
 
-    describe("#moveAll", function () {
+    describe("#moveAllBy", function () {
         it("should move the layout", function () {
-            this.l.moveAll(new Vec2(1, 1));
+            this.l.moveAllBy(new Vec2(1, 1));
 
             const pos1 = this.l.getPosition("n1");
             expect(pos1.x).to.equal(3);
