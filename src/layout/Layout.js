@@ -96,7 +96,7 @@ export default class Layout {
      * y-coordinates are 0.
      */
     scaleAll(factorX, factorY, center = new Vec2(0, 0)) {
-        this.moveAll(center.mul(-1));
+        this.moveAllBy(center.mul(-1));
         for (let [id, position] of this.positions) {
             const newPos = new Vec2(
                 position.x * factorX,
@@ -104,7 +104,7 @@ export default class Layout {
             );
             this.moveNodeTo(id, newPos);
         }
-        this.moveAll(center);
+        this.moveAllBy(center);
     }
 
     /**
@@ -118,11 +118,11 @@ export default class Layout {
      * y-coordinates are 0.
      */
     rotateAll(angle, center = new Vec2(0, 0)) {
-        this.moveAll(center.mul(-1));
+        this.moveAllBy(center.mul(-1));
         for (let [id, position] of this.positions) {
             this.moveNodeTo(id, position.rotate(angle));
         }
-        this.moveAll(center);
+        this.moveAllBy(center);
     }
 
     /**

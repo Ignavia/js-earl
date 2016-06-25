@@ -1,6 +1,6 @@
 import {Vec2, Vec2Builder} from "@ignavia/ella";
 
-import randomLayout from "./randomLayout";
+import RandomLayout from "./RandomLayout";
 
 /**
  * Layout the graph using the Fruchterman-Reingold layout algorithm.

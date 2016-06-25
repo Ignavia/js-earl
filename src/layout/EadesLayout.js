@@ -1,6 +1,6 @@
 import {Vec2Builder} from "@ignavia/ella";
 
-import RandomLayout from "./randomLayout.js";
+import RandomLayout from "./RandomLayout.js";
 
 /**
  * Layouts nodes using the Eades layout algorithm.
