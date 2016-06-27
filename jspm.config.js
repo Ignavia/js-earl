@@ -53,7 +53,7 @@ SystemJS.config({
     ],
     map: {
         "@ignavia/ella": "npm:@ignavia/ella@1.0.15",
-        "@ignavia/util": "npm:@ignavia/util@1.4.0",
+        "@ignavia/util": "npm:@ignavia/util@2.0.0",
         "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
         "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
         "core-js": "npm:core-js@1.2.6",
@@ -102,16 +102,16 @@ SystemJS.config({
                 "isarray": "npm:isarray@1.0.0"
             }
         },
-        "npm:@ignavia/util@1.4.0": {
-            "map": {
-                "lodash": "npm:lodash@4.13.1"
-            }
-        },
         "npm:buffer@4.7.0": {
             "map": {
                 "ieee754": "npm:ieee754@1.1.6",
                 "base64-js": "npm:base64-js@1.1.2",
                 "isarray": "npm:isarray@1.0.0"
+            }
+        },
+        "npm:@ignavia/util@2.0.0": {
+            "map": {
+                "lodash": "npm:lodash@4.13.1"
             }
         }
     }

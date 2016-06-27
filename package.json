@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@ignavia/ella": "^1.0.15",
-    "@ignavia/util": "^1.1.7",
+    "@ignavia/util": "^2.0.0",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "name": "@ignavia/earl",
     "dependencies": {
       "@ignavia/ella": "^1.0.15",
-      "@ignavia/util": "^1.1.7",
+      "@ignavia/util": "^2.0.0",
       "lodash": "^4.6.1"
     },
     "devDependencies": {
@@ -82,6 +82,12 @@
         "ignore": [
           "test.js"
         ]
+      },
+      "npm:lodash@4.13.1": {
+        "map": {
+          "buffer": "@empty",
+          "process": "@empty"
+        }
       }
     }
   }
