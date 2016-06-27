@@ -334,17 +334,22 @@ export default class FruchtermannLayout {
      *
      * @param {Graph} graph
      * The graph to layout.
+     *
+     * @param {Layout} [layout]
+     * The previous layout. If none is provided, a random layout is generated.
+     *
+     * @return {Layout}
+     * The new layout.
      */
-    layout(graph) {
-        const result        = this.randomLayout.layout(graph);
+    layout(graph, layout = this.randomLayout.layout(graph)) {
         const idealDistance = this.computeIdealDistance(graph);
 
         for (let i = 0; i < this.nSteps; i++) {
-            const forces          = computeForces(graph, result, idealDistance);
+            const forces          = computeForces(graph, layout, idealDistance);
             const maxDisplacement = this.computeMaxDisplacement(i);
-            this.adjustLayout(result, forces, maxDisplacement);
+            this.adjustLayout(layout, forces, maxDisplacement);
         }
 
-        return result;
+        return layout;
     }
 }

@@ -254,15 +254,19 @@ export default class EadesLayout {
      *
      * @param {Graph} graph
      * The graph to layout.
+     *
+     * @param {Layout} [layout]
+     * The previous layout. If none is provided, a random layout is generated.
+     *
+     * @return {Layout}
+     * The new layout.
      */
-    layout(graph) {
-        const result = this.randomLayout.layout(graph);
-
+    layout(graph, layout = this.randomLayout.layout(graph)) {
         for (let i = 0; i < this.nSteps; i++) {
-            const forces = this.computeForces(graph, result);
-            this.adjustLayout(result, forces);
+            const forces = this.computeForces(graph, layout);
+            this.adjustLayout(layout, forces);
         }
 
-        return result;
+        return layout;
     }
 }
