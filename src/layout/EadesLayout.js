@@ -46,10 +46,10 @@ export default class EadesLayout {
         randomHeight        = 1080,
         springForceCoef     = 2,
         idealDistance       = 500,
-        repulsiveForceCoef  = 1,
+        repulsiveForceCoef  = 30000,
         forceToDistanceCoef = 1,
         nSteps              = 100,
-    } = {}) {console.log("created")
+    } = {}) {
 
         /**
          * Creates the initial random layout.
@@ -243,7 +243,7 @@ export default class EadesLayout {
      */
     adjustLayout(layout, forces) {
         for (let [id, force] of forces) {
-            const displacement = force.mul(this.forceToDistanceCoef); console.log("disp", id, force, displacement)
+            const displacement = force.mul(this.forceToDistanceCoef);
             layout.moveNodeBy(id, displacement);
         }
     }
