@@ -1,4 +1,4 @@
-import {Vec2Builder} from "@ignavia/ella";
+import {Vec2} from "@ignavia/ella";
 
 import RandomLayout from "./RandomLayout.js";
 
