@@ -46,11 +46,7 @@ export default class FruchtermannLayout {
          * @type {RandomLayout}
          * @private
          */
-        this.randomLayout = new RandomLayout({
-            pos:    randomPos,
-            width:  randomWidth,
-            height: randomHeight,
-        });
+        this.randomLayout = new RandomLayout({ pos, width, height, });
 
         /**
          * The top left corner of the bounding rectangle.
@@ -197,7 +193,7 @@ export default class FruchtermannLayout {
      * @private
      */
     computeMaxDisplacement(step) {
-        return this.initialMaxDisplacement * (1 - step / nStep);
+        return this.initialMaxDisplacement * (1 - step / this.nSteps);
     }
 
     /**
@@ -221,8 +217,8 @@ export default class FruchtermannLayout {
      * @private
      */
     computeForceForNode(graph, layout, idealDistance, u) {
-        const result = new Vec2(0, 0);
-        const uPos   = layout.getPosition(u);
+        let result = new Vec2(0, 0); // TODO make builder?
+        const uPos = layout.getPosition(u);
 
         for (let v of graph.iterNodes()) {
             if (u !== v) {
@@ -230,7 +226,7 @@ export default class FruchtermannLayout {
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
                 const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance);
-                result.add(repulsive).add(attractive.mul(nEdgesBetween));
+                result = result.add(repulsive).add(attractive.mul(nEdgesBetween));
             }
         }
 
@@ -259,7 +255,7 @@ export default class FruchtermannLayout {
 
         for (let u of graph.iterNodes()) {
             const force = this.computeForceForNode(
-                layout, graph, idealDistance, u
+                graph, layout, idealDistance, u
             );
             result.set(u.id, force);
         }
@@ -282,8 +278,8 @@ export default class FruchtermannLayout {
      * @private
      */
     adjustLayout(layout, forces, maxDisplacement) {
-        for (let [id, force] of displacements) {
-            displacement = this.limitDisplacement(force, maxDisplacement);
+        for (let [id, force] of forces) {
+            const displacement = this.limitDisplacement(force, maxDisplacement);
             const oldPos = layout.getPosition(id);
             const newPos = oldPos.add(displacement);
             layout.moveNodeTo(id, this.clipToFrame(newPos));
@@ -345,7 +341,7 @@ export default class FruchtermannLayout {
         const idealDistance = this.computeIdealDistance(graph);
 
         for (let i = 0; i < this.nSteps; i++) {
-            const forces          = computeForces(graph, layout, idealDistance);
+            const forces          = this.computeForces(graph, layout, idealDistance);
             const maxDisplacement = this.computeMaxDisplacement(i);
             this.adjustLayout(layout, forces, maxDisplacement);
         }

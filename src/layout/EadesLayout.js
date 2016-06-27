@@ -1,4 +1,4 @@
-import {Vec2} from "@ignavia/ella";
+import {Vec2, Vec2Builder} from "@ignavia/ella";
 
 import RandomLayout from "./RandomLayout.js";
 
@@ -45,11 +45,11 @@ export default class EadesLayout {
         randomWidth         = 1920,
         randomHeight        = 1080,
         springForceCoef     = 2,
-        idealDistance       = 200,
+        idealDistance       = 500,
         repulsiveForceCoef  = 1,
-        forceToDistanceCoef = 0.1,
+        forceToDistanceCoef = 1,
         nSteps              = 100,
-    } = {}) {
+    } = {}) {console.log("created")
 
         /**
          * Creates the initial random layout.
@@ -97,7 +97,7 @@ export default class EadesLayout {
          * @type {number}
          * @private
          */
-        this.forceToDisplacementCoef = forceToDisplacementCoef;
+        this.forceToDistanceCoef = forceToDistanceCoef;
 
         /**
          * The number of simulation steps.
@@ -189,21 +189,20 @@ export default class EadesLayout {
      * @private
      */
     computeForceForNode(graph, layout, u) {
-        const result = new Vec2(0, 0);
-        const uPos   = layout.getPosition(u);
+        let result = new Vec2Builder(0, 0);
+        const uPos = layout.getPosition(u);
 
         for (let v of graph.iterNodes()) {
             if (u !== v) {
                 const vPos = layout.getPosition(v);
-                if (u.isAdjacentNode(v)) {
-                    result.add(this.computeSpringForce(uPos, vPos));
-                } else {
-                    result.add(this.computeRepulsiveForce(uPos, vPos));
-                }
+                let force  = u.isAdjacentNode(v) ?
+                    this.computeSpringForce(uPos, vPos)   :
+                    this.computeRepulsiveForce(uPos, vPos);
+                result.add(force.x, force.y);
             }
         }
 
-        return result;
+        return result.toVec2();
     }
 
     /**
@@ -244,7 +243,7 @@ export default class EadesLayout {
      */
     adjustLayout(layout, forces) {
         for (let [id, force] of forces) {
-            const displacement = force.mul(this.forceToDisplacementCoef);
+            const displacement = force.mul(this.forceToDistanceCoef); console.log("disp", id, force, displacement)
             layout.moveNodeBy(id, displacement);
         }
     }
