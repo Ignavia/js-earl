@@ -83,7 +83,8 @@ describe("Node", function () {
         const e1 = new Edge(n1, n2);
         const e2 = new Edge(n0, n2);
         const e3 = new Edge(n2, n0);
-        g0.addEdges(e0, e1, e2, e3);
+        const e4 = new Edge(n1, n0);
+        g0.addEdges(e0, e1, e2, e3, e4);
         g0.removeEdges(e2, e3);
 
         it(`should return the number of adjacent nodes (direction="all")`, function () {
@@ -96,7 +97,7 @@ describe("Node", function () {
 
         it(`should return the number of outgoing adjacent nodes (direction="out")`, function () {
             const r0 = n1.getNumberOfAdjacentNodes("out");
-            expect(r0).to.equal(1);
+            expect(r0).to.equal(2);
 
             const r1 = n0.getNumberOfAdjacentNodes("out");
             expect(r1).to.equal(1);
@@ -107,7 +108,7 @@ describe("Node", function () {
             expect(r0).to.equal(1);
 
             const r1 = n0.getNumberOfAdjacentNodes("inc");
-            expect(r1).to.equal(0);
+            expect(r1).to.equal(1);
         });
     });
 

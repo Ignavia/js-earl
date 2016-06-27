@@ -128,7 +128,7 @@ export default class Node {
         if (!adjacencyList) {
             throw new Error(`The direction ${direction} is invalid.`);
         }
-        return adjacencyList.size;
+        return adjacencyList.children.size;
     }
 
     /**
