@@ -17,10 +17,20 @@ import {Vec2} from "@ignavia/ella";
  */
 export function computeConnection(uPos, vPos) {
     const connection = uPos.equals(vPos) ?
-        new Vec2(Math.random() + 0.01, Math.random() + 0.01) :
+        new Vec2(randomWiggle(), randomWiggle()) :
         vPos.sub(uPos);
     return {
         distance:  connection.length(),
         direction: connection.normalize(),
     };
+}
+
+function randomWiggle() {
+    let result;
+
+    do {
+        result = Math.random() - Math.random();
+    } while (result === 0);
+
+    return result;
 }
