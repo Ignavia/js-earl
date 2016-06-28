@@ -7,7 +7,7 @@ import Layout from "./Layout.js";
 /**
  * Layouts nodes randomly within a bounding rectangle.
  */
-export default class RandomLayout {
+export default class RandomLayouter {
 
     /**
      * @param {Object} obj

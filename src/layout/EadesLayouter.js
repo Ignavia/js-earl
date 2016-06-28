@@ -1,11 +1,11 @@
 import {Vec2, Vec2Builder} from "@ignavia/ella";
 
-import RandomLayout from "./RandomLayout.js";
+import RandomLayouter from "./RandomLayouter.js";
 
 /**
  * Layouts nodes using the Eades layout algorithm.
  */
-export default class EadesLayout {
+export default class EadesLayouter {
 
     /**
      * @param {Object} [obj={}]
@@ -54,10 +54,10 @@ export default class EadesLayout {
         /**
          * Creates the initial random layout.
          *
-         * @type {RandomLayout}
+         * @type {RandomLayouter}
          * @private
          */
-        this.randomLayout = new RandomLayout({
+        this.randomLayouter = new RandomLayouter({
             pos:    randomPos,
             width:  randomWidth,
             height: randomHeight,
@@ -109,29 +109,6 @@ export default class EadesLayout {
     }
 
     /**
-     * Computes the distance between the two points and a normalized direction
-     * vector from the first to the second.
-     *
-     * @param {Vec2} uPos
-     * The first position.
-     *
-     * @param {Vec2} vPos
-     * The second position.
-     *
-     * @return {Object}
-     * The distance and direction.
-     *
-     * @private
-     */
-    computeConnection(uPos, vPos) {
-        const connection = vPos.sub(uPos);
-        return {
-            distance:  connection.length(),
-            direction: connection.normalize(),
-        };
-    }
-
-    /**
      * Calculates the the spring force between two adjacent nodes.
      *
      * @param {Vec2} uPos
@@ -146,7 +123,7 @@ export default class EadesLayout {
      * @private
      */
     computeSpringForce(uPos, vPos) {
-        const {distance, direction} = this.computeConnection(uPos, vPos);
+        const {distance, direction} = utils.computeConnection(uPos, vPos);
         const forceMagnitude        = this.springForceCoef * Math.log(distance / this.idealDistance);
         return direction.mul(forceMagnitude);
     }
@@ -166,8 +143,8 @@ export default class EadesLayout {
      * @private
      */
     computeRepulsiveForce(uPos, vPos) {
-        const {distance, direction} = this.computeConnection(uPos, vPos);
-        const forceMagnitude        = -this.repulsiveForceCoef / distance**2;
+        let {distance, direction} = utils.computeConnection(uPos, vPos);
+        const forceMagnitude      = -this.repulsiveForceCoef / distance**2;
         return direction.mul(forceMagnitude);
     }
 
@@ -260,7 +237,7 @@ export default class EadesLayout {
      * @return {Layout}
      * The new layout.
      */
-    layout(graph, layout = this.randomLayout.layout(graph)) {
+    layout(graph, layout = this.randomLayouter.layout(graph)) {
         for (let i = 0; i < this.nSteps; i++) {
             const forces = this.computeForces(graph, layout);
             this.adjustLayout(layout, forces);

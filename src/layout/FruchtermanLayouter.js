@@ -1,11 +1,12 @@
 import {Vec2} from "@ignavia/ella";
 
-import RandomLayout from "./RandomLayout";
+import RandomLayouter from "./RandomLayouter";
+import * as utils   from "./utils.js";
 
 /**
  * Layout the graph using the Fruchterman-Reingold layout algorithm.
  */
-export default class FruchtermannLayout {
+export default class FruchtermannLayouter {
 
     /**
      * @param {Object} [obj={}]
@@ -23,7 +24,7 @@ export default class FruchtermannLayout {
      * @param {number} [obj.idealDistanceCoef=1]
      * The ideal distance between nodes scales linearly with this factor.
      *
-     * @param {number} initialMaxDisplacement
+     * @param {number} [initialMaxDisplacement]
      * Nodes are only moved this much during the first simulation step. This
      * maximum displacement goes down to 0 in a linear fashion for later
      * simulation steps.
@@ -43,10 +44,10 @@ export default class FruchtermannLayout {
         /**
          * Creates the initial random layout.
          *
-         * @type {RandomLayout}
+         * @type {RandomLayouter}
          * @private
          */
-        this.randomLayout = new RandomLayout({ pos, width, height, });
+        this.randomLayouter = new RandomLayouter({ pos, width, height, });
 
         /**
          * The top left corner of the bounding rectangle.
@@ -118,29 +119,6 @@ export default class FruchtermannLayout {
     }
 
     /**
-     * Computes the distance between the two points and a normalized direction
-     * vector from the first to the second.
-     *
-     * @param {Vec2} uPos
-     * The first position.
-     *
-     * @param {Vec2} vPos
-     * The second position.
-     *
-     * @return {Object}
-     * The distance and direction.
-     *
-     * @private
-     */
-    computeConnection(uPos, vPos) {
-        const connection = vPos.sub(uPos);
-        return {
-            distance:  connection.length(),
-            direction: connection.normalize(),
-        };
-    }
-
-    /**
      * Calculates the the attractive force between two adjacent nodes.
      *
      * @param {Vec2} uPos
@@ -155,7 +133,8 @@ export default class FruchtermannLayout {
      * @private
      */
     computeAttractiveForce(uPos, vPos, idealDistance) {
-        const {distance, direction} = this.computeConnection(uPos, vPos);
+        const {distance, direction} = utils.computeConnection(uPos, vPos);
+        console.log("att", distance, direction)
         const forceMagnitude = distance**2 / idealDistance;
         return direction.mul(forceMagnitude);
     }
@@ -175,13 +154,14 @@ export default class FruchtermannLayout {
      * @private
      */
     computeRepulsiveForce(uPos, vPos, idealDistance) {
-        const {distance, direction} = this.computeConnection(uPos, vPos);
-        const forceMagnitude = -(idealDistance**2) / distance;
+        let {distance, direction} = utils.computeConnection(uPos, vPos);
+        console.log("rep", distance, direction)
+        const forceMagnitude      = -(idealDistance**2) / distance;
         return direction.mul(forceMagnitude);
     }
 
     /**
-     * Computes te maximum displacement that should occur in the given
+     * Computes the maximum displacement that should occur in the given
      * simulation step.
      *
      * @param {number} step
@@ -226,6 +206,7 @@ export default class FruchtermannLayout {
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
                 const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance);
+                console.log("force on", v.id, repulsive, nEdgesBetween, attractive);
                 result = result.add(repulsive).add(attractive.mul(nEdgesBetween));
             }
         }
@@ -337,15 +318,15 @@ export default class FruchtermannLayout {
      * @return {Layout}
      * The new layout.
      */
-    layout(graph, layout = this.randomLayout.layout(graph)) {
+    layout(graph, layout = this.randomLayouter.layout(graph)) {
         const idealDistance = this.computeIdealDistance(graph);
-
+console.log("ideal", idealDistance)
         for (let i = 0; i < this.nSteps; i++) {
-            const forces          = this.computeForces(graph, layout, idealDistance);
-            const maxDisplacement = this.computeMaxDisplacement(i);
+            const forces          = this.computeForces(graph, layout, idealDistance); console.log(forces)
+            const maxDisplacement = this.computeMaxDisplacement(i);console.log("maxDisp", i, maxDisplacement);
             this.adjustLayout(layout, forces, maxDisplacement);
         }
-
+for (let [k, v] of layout) {console.log("layout", k, v)}
         return layout;
     }
 }

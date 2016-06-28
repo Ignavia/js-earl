@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Graph, Node, RandomLayout} from "../src/index.js";
+import {Graph, Node, RandomLayouter} from "../src/index.js";
 
 describe("Layout", function () {
     before(function () {
@@ -10,7 +10,7 @@ describe("Layout", function () {
         const n1 = new Node("n1");
         this.g.addNodes(n0, n1);
 
-        this.ran = new RandomLayout();
+        this.ran = new RandomLayouter();
     });
 
     describe("#randomLayout", function () {
