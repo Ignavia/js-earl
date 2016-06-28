@@ -1,7 +1,7 @@
-import {Vec2} from "@ignavia/ella";
+import {Vec2, Vec2Builder} from "@ignavia/ella";
 
 import RandomLayouter from "./RandomLayouter";
-import * as utils   from "./utils.js";
+import * as utils     from "./utils.js";
 
 /**
  * Layout the graph using the Fruchterman-Reingold layout algorithm.
@@ -134,8 +134,7 @@ export default class FruchtermannLayouter {
      */
     computeAttractiveForce(uPos, vPos, idealDistance) {
         const {distance, direction} = utils.computeConnection(uPos, vPos);
-        console.log("att", distance, direction)
-        const forceMagnitude = distance**2 / idealDistance;
+        const forceMagnitude        = distance**2 / idealDistance;
         return direction.mul(forceMagnitude);
     }
 
@@ -155,7 +154,6 @@ export default class FruchtermannLayouter {
      */
     computeRepulsiveForce(uPos, vPos, idealDistance) {
         let {distance, direction} = utils.computeConnection(uPos, vPos);
-        console.log("rep", distance, direction)
         const forceMagnitude      = -(idealDistance**2) / distance;
         return direction.mul(forceMagnitude);
     }
@@ -197,7 +195,7 @@ export default class FruchtermannLayouter {
      * @private
      */
     computeForceForNode(graph, layout, idealDistance, u) {
-        let result = new Vec2(0, 0); // TODO make builder?
+        let result = new Vec2Builder(0, 0);
         const uPos = layout.getPosition(u);
 
         for (let v of graph.iterNodes()) {
@@ -205,13 +203,13 @@ export default class FruchtermannLayouter {
                 const vPos          = layout.getPosition(v);
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
-                const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance);
-                console.log("force on", v.id, repulsive, nEdgesBetween, attractive);
-                result = result.add(repulsive).add(attractive.mul(nEdgesBetween));
+                const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance).mul(nEdgesBetween);
+                result.add(repulsive.x,  repulsive.y)
+                      .add(attractive.x, attractive.y);
             }
         }
 
-        return result;
+        return result.toVec2();
     }
 
     /**
@@ -320,13 +318,13 @@ export default class FruchtermannLayouter {
      */
     layout(graph, layout = this.randomLayouter.layout(graph)) {
         const idealDistance = this.computeIdealDistance(graph);
-console.log("ideal", idealDistance)
+
         for (let i = 0; i < this.nSteps; i++) {
-            const forces          = this.computeForces(graph, layout, idealDistance); console.log(forces)
-            const maxDisplacement = this.computeMaxDisplacement(i);console.log("maxDisp", i, maxDisplacement);
+            const forces          = this.computeForces(graph, layout, idealDistance);
+            const maxDisplacement = this.computeMaxDisplacement(i);
             this.adjustLayout(layout, forces, maxDisplacement);
         }
-for (let [k, v] of layout) {console.log("layout", k, v)}
+
         return layout;
     }
 }

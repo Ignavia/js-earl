@@ -1,6 +1,7 @@
 import {Vec2, Vec2Builder} from "@ignavia/ella";
 
 import RandomLayouter from "./RandomLayouter.js";
+import * as utils     from "./utils.js";
 
 /**
  * Layouts nodes using the Eades layout algorithm.
