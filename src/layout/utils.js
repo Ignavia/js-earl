@@ -12,8 +12,6 @@ import {Vec2} from "@ignavia/ella";
  *
  * @return {Object}
  * The distance and direction.
- *
- * @private
  */
 export function computeConnection(uPos, vPos) {
     const connection = uPos.equals(vPos) ?
@@ -25,6 +23,12 @@ export function computeConnection(uPos, vPos) {
     };
 }
 
+/**
+ * Adds some random wiggle to the node positions if they are equal.
+ *
+ * @return {number}
+ * A random number between -1 and 1, excluding 0.
+ */
 function randomWiggle() {
     let result;
 
