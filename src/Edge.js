@@ -31,10 +31,7 @@ export default class Edge {
      * The ID of this edge. If provided it must have the form /e[0-9]+/.
      */
     constructor(source, target, id) {
-        if (id && /^e[0-9]+$/.test(id)) {
-            const [, counter] = id.match(/^e([0-9]+)$/);
-            Edge.idGenerator.increaseToAtLeast(Number(counter) + 1);
-        }
+        Edge.idGenerator.avoid(id);
 
         /**
          * The ID of the source node.

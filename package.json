@@ -1,6 +1,6 @@
 {
   "name": "@ignavia/earl",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "description": "A graph library.",
   "keywords": [
     "graph"
@@ -18,13 +18,13 @@
     "url": "https://github.com/Ignavia/js-earl.git"
   },
   "scripts": {
-    "build": "jspm build ./src/earl.js - @ignavia/ella - @ignavia/util - lodash ./dist/earl.js --format cjs --skip-source-maps --minify",
+    "build": "jspm build ./src/index.js - @ignavia/ella - @ignavia/util - lodash ./dist/earl.js --format cjs --skip-source-maps --minify",
     "doc": "esdoc -c esdoc.json",
     "test": "mocha --compilers js:babel-register"
   },
   "dependencies": {
     "@ignavia/ella": "^1.0.15",
-    "@ignavia/util": "^1.1.7",
+    "@ignavia/util": "^2.0.0",
     "lodash": "^4.13.1"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "name": "@ignavia/earl",
     "dependencies": {
       "@ignavia/ella": "^1.0.15",
-      "@ignavia/util": "^1.1.7",
+      "@ignavia/util": "^2.0.0",
       "lodash": "^4.6.1"
     },
     "devDependencies": {
@@ -82,6 +82,12 @@
         "ignore": [
           "test.js"
         ]
+      },
+      "npm:lodash@4.13.1": {
+        "map": {
+          "buffer": "@empty",
+          "process": "@empty"
+        }
       }
     }
   }

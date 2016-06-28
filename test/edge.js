@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Node, Edge} from "../src/earl.js";
+import {Node, Edge} from "../src/index.js";
 
 describe("Edge", function () {
     beforeEach(function () {

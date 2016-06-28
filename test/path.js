@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-import {Node, Path} from "../src/earl.js";
+import {Node, Path} from "../src/index.js";
 
 describe("Path", function () {
     describe("#fromJSON", function () {

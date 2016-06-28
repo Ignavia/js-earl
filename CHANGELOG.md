@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.0 (2016-06-28)
+
+* Added layout algorithms for smaller graphs.
+
 ## 1.3.0 (2016-04-19)
 
 * IDs of graphs, nodes and edges can now be set by the client.
