@@ -14,7 +14,7 @@ describe("Layout", function () {
     });
 
     describe("#fromJSON", function () {
-        it("should convert an object to a layout", function () {
+        it("should convert a plain object to a layout", function () {
             const o = {
                 "n1": {x: 1, y: 0},
                 "n2": {x: 2, y: 3},

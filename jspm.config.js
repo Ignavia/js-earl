@@ -52,7 +52,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
-        "@ignavia/ella": "npm:@ignavia/ella@1.1.0",
+        "@ignavia/ella": "npm:@ignavia/ella@1.2.0",
         "@ignavia/util": "npm:@ignavia/util@2.0.0",
         "assert": "github:jspm/nodelibs-assert@0.2.0-alpha",
         "buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",

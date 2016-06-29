@@ -19,10 +19,7 @@ export default class Layout {
     static fromJSON(json) {
         const result = new Layout();
         for (let [id, position] of Object.entries(json)) {
-            result.moveNodeTo(id, new Vec2(
-                position.x,
-                position.y
-            ));
+            result.moveNodeTo(id, Vec2.fromJSON(position));
         }
         return result;
     }
@@ -159,12 +156,9 @@ export default class Layout {
      * The serialized layout.
      */
     toJSON() {
-        const result =  {};
+        const result = {};
         for (let [id, position] of this) {
-            result[id] = {
-                x: position.x,
-                y: position.y,
-            };
+            result[id] = position.toJSON();
         }
         return result;
     }

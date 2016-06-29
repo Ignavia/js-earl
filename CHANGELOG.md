@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0 (2016-06-29)
+
+* Added methods to serialize and deserialize layouts.
+
 ## 1.4.0 (2016-06-28)
 
 * Added layout algorithms for smaller graphs.
