@@ -150,7 +150,7 @@ describe("Path", function () {
     });
 
     describe("#toJSON", function () {
-        it("should encode all information to reconstruct the node object", function () {
+        it("should encode all information to reconstruct the path object", function () {
             const n0 = new Node("n0");
             const n1 = new Node("n1");
             const r  = new Path(n0, n1).toJSON();
