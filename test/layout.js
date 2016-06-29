@@ -13,6 +13,20 @@ describe("Layout", function () {
         ]);
     });
 
+    describe("#fromJSON", function () {
+        it("should convert an object to a layout", function () {
+            const o = {
+                "n1": {x: 1, y: 0},
+                "n2": {x: 2, y: 3},
+            };
+            const r     = Layout.fromJSON(o);
+            const n1Pos = r.getPosition("n1");
+            expect(n1Pos.x).to.equal(1);
+            expect(n1Pos.y).to.equal(0);
+            expect(n1Pos).to.be.an.instanceof(Vec2);
+        });
+    });
+
     describe("#constructor", function () {
         it("should set the initial positions", function () {
             const pos1 = this.l.getPosition("n1");
@@ -96,6 +110,14 @@ describe("Layout", function () {
             const pos3 = this.l.getPosition("n3");
             expect(pos3.x).to.be.closeTo(1, Number.EPSILON);
             expect(pos3.y).to.be.closeTo(-1, Number.EPSILON);
+        });
+    });
+
+    describe("#toJSON", function () {
+        it("should convert the layout into a plain object", function () {
+            const r = this.l.toJSON();
+            expect(r.n1.x).to.equal(2);
+            expect(r.n1.y).to.equal(0);
         });
     });
 

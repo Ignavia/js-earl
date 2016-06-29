@@ -8,6 +8,26 @@ import Graph from "../Graph.js";
 export default class Layout {
 
     /**
+     * Parses the given object and creates a layout using its content.
+     *
+     * @param {Object} json
+     * The object to parse.
+     *
+     * @return {Layout}
+     * The created layout.
+     */
+    static fromJSON(json) {
+        const result = new Layout();
+        for (let [id, position] of Object.entries(json)) {
+            result.moveNodeTo(id, new Vec2(
+                position.x,
+                position.y
+            ));
+        }
+        return result;
+    }
+
+    /**
      * @param {Iterable} [positions=[]]
      * The positions of the nodes. Each entry has the form [node, position].
      */
@@ -16,7 +36,7 @@ export default class Layout {
         /**
          * Maps from node IDs to positions.
          *
-         * @type {Map<string, Vec2Builder>}
+         * @type {Map<string, Vec2>}
          * @private
          */
         this.positions = new Map();
@@ -34,7 +54,7 @@ export default class Layout {
      * @param {string|Node} node
      * The node to get the position for or its ID.
      *
-     * @return {Vec2|Vec2Builder}
+     * @return {Vec2}
      * The position of the node.
      */
     getPosition(node) {
@@ -48,7 +68,7 @@ export default class Layout {
      * @param {string|Node} node
      * The node to move or its ID.
      *
-     * @param {Vec2|Vec2Builder} newPosition
+     * @param {Vec2} newPosition
      * The new position of the node.
      */
     moveNodeTo(node, newPosition) {
@@ -62,7 +82,7 @@ export default class Layout {
      * @param {string|Node} node
      * The node to move or its ID.
      *
-     * @param {Vec2|Vec2Builder} vector
+     * @param {Vec2} vector
      * The vector to add to the current position.
      */
     moveNodeBy(node, vector) {
@@ -73,11 +93,11 @@ export default class Layout {
     /**
      * Translates all positions by the given vector.
      *
-     * @param {Vec2|Vec2Builder} vector
+     * @param {Vec2} vector
      * The vector to add to the positions.
      */
     moveAllBy(vector) {
-        for (let [id, position] of this.positions) {
+        for (let [id, position] of this) {
             this.moveNodeTo(id, position.add(vector));
         }
     }
@@ -91,13 +111,13 @@ export default class Layout {
      * @param {number} factorY
      * The factor by which to stretch the layout in the y-direction.
      *
-     * @param {Vec2|Vec2Builder} [center]
+     * @param {Vec2} [center]
      * The point from which to stretch the layout. By default both the x- and
      * y-coordinates are 0.
      */
     scaleAll(factorX, factorY, center = new Vec2(0, 0)) {
         this.moveAllBy(center.mul(-1));
-        for (let [id, position] of this.positions) {
+        for (let [id, position] of this) {
             const newPos = new Vec2(
                 position.x * factorX,
                 position.y * factorY
@@ -113,13 +133,13 @@ export default class Layout {
      * @param {number} angle
      * The angle by which to rotate the layout.
      *
-     * @param {Vec2|Vec2Builder} [center]
+     * @param {Vec2} [center]
      * The point around which to rotate the layout. By default both the x- and
      * y-coordinates are 0.
      */
     rotateAll(angle, center = new Vec2(0, 0)) {
         this.moveAllBy(center.mul(-1));
-        for (let [id, position] of this.positions) {
+        for (let [id, position] of this) {
             this.moveNodeTo(id, position.rotate(angle));
         }
         this.moveAllBy(center);
@@ -130,5 +150,22 @@ export default class Layout {
      */
     * [Symbol.iterator]() {
         yield* this.positions;
+    }
+
+    /**
+     * Serializes this layout.
+     *
+     * @return {Object}
+     * The serialized layout.
+     */
+    toJSON() {
+        const result =  {};
+        for (let [id, position] of this) {
+            result[id] = {
+                x: position.x,
+                y: position.y,
+            };
+        }
+        return result;
     }
 }
