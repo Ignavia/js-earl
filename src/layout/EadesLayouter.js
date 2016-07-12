@@ -176,7 +176,7 @@ export default class EadesLayouter {
                 let force  = u.isAdjacentNode(v) ?
                     this.computeSpringForce(uPos, vPos)   :
                     this.computeRepulsiveForce(uPos, vPos);
-                result.add(force.x, force.y);
+                result.add(force);
             }
         }
 

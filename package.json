@@ -54,7 +54,7 @@
   "jspm": {
     "name": "@ignavia/earl",
     "dependencies": {
-      "@ignavia/ella": "^1.0.15",
+      "@ignavia/ella": "^2.0.0",
       "@ignavia/util": "^2.0.0",
       "lodash": "^4.6.1"
     },

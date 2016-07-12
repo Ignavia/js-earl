@@ -204,8 +204,7 @@ export default class FruchtermannLayouter {
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
                 const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance).mul(nEdgesBetween);
-                result.add(repulsive.x,  repulsive.y)
-                      .add(attractive.x, attractive.y);
+                result.add(repulsive).add(attractive);
             }
         }
 
