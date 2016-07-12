@@ -107,6 +107,22 @@ export default class EadesLayouter {
          * @private
          */
         this.nSteps = nSteps;
+
+        /**
+         * Stores the force of one node on another node.
+         *
+         * @type {Vec2Builder}
+         * @private
+         */
+        this.singleForceAcc = new Vec2Builder(0, 0);
+
+        /**
+         * Stores the force on a node.
+         *
+         * @type {Vec2Builder}
+         * @private
+         */
+        this.nodeForceAcc = new Vec2Builder(0, 0);
     }
 
     /**
@@ -124,8 +140,12 @@ export default class EadesLayouter {
      * @private
      */
     computeSpringForce(uPos, vPos) {
-        const {distance, direction} = utils.computeConnection(uPos, vPos);
-        const forceMagnitude        = this.springForceCoef * Math.log(distance / this.idealDistance);
+        const {distance, direction} = utils.computeConnection(
+            uPos,
+            vPos,
+            this.singleForceAcc
+        );
+        const forceMagnitude = this.springForceCoef * Math.log(distance / this.idealDistance);
         return direction.mul(forceMagnitude);
     }
 
@@ -144,8 +164,12 @@ export default class EadesLayouter {
      * @private
      */
     computeRepulsiveForce(uPos, vPos) {
-        let {distance, direction} = utils.computeConnection(uPos, vPos);
-        const forceMagnitude      = -this.repulsiveForceCoef / distance**2;
+        let {distance, direction} = utils.computeConnection(
+            uPos,
+            vPos,
+            this.singleForceAcc
+        );
+        const forceMagnitude = -this.repulsiveForceCoef / distance**2;
         return direction.mul(forceMagnitude);
     }
 
@@ -167,7 +191,9 @@ export default class EadesLayouter {
      * @private
      */
     computeForceForNode(graph, layout, u) {
-        let result = new Vec2Builder(0, 0);
+        this.nodeForceAcc.x = 0;
+        this.nodeForceAcc.y = 0;
+
         const uPos = layout.getPosition(u);
 
         for (let v of graph.iterNodes()) {
@@ -176,11 +202,11 @@ export default class EadesLayouter {
                 let force  = u.isAdjacentNode(v) ?
                     this.computeSpringForce(uPos, vPos)   :
                     this.computeRepulsiveForce(uPos, vPos);
-                result.add(force);
+                this.nodeForceAcc.add(force);
             }
         }
 
-        return result.toVec2();
+        return this.nodeForceAcc.toVec2();
     }
 
     /**

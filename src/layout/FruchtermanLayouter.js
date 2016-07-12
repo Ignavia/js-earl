@@ -101,6 +101,22 @@ export default class FruchtermannLayouter {
          * @private
          */
         this.nSteps = nSteps;
+
+        /**
+         * Stores the force of one node on another node.
+         *
+         * @type {Vec2Builder}
+         * @private
+         */
+        this.singleForceAcc = new Vec2Builder(0, 0);
+
+        /**
+         * Stores the force on a node.
+         *
+         * @type {Vec2Builder}
+         * @private
+         */
+        this.nodeForceAcc = new Vec2Builder(0, 0);
     }
 
     /**
@@ -133,8 +149,12 @@ export default class FruchtermannLayouter {
      * @private
      */
     computeAttractiveForce(uPos, vPos, idealDistance) {
-        const {distance, direction} = utils.computeConnection(uPos, vPos);
-        const forceMagnitude        = distance**2 / idealDistance;
+        const {distance, direction} = utils.computeConnection(
+            uPos,
+            vPos,
+            this.singleForceAcc
+        );
+        const forceMagnitude = distance**2 / idealDistance;
         return direction.mul(forceMagnitude);
     }
 
@@ -153,8 +173,12 @@ export default class FruchtermannLayouter {
      * @private
      */
     computeRepulsiveForce(uPos, vPos, idealDistance) {
-        let {distance, direction} = utils.computeConnection(uPos, vPos);
-        const forceMagnitude      = -(idealDistance**2) / distance;
+        let {distance, direction} = utils.computeConnection(
+            uPos,
+            vPos,
+            this.singleForceAcc
+        );
+        const forceMagnitude = -(idealDistance**2) / distance;
         return direction.mul(forceMagnitude);
     }
 
@@ -195,7 +219,9 @@ export default class FruchtermannLayouter {
      * @private
      */
     computeForceForNode(graph, layout, idealDistance, u) {
-        let result = new Vec2Builder(0, 0);
+        this.nodeForceAcc.x = 0;
+        this.nodeForceAcc.y = 0;
+
         const uPos = layout.getPosition(u);
 
         for (let v of graph.iterNodes()) {
@@ -204,11 +230,11 @@ export default class FruchtermannLayouter {
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
                 const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance).mul(nEdgesBetween);
-                result.add(repulsive).add(attractive);
+                this.nodeForceAcc.add(repulsive).add(attractive);
             }
         }
 
-        return result.toVec2();
+        return this.nodeForceAcc.toVec2();
     }
 
     /**

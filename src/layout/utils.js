@@ -10,16 +10,24 @@ import {Vec2} from "@ignavia/ella";
  * @param {Vec2} vPos
  * The second position.
  *
+ * @param {Vec2|Vec2Builder} [accumulator]
+ * A place to store intermediate results in.
+ *
  * @return {Object}
  * The distance and direction.
  */
-export function computeConnection(uPos, vPos) {
-    const connection = uPos.equals(vPos) ?
-        new Vec2(randomWiggle(), randomWiggle()) :
-        vPos.sub(uPos);
+export function computeConnection(uPos, vPos, accumulator = new Vec2()) {
+    if (uPos.equals(vPos)) {
+        accumulator.x = randomWiggle();
+        accumulator.y = randomWiggle();
+    } else {
+        accumulator.x = vPos.x - uPos.x;
+        accumulator.y = vPos.y - uPos.y;
+    }
+
     return {
-        distance:  connection.length(),
-        direction: connection.normalize(),
+        distance:  accumulator.length(),
+        direction: accumulator.normalize(),
     };
 }
 
