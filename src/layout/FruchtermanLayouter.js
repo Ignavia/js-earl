@@ -228,9 +228,10 @@ export default class FruchtermannLayouter {
             if (u !== v) {
                 const vPos          = layout.getPosition(v);
                 const repulsive     = this.computeRepulsiveForce(uPos, vPos, idealDistance);
+                this.nodeForceAcc.add(repulsive);
                 const nEdgesBetween = u.getNumberOfEdgesBetween(v, "out");
                 const attractive    = this.computeAttractiveForce(uPos, vPos, idealDistance).mul(nEdgesBetween);
-                this.nodeForceAcc.add(repulsive).add(attractive);
+                this.nodeForceAcc.add(attractive);
             }
         }
 
