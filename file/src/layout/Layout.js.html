@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/layout/Layout.js | JavaScript Earl API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/Ignavia/js-earl.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/BreadthFirstTree.js~BreadthFirstTree.html">BreadthFirstTree</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Edge.js~Edge.html">Edge</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Graph.js~Graph.html">Graph</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Node.js~Node.html">Node</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Path.js~Path.html">Path</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">layout</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/layout/EadesLayouter.js~EadesLayouter.html">EadesLayouter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/layout/FruchtermanLayouter.js~FruchtermannLayouter.html">FruchtermannLayouter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/layout/Layout.js~Layout.html">Layout</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/layout/RandomLayouter.js~RandomLayouter.html">RandomLayouter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-computeConnection">computeConnection</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/layout/Layout.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Vec2} from &quot;@ignavia/ella&quot;;
+
+import Graph from &quot;../Graph.js&quot;;
+
+/**
+ * A graph layout.
+ */
+export default class Layout {
+
+    /**
+     * Parses the given object and creates a layout using its content.
+     *
+     * @param {Object} json
+     * The object to parse.
+     *
+     * @return {Layout}
+     * The created layout.
+     */
+    static fromJSON(json) {
+        const result = new Layout();
+        for (let [id, position] of Object.entries(json)) {
+            result.moveNodeTo(id, Vec2.fromJSON(position));
+        }
+        return result;
+    }
+
+    /**
+     * @param {Iterable} [positions=[]]
+     * The positions of the nodes. Each entry has the form [node, position].
+     */
+    constructor(positions = []) {
+
+        /**
+         * Maps from node IDs to positions.
+         *
+         * @type {Map&lt;string, Vec2&gt;}
+         * @private
+         */
+        this.positions = new Map();
+
+        // Initial positions
+        for (let [node, position] of positions) {
+            node = Graph.toNodeId(node);
+            this.moveNodeTo(node, position);
+        }
+    }
+
+    /**
+     * Returns the position of the given node.
+     *
+     * @param {string|Node} node
+     * The node to get the position for or its ID.
+     *
+     * @return {Vec2}
+     * The position of the node.
+     */
+    getPosition(node) {
+        node = Graph.toNodeId(node);
+        return this.positions.get(node);
+    }
+
+    /**
+     * Moves the given node to the new position.
+     *
+     * @param {string|Node} node
+     * The node to move or its ID.
+     *
+     * @param {Vec2} newPosition
+     * The new position of the node.
+     */
+    moveNodeTo(node, newPosition) {
+        node = Graph.toNodeId(node);
+        this.positions.set(node, newPosition);
+    }
+
+    /**
+     * Translates the given node by the given vector.
+     *
+     * @param {string|Node} node
+     * The node to move or its ID.
+     *
+     * @param {Vec2} vector
+     * The vector to add to the current position.
+     */
+    moveNodeBy(node, vector) {
+        const position = this.getPosition(node);
+        this.moveNodeTo(node, position.add(vector));
+    }
+
+    /**
+     * Translates all positions by the given vector.
+     *
+     * @param {Vec2} vector
+     * The vector to add to the positions.
+     */
+    moveAllBy(vector) {
+        for (let [id, position] of this) {
+            this.moveNodeTo(id, position.add(vector));
+        }
+    }
+
+    /**
+     * Stretches the layout from the given center by the given factors.
+     *
+     * @param {number} factorX
+     * The factor by which to stretch the layout in the x-direction.
+     *
+     * @param {number} factorY
+     * The factor by which to stretch the layout in the y-direction.
+     *
+     * @param {Vec2} [center]
+     * The point from which to stretch the layout. By default both the x- and
+     * y-coordinates are 0.
+     */
+    scaleAll(factorX, factorY, center = new Vec2(0, 0)) {
+        this.moveAllBy(center.mul(-1));
+        for (let [id, position] of this) {
+            const newPos = new Vec2(
+                position.x * factorX,
+                position.y * factorY
+            );
+            this.moveNodeTo(id, newPos);
+        }
+        this.moveAllBy(center);
+    }
+
+    /**
+     * Rotates the layout around the given center by the given angle.
+     *
+     * @param {number} angle
+     * The angle by which to rotate the layout.
+     *
+     * @param {Vec2} [center]
+     * The point around which to rotate the layout. By default both the x- and
+     * y-coordinates are 0.
+     */
+    rotateAll(angle, center = new Vec2(0, 0)) {
+        this.moveAllBy(center.mul(-1));
+        for (let [id, position] of this) {
+            this.moveNodeTo(id, position.rotate(angle));
+        }
+        this.moveAllBy(center);
+    }
+
+    /**
+     * Yields all pairs [id, position].
+     */
+    * [Symbol.iterator]() {
+        yield* this.positions;
+    }
+
+    /**
+     * Serializes this layout.
+     *
+     * @return {Object}
+     * The serialized layout.
+     */
+    toJSON() {
+        const result = {};
+        for (let [id, position] of this) {
+            result[id] = position.toJSON();
+        }
+        return result;
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.8)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
