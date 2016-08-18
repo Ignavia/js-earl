@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1 (2016-08-18)
+
+* Enhanced the performance of the layout algorithms.
+
 ## 1.5.0 (2016-06-29)
 
 * Added methods to serialize and deserialize layouts.
